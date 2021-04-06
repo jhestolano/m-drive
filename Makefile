@@ -43,7 +43,7 @@ SRCS+=app/src/app.c
 SRCS+=app/src/mtrif.c
 SRCS+=app/src/command.c
 SRCS+=sys/src/system_stm32f3xx.c
-SRCS+=sys/src/startup_stm32f302x8.s
+SRCS+=sys/src/startup_stm32f303xe.s
 SRCS+=sys/src/stm32f3xx_it.c
 
 # Code generated files.
@@ -96,7 +96,7 @@ GDB=arm-none-eabi-gdb
 SZ=arm-none-eabi-size
 
 # Project Defines.
-DEFS=-DSTM32F302x8 \
+DEFS=-DSTM32F303xE \
 	-DARM_MATH_CM4 \
 	-D__FPU_PRESENT \
 	-DUSE_HAL_DRIVER \
@@ -119,7 +119,7 @@ CFLAGS=$(TARGET_FLAGS) \
 	-ffunction-sections \
 	-fno-math-errno \
 
-LINKER_FILE=./linker/stm32f30_flash.ld
+LINKER_FILE=./linker/STM32F303RETx_FLASH.ld
 
 LFLAGS=$(TARGET_FLAGS) \
 	-Wl,-Map,$(BUILD_DIR)/$(PROJ_NAME).map -T$(LINKER_FILE) \
