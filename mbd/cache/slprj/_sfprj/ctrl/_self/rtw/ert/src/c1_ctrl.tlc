@@ -1,0 +1,133 @@
+%implements "chartSource" "C"
+%function ChartConfig(block, system) void
+  %createrecord chartConfiguration { ...
+          executeAtInitialization  0 ...
+  }
+  %return chartConfiguration
+%endfunction
+%function ChartDataMap(block, system) void
+  %createrecord ChartDataElements {\
+    NumChartData   16 \
+    ChartDataDefaults {\
+      RecordType   "ChartData"\
+      Dimensions   []\
+      IsTestPoint  0\
+    }\
+    ChartData {\
+      Name         "is_active_c1_ctrl"\
+      Description  "StateIsActive"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_c1_ctrl"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_autocal_in_progress"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "autocal_in_progress"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_ifbk_offset_id"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "autocal_in_progress.ifbk_offset_id"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_inductance_id"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "autocal_in_progress.inductance_id"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_inductance_switching"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "autocal_in_progress.inductance_id.inductance_switching"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_resistance_id"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "autocal_in_progress.resistance_id"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_motor_inertia_id"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "autocal_in_progress.motor_inertia_id"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_motor_constant_id"\
+      Description  "StateActiveChild"\
+      SFName       ""\
+      Path         "autocal_in_progress.motor_constant_id"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "cycle_cnt"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "cycle_cnt"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "ifbk_neg"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "ifbk_neg"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "ifbk_pos"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "ifbk_pos"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "spd_max"\
+      Description  "ChartLocal"\
+      SFName       "spd_max"\
+      Path         "spd_max"\
+      SrcLocation  ""\
+      IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "ifbk_max"\
+      Description  "ChartLocal"\
+      SFName       "ifbk_max"\
+      Path         "ifbk_max"\
+      SrcLocation  ""\
+      IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "ind_id_cnt"\
+      Description  "ChartLocal"\
+      SFName       "ind_id_cnt"\
+      Path         "ind_id_cnt"\
+      SrcLocation  ""\
+      IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "temporalCounter_i1"\
+      Description  "TemporalCounter"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  ""\
+    }\
+  }
+  %return ChartDataElements
+%endfunction

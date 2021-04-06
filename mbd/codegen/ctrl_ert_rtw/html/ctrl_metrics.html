@@ -1,0 +1,4443 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><link rel="stylesheet" type="text/css" href="rtwreport.css" /><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><script language="JavaScript" type="text/javascript" src="rtwshrink.js"></script><title>
+Static Code Metrics Report
+</title>
+
+</head>
+<body onload="try {if (top) {if (top.rtwPageOnLoad) top.rtwPageOnLoad('rtwIdCodeMetrics'); else local_onload();}} catch(err) {};">
+<h1>
+Static Code Metrics Report
+</h1>
+<div>
+<p>
+The static code metrics report provides statistics of the generated code. Metrics are estimated from static analysis of the generated code using the C data types specified in the 'Device details' section of the <b>Configuration Parameter > Hardware Implementation</b> pane: <b>char</b> 8, <b>short</b> 16, <b>int</b> 32, <b>long</b> 32, <b>float</b> 32, <b>double</b> 64, <b>pointer</b> 32 bits. If your model contains a Variant block, the Static Code Metrics Report does not contain data for the inactive variant. Actual object code metrics might differ due to target specific compiler and platform settings. Consult the <b>Code Generation Advisor</b><a name="MATLAB_link" style="text-decoration: none" href="matlab:helpview([docroot '/toolbox/ecoder/helptargets.map'], 'code_gen_advisor')">
+<img src="help.png" title="Open Code Generation Advisor help" style="border:none;cursor:pointer">
+
+</img>
+
+</a>
+ for options to improve code efficiency.
+</p>
+
+</div>
+<div>
+<h3>
+Table of Contents
+</h3>
+<ol>
+<li>
+<a href="#sec_File_Information" onclick="rtwTableExpand(window.document, window.document.getElementById('rtwIdCodeMetrics_table_001_control'), 'rtwIdCodeMetrics_table_001')">
+File Information
+</a>
+
+</li>
+<li>
+<a href="#sec_Global_Variables" onclick="rtwTableExpand(window.document, window.document.getElementById('rtwIdCodeMetrics_table_002_control'), 'rtwIdCodeMetrics_table_002')">
+Global Variables
+</a>
+
+</li>
+<li>
+<a href="#sec_Function_Information" onclick="rtwTableExpand(window.document, window.document.getElementById('rtwIdCodeMetrics_table_016_control'), 'rtwIdCodeMetrics_table_016')">
+Function Information
+</a>
+
+</li>
+
+</ol>
+
+</div>
+<h3 name="sec_File_Information" id="sec_File_Information">
+1. File Information <span title="Click to shrink or expand section" style="cursor:pointer;font-weight:normal;" id="rtwIdCodeMetrics_table_001_control" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, 'rtwIdCodeMetrics_table_001', false)"><span class="shrink-button">[<u>hide</u>]</span></span>
+</h3>
+<table width="100%" name="rtwIdCodeMetrics_table_001" id="rtwIdCodeMetrics_table_001" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" border="0">
+<tr>
+<td align="left" valign="top">
+<p>
+<span name="button_fileInfo_summary_table" id="button_fileInfo_summary_table" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, 'fileInfo_summary_table', true)"><span class="shrink-button">[-]</span></span> Summary
+</p>
+<table width="50%" cellpadding="0" name="fileInfo_summary_table" id="fileInfo_summary_table" border="0">
+<tr>
+<td width="4%" align="left" valign="top">
+<span style="white-space:nowrap" title="Number of source files excluding ert_main.c.">Number of .c files</span>
+</td>
+<td width="4%" align="left" valign="top">
+:
+</td>
+<td width="4%" align="right" valign="top">
+4
+</td>
+<td width="86%" align="right" valign="top">
+&#160;
+</td>
+
+</tr>
+<tr>
+<td width="4%" align="left" valign="top">
+<span style="white-space:nowrap" title="Number of header files.">Number of .h files</span>
+</td>
+<td width="4%" align="left" valign="top">
+:
+</td>
+<td width="4%" align="right" valign="top">
+9
+</td>
+<td width="86%" align="right" valign="top">
+&#160;
+</td>
+
+</tr>
+<tr>
+<td width="4%" align="left" valign="top">
+<span title="Lines of code excluding comments and blank lines">Lines of code</span>
+</td>
+<td width="4%" align="left" valign="top">
+:
+</td>
+<td width="4%" align="right" valign="top">
+1,261
+</td>
+<td width="86%" align="right" valign="top">
+&#160;
+</td>
+
+</tr>
+<tr>
+<td width="4%" align="left" valign="top">
+<span style="white-space:nowrap" title="Lines including source code, comments, and blank lines.">Lines</span>
+</td>
+<td width="4%" align="left" valign="top">
+:
+</td>
+<td width="4%" align="right" valign="top">
+2,908
+</td>
+<td width="86%" align="right" valign="top">
+&#160;
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<p>
+<span name="button_fileInfo_detail_table" id="button_fileInfo_detail_table" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, 'fileInfo_detail_table', true)"><span class="shrink-button">[-]</span></span> File details
+</p>
+<table width="100%" cellpadding="2" name="fileInfo_detail_table" id="fileInfo_detail_table" border="1">
+<tr style="background-color: #eeeeff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<b>
+<span style="white-space:nowrap" title="Files sorted in descending order by number of lines of code.">File Name</span>
+</b>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+<b>
+<span title="Lines of code excluding comments and blank lines.">Lines of Code</span>
+</b>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+<b>
+<span style="white-space:nowrap" title="Lines including source code, comments, and blank lines.">Lines</span>
+</b>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+<b>
+<span style="white-space:nowrap" title="Timestamp of the file">Generated On</span>
+</b>
+
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_fast_c.html" class="code2code">
+ctrl_fast.c
+</a>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+450
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+697
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+01/21/2021  7:51 PM
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_slow_c.html" class="code2code">
+ctrl_slow.c
+</a>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+218
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+499
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+01/21/2021  7:51 PM
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_data_c.html" class="code2code">
+ctrl_data.c
+</a>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+156
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+683
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+01/21/2021  7:51 PM
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_fast_h.html" class="code2code">
+ctrl_fast.h
+</a>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+108
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+216
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+01/21/2021  7:51 PM
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_slow_h.html" class="code2code">
+ctrl_slow.h
+</a>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+83
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+193
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+01/21/2021  7:51 PM
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_h.html" class="code2code">
+ctrl.h
+</a>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+75
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+263
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+01/21/2021  7:51 PM
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_c.html" class="code2code">
+ctrl.c
+</a>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+46
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+127
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+01/21/2021  7:51 PM
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<a href="rtwtypes_h.html" class="code2code">
+rtwtypes.h
+</a>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+38
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+84
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+01/21/2021  7:51 PM
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_types_h.html" class="code2code">
+ctrl_types.h
+</a>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+34
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+57
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+01/21/2021  7:51 PM
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<a href="AutoCalSt_h.html" class="code2code">
+AutoCalSt.h
+</a>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+18
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+21
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+01/21/2021  7:51 PM
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<a href="DBG_BUS_h.html" class="code2code">
+DBG_BUS.h
+</a>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+18
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+21
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+01/21/2021  7:51 PM
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<a href="rtmodel_h.html" class="code2code">
+rtmodel.h
+</a>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+13
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+32
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+01/21/2021  7:51 PM
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_private_h.html" class="code2code">
+ctrl_private.h
+</a>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+4
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+15
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+01/21/2021  7:51 PM
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+<h3 name="sec_Global_Variables" id="sec_Global_Variables">
+2. Global Variables <span title="Click to shrink or expand section" style="cursor:pointer;font-weight:normal;" id="rtwIdCodeMetrics_table_002_control" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, 'rtwIdCodeMetrics_table_002', false)"><span class="shrink-button">[<u>hide</u>]</span></span>
+</h3>
+<table width="100%" name="rtwIdCodeMetrics_table_002" id="rtwIdCodeMetrics_table_002" border="0">
+<tr>
+<td align="left" valign="top">
+Global variables defined in the generated code.
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="0" cellspacing="0" name="globalvarInfo_table" id="globalvarInfo_table" border="1">
+<tr style="background-color: #ffffff">
+<td width="100%" align="left" valign="top" style="border-style: none">
+<table class="treeTable" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #eeeeff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<b>
+<span title="Global variables sorted by the maximum size in bytes.">Global Variable</span>
+</b>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+<b>
+<span title="Global variable size in bytes.">Size (bytes)</span>
+</b>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+<b>
+<span title="Total number of potential reads and writes for this global variable">Reads / Writes</span>
+</b>
+
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+<b>
+<span title="Maximum number of potential reads and writes in a function">Reads / Writes in a Function</span>
+</b>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #ffffff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap"><span name="button_globalvarInfo_table_sub3" id="button_globalvarInfo_table_sub3" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, 'globalvarInfo_table_sub3', true)"><span class="shrink-button">[+]</span></span> <a href="ctrl_data_c.html#var_rtP" class="code2code">
+rtP
+</a>
+</span>
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+610
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+48<span style="font-family:Courier">&#160;</span>
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+23<span style="font-family:Courier">&#160;</span>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="globalvarInfo_table_sub3" id="globalvarInfo_table_sub3" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;<span name="button_globalvarInfo_table_sub3_sub3" id="button_globalvarInfo_table_sub3_sub3" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, 'globalvarInfo_table_sub3_sub3', true)"><span class="shrink-button">[+]</span></span> MotorParams</span></td>
+<td align="right" width="22.22%">80</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="globalvarInfo_table_sub3_sub3" id="globalvarInfo_table_sub3_sub3" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; R</span></td>
+<td align="right" width="22.22%">8</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; L</span></td>
+<td align="right" width="22.22%">8</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; K</span></td>
+<td align="right" width="22.22%">8</td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Kf</span></td>
+<td align="right" width="22.22%">8</td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; J</span></td>
+<td align="right" width="22.22%">8</td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Tau</span></td>
+<td align="right" width="22.22%">8</td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Kdc</span></td>
+<td align="right" width="22.22%">8</td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; AccMax</span></td>
+<td align="right" width="22.22%">8</td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; PPR</span></td>
+<td align="right" width="22.22%">8</td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; IfbkOfs</span></td>
+<td align="right" width="22.22%">8</td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_IndIDCntThshld</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_IndIDCoolDownTicks</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_IndIDSwTicks</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_OfsIDCntThshld</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_ResIDCntThshld</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_ResIDCoolDownTicks</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_TrqCnstIDCntThshld</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">3<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">3<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_IfbkCtrlBW</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">4<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">4<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_IndIDMaxThshld</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_IndIDMinThshld</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_IndIDMtrVin</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">4<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">4<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_IndIDTs</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_ResIDMaxThshld</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_ResIDMinThshld</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">0<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_ResIDMtrVin</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_SpdCtrlBW</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_TrqCnstIDMtrVin</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">3<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">3<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DistObs_K1</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DistObs_K2</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DistObs_K3</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; PosCtrl_Kp</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; SmDiff_FiltCnst</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; SmDiff_Ki</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; SmDiff_Kp</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; TsFast</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_SpdSnsSrc</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_AutoCalEnbl</span></td>
+<td align="right" width="22.22%">1</td>
+<td align="right" width="22.22%">3<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Cfg_EnblLoadObs</span></td>
+<td align="right" width="22.22%">1</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;<span name="button_globalvarInfo_table_sub3_sub3_sub42" id="button_globalvarInfo_table_sub3_sub3_sub42" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, 'globalvarInfo_table_sub3_sub3_sub42', true)"><span class="shrink-button">[+]</span></span> ctrl_slow_e</span></td>
+<td align="right" width="22.22%">196</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="globalvarInfo_table_sub3_sub3_sub42" id="globalvarInfo_table_sub3_sub3_sub42" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; PICtrl_PI_Ki</span></td>
+<td align="right" width="22.22%">8</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; CompareToConstant_const</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; CompareToConstant1_const</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; TrackDiff_h0</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; PICtrl_max_lim</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; PICtrlVaryingGains_max_lim</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; PICtrl_min_lim</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; PICtrlVaryingGains_min_lim</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Constant1_Value</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Saturation1_UpperSat</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Saturation1_LowerSat</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Constant_Value</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Saturation_UpperSat</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Saturation_LowerSat</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Constant1_Value_j</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrSpdTgt_Y0</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_gainval</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_IC</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Ctrl_Y0</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_gainva_a</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_IC_k</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Saturation_UpperSat_k</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Saturation_LowerSat_e</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Ref_Y0</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Grd_Y0</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator1_gainval</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator1_IC</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_gainva_b</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_IC_e</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; d_Value</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Gain_Gain</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Gain_Gain_o</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Gain1_Gain</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Gain_Gain_m</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Gain_Gain_c</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Constant2_Value</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Constant3_Value</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Constant4_Value</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrIfbkTgt_Y0</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrSpdOut_Y0</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrDistEst_Y0</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrPosEst_Y0</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Gain1_Gain_f</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; TO_RPM_Gain</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Gain1_Gain_j</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DataStoreMemory_InitialValue</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DataStoreMemory1_InitialValue</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DataStoreMemory2_InitialValue</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;<span name="button_globalvarInfo_table_sub3_sub3_sub42_sub91" id="button_globalvarInfo_table_sub3_sub3_sub42_sub91" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, 'globalvarInfo_table_sub3_sub3_sub42_sub91', true)"><span class="shrink-button">[+]</span></span> ctrl_fast_f</span></td>
+<td align="right" width="22.22%">228</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="globalvarInfo_table_sub3_sub3_sub42_sub91" id="globalvarInfo_table_sub3_sub3_sub42_sub91" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; CompareToConstant_const</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; PICtrlVaryingGains_max_lim</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Integrator_max_lim</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Integrator2_max_lim</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Integrator1_max_lim</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Integrator1_max_lim_o</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Integrator_max_lim_k</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; PICtrlVaryingGains_min_lim</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Integrator_min_lim</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Integrator2_min_lim</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Integrator1_min_lim</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Integrator1_min_lim_i</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Integrator_min_lim_i</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span name="button_globalvarInfo_table_sub3_sub3_sub42_sub91_sub105" id="button_globalvarInfo_table_sub3_sub3_sub42_sub91_sub105" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, 'globalvarInfo_table_sub3_sub3_sub42_sub91_sub105', true)"><span class="shrink-button">[+]</span></span> DBG_BUS_Y0</span></td>
+<td align="right" width="22.22%">44</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="globalvarInfo_table_sub3_sub3_sub42_sub91_sub105" id="globalvarInfo_table_sub3_sub3_sub42_sub91_sub105" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; IfbkTgt</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Lest</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Rest</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; KTrqEst</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; IfbkOfs</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; KFrcEst</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; JEst</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; IfbkSteady</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; IfbkMax</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; SpdMax</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Status</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Constant_Value</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Constant1_Value</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Constant_Value_o</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrCtrlMd_Y0</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Gain1_Gain</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Ctrl_Y0</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_gainval</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_IC</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Constant2_Value</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrSpd_Y0</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrDistTrq_Y0</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; PosEst_Y0</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; CtrlCmd_Y0</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; UnitDelay_InitialCondition</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; UnitDelay_InitialCondition_m</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Gain1_Gain_m</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_gainva_h</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_IC_b</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Saturation1_UpperSat</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Saturation1_LowerSat</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_gainva_p</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_IC_n</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; UnitDelay_InitialCondition_b</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_gainva_k</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_IC_f</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_gainva_o</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_IC_g</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_gainva_i</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_IC_o</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Constant1_Value_b</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; UnitDelay_InitialCondition_bk</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Saturation_UpperSat</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Saturation_LowerSat</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #ffffff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap"><span name="button_globalvarInfo_table_sub151" id="button_globalvarInfo_table_sub151" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, 'globalvarInfo_table_sub151', true)"><span class="shrink-button">[+]</span></span> <a href="ctrl_c.html#var_rtDW" class="code2code">
+rtDW
+</a>
+</span>
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+185
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+17<span style="font-family:Courier">&#160;</span>
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+7<span style="font-family:Courier">&#160;</span>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="globalvarInfo_table_sub151" id="globalvarInfo_table_sub151" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;<span name="button_globalvarInfo_table_sub151_sub151" id="button_globalvarInfo_table_sub151_sub151" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, 'globalvarInfo_table_sub151_sub151', true)"><span class="shrink-button">[+]</span></span> ctrl_slow_e</span></td>
+<td align="right" width="22.22%">43</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="globalvarInfo_table_sub151_sub151" id="globalvarInfo_table_sub151_sub151" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator1</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; OutportBufferForGrd</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; OutportBufferForRef</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Saturation</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Add</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator1_DSTATE</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_DSTATE</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_DSTATE_g</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_DSTATE_k</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; TrackDiff_MODE</span></td>
+<td align="right" width="22.22%">1</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; SpdCtrl_MODE</span></td>
+<td align="right" width="22.22%">1</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; PosCtl_MODE</span></td>
+<td align="right" width="22.22%">1</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;<span name="button_globalvarInfo_table_sub151_sub151_sub165" id="button_globalvarInfo_table_sub151_sub151_sub165" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, 'globalvarInfo_table_sub151_sub151_sub165', true)"><span class="shrink-button">[+]</span></span> ctrl_fast_f</span></td>
+<td align="right" width="22.22%">126</td>
+<td align="right" width="22.22%">3<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="globalvarInfo_table_sub151_sub151_sub165" id="globalvarInfo_table_sub151_sub151_sub165" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Add</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; vout</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Lest</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Rest</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; KTrqEst</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; ifbk_ofs</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; KFrcEst</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; JEst</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; IfbkSteady</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; IfbkMax</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; SpdMax</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; UnitDelay_DSTATE</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; UnitDelay_DSTATE_i</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_DSTATE</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_DSTATE_k</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; UnitDelay_DSTATE_f</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_DSTATE_j</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_DSTAT_j4</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_DSTATE_o</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; UnitDelay_DSTATE_fb</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator_DSTATE_g</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; ifbk_neg</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; ifbk_pos</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; spd_max</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; ifbk_max</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; cycle_cnt</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; ind_id_cnt</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; temporalCounter_i1</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; status</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">3<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; is_active_c1_ctrl</span></td>
+<td align="right" width="22.22%">1</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; is_c1_ctrl</span></td>
+<td align="right" width="22.22%">1</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; is_autocal_in_progress</span></td>
+<td align="right" width="22.22%">1</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; is_ifbk_offset_id</span></td>
+<td align="right" width="22.22%">1</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; is_inductance_id</span></td>
+<td align="right" width="22.22%">1</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; is_inductance_switching</span></td>
+<td align="right" width="22.22%">1</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; is_resistance_id</span></td>
+<td align="right" width="22.22%">1</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; is_motor_inertia_id</span></td>
+<td align="right" width="22.22%">1</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; is_motor_constant_id</span></td>
+<td align="right" width="22.22%">1</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; IfbkCtrl_MODE</span></td>
+<td align="right" width="22.22%">1</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Product1</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">3<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; DiscreteTimeIntegrator</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">3<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrSpdOut</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">3<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Switch1</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">3<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #eeeeff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap"><span name="button_globalvarInfo_table_sub210" id="button_globalvarInfo_table_sub210" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, 'globalvarInfo_table_sub210', true)"><span class="shrink-button">[+]</span></span> <a href="ctrl_c.html#var_rtY" class="code2code">
+rtY
+</a>
+</span>
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+68
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+17<span style="font-family:Courier">&#160;</span>
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+8<span style="font-family:Courier">&#160;</span>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="globalvarInfo_table_sub210" id="globalvarInfo_table_sub210" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrIf_CtrlCmd</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrIf_SpdEst</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrIf_IfbkTgt</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">3<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrIf_Ref</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrIf_DistTrqEst</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrIf_PosEst</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;<span name="button_globalvarInfo_table_sub210_sub216" id="button_globalvarInfo_table_sub210_sub216" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, 'globalvarInfo_table_sub210_sub216', true)"><span class="shrink-button">[+]</span></span> DBG_BUS_OUT</span></td>
+<td align="right" width="22.22%">44</td>
+<td align="right" width="22.22%">4<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="globalvarInfo_table_sub210_sub216" id="globalvarInfo_table_sub210_sub216" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; IfbkTgt</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">4<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Lest</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">4<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Rest</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">4<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; KTrqEst</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">4<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; IfbkOfs</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">4<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; KFrcEst</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">4<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; JEst</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">4<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; IfbkSteady</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">4<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; IfbkMax</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">4<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; SpdMax</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">4<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; Status</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">4<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #ffffff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap"><span name="button_globalvarInfo_table_sub229" id="button_globalvarInfo_table_sub229" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, 'globalvarInfo_table_sub229', true)"><span class="shrink-button">[+]</span></span> <a href="ctrl_c.html#var_rtU" class="code2code">
+rtU
+</a>
+</span>
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+20
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+6<span style="font-family:Courier">&#160;</span>
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+4<span style="font-family:Courier">&#160;</span>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="globalvarInfo_table_sub229" id="globalvarInfo_table_sub229" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrIf_Tgt</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrIf_Pos</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">2<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrIf_IfbkAct</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #ffffff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrIf_SpdSns</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2"  style="background-color: #eeeeff" >
+<tr><td align="left" width="33.33%"><span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160; MtrIf_CtrlMd</span></td>
+<td align="right" width="22.22%">4</td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+<td align="right" width="22.22%">1<span style="font-family:Courier">&#160;</span></td>
+</tr></table>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #ffffff">
+<td width="33%" align="left" valign="top" style="border-style: none">
+<b>Total</b>
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+<b>883</b>
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+<b>88<span style="font-family:Courier">&#160;</span></b>
+</td>
+<td width="22%" align="right" valign="top" style="border-style: none">
+ 
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+<h3 name="sec_Function_Information" id="sec_Function_Information">
+3. Function Information <span title="Click to shrink or expand section" style="cursor:pointer;font-weight:normal;" id="rtwIdCodeMetrics_table_016_control" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, 'rtwIdCodeMetrics_table_016', false)"><span class="shrink-button">[<u>hide</u>]</span></span>
+</h3>
+<table width="100%" name="rtwIdCodeMetrics_table_016" id="rtwIdCodeMetrics_table_016" border="0">
+<tr>
+<td align="left" valign="top">
+View function metrics in a call tree format or table format. Accumulated stack numbers include the estimated stack size of the function plus the maximum of the accumulated stack size of the subroutines that the function calls.
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="0" cellspacing="0" name="fcnInfo_calltree" id="fcnInfo_calltree" border="0">
+<tr>
+<td align="left" valign="top">
+View:Call Tree | <a href="javascript:if (rtwSwitchView) rtwSwitchView(window.document,'fcnInfo_calltree', 'fcnInfo_table')" title="List of functions in alphabetical order. The second column includes the callers of the functions.">
+Table
+</a>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="0" cellspacing="0" border="1">
+<tr style="background-color: #ffffff">
+<td width="100%" align="left" valign="top" style="border-style: none">
+<table width="100%" cellpadding="0" cellspacing="0" class="treeTable" id="fcnTreeView" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #eeeeff">
+<td width="37%" align="left" valign="top" style="border-style: none">
+<b>
+<span title="Function name sorted by the maximum accumulated stack size.">Function Name</span>
+</b>
+
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+<b>
+<span title="Estimated stack size of the function plus the maximum of the accumulated stack size of its subroutines.">Accumulated Stack Size (bytes)</span>
+</b>
+
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+<b>
+<span title="Size of local variables in the function.">Self Stack Size (bytes)</span>
+</b>
+
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+<b>
+<span title="Lines of code excluding comments and blank lines.">Lines of Code</span>
+</b>
+
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+<b>
+<span style="white-space:nowrap" title="Lines including source code, comments, and blank lines.">Lines</span>
+</b>
+
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+<b>
+<span style="white-space:nowrap" title="Cyclomatic complexity">Complexity</span>
+</b>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="border-style: none" width="100%" cellpadding="0" cellspacing="0" name="" id="" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #ffffff">
+<td width="37%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap"><span name="button_3" id="button_3" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, '3', true)"><span class="shrink-button">[+]</span></span>&#160;<b><a href="ctrl_c.html#fcn_Ctrl_Slow" title="Ctrl_Slow" class="code2code">
+Ctrl_Slow
+</a>
+</b></span>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+35
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+5
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+23
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+1
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="3" id="3" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #eeeeff">
+<td width="37%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;<span name="button_4" id="button_4" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, '4', true)"><span class="shrink-button">[+]</span></span>&#160;<a href="ctrl_slow_c.html#fcn_ctrl_slow" title="ctrl_slow" class="code2code">
+ctrl_slow
+</a>
+</span>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+35
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+35
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+189
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+426
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+35
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="4" id="4" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #ffffff">
+<td width="37%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160;&#160;<span>
+fabsf
+</span>
+</span>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+<i title="Definition of this function is not found.">Not available</i>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="4" id="4" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #eeeeff">
+<td width="37%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160;&#160;<span>
+sqrtf
+</span>
+</span>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+<i title="Definition of this function is not found.">Not available</i>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="border-style: none" width="100%" cellpadding="0" cellspacing="0" name="" id="" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #ffffff">
+<td width="37%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap"><span name="button_7" id="button_7" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, '7', true)"><span class="shrink-button">[+]</span></span>&#160;<b><a href="ctrl_c.html#fcn_Ctrl_Fast" title="Ctrl_Fast" class="code2code">
+Ctrl_Fast
+</a>
+</b></span>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+29
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+4
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+21
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+1
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="7" id="7" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #eeeeff">
+<td width="37%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;<span name="button_8" id="button_8" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, '8', true)"><span class="shrink-button">[+]</span></span>&#160;<a href="ctrl_fast_c.html#fcn_ctrl_fast" title="ctrl_fast" class="code2code">
+ctrl_fast
+</a>
+</span>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+29
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+29
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+217
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+404
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+33
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="8" id="8" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #ffffff">
+<td width="37%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span name="button_9" id="button_9" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, '9', true)"><span class="shrink-button">[+]</span></span>&#160;<a href="ctrl_fast_c.html#fcn_autocal_in_progress" title="autocal_in_progress is a static function in ctrl_fast.c." class="code2code">
+autocal_in_progress
+</a>
+</span>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+163
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+172
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+27
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="9" id="9" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #eeeeff">
+<td width="37%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160;&#160;<span>
+fmaxf
+</span>
+</span>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+<i title="Definition of this function is not found.">Not available</i>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="8" id="8" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #ffffff">
+<td width="37%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160;&#160;<span>
+fabsf
+</span>
+</span>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+<i title="Definition of this function is not found.">Not available</i>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="8" id="8" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #eeeeff">
+<td width="37%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160;&#160;<span>
+sqrtf
+</span>
+</span>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+<i title="Definition of this function is not found.">Not available</i>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+-
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="border-style: none" width="100%" cellpadding="0" cellspacing="0" name="" id="" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #ffffff">
+<td width="37%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap"><span name="button_13" id="button_13" title="Click to shrink or expand tree" style="cursor:pointer;font-family:monospace;font-weight:normal;" onclick ="if (rtwTableShrink) rtwTableShrink(window.document, this, '13', true)"><span class="shrink-button">[+]</span></span>&#160;<b><a href="ctrl_c.html#fcn_Ctrl_Init" title="Ctrl_Init" class="code2code">
+Ctrl_Init
+</a>
+</b></span>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+10
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+41
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+1
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="13" id="13" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #eeeeff">
+<td width="37%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160;&#160;<a href="ctrl_slow_c.html#fcn_ctrl_slow_Init" title="ctrl_slow_Init" class="code2code">
+ctrl_slow_Init
+</a>
+</span>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+13
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+52
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+1
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table style="display: none; border-style: none" width="100%" cellpadding="0" cellspacing="0" name="13" id="13" border="0">
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" border="0">
+<tr style="background-color: #ffffff">
+<td width="37%" align="left" valign="top" style="border-style: none">
+<span style="white-space:nowrap">&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-family:monospace">&#160;&#160;</span>&#160;&#160;<a href="ctrl_fast_c.html#fcn_ctrl_fast_Init" title="ctrl_fast_Init" class="code2code">
+ctrl_fast_Init
+</a>
+</span>
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+27
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+71
+</td>
+<td width="12%" align="right" valign="top" style="border-style: none">
+1
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="0" cellspacing="0" name="fcnInfo_table" id="fcnInfo_table" style="display: none" border="0">
+<tr>
+<td align="left" valign="top">
+View: <a href="javascript:if (rtwSwitchView) rtwSwitchView(window.document,'fcnInfo_table', 'fcnInfo_calltree')" title="Browse call graph in a call tree format.">
+Call Tree
+</a>
+ | Table
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<table width="100%" cellpadding="2" class="treeTable" id="fcnTableView" border="1">
+<tr style="background-color: #eeeeff">
+<td width="22%" align="left" valign="top" style="border-style: none">
+<b>
+<span title="Function name sorted alphabetically">Function Name</span>
+</b>
+
+</td>
+<td width="22%" align="left" valign="top" style="border-style: none">
+<b>
+<span title="List of functions calling the function in the corresponding first column. The number of call sites is included in parentheses.">Called By (number of call sites)</span>
+</b>
+
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+<b>
+<span title="Estimated stack size of the function plus the maximum of the accumulated stack size of its subroutines.">Accumulated Stack Size (bytes)</span>
+</b>
+
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+<b>
+<span title="Size of local variables in the function.">Self Stack Size (bytes)</span>
+</b>
+
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+<b>
+<span title="Lines of code excluding comments and blank lines.">Lines of Code</span>
+</b>
+
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+<b>
+<span style="white-space:nowrap" title="Lines including source code, comments, and blank lines.">Lines</span>
+</b>
+
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+<b>
+<span style="white-space:nowrap" title="Cyclomatic complexity">Complexity</span>
+</b>
+
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td width="22%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_c.html#fcn_Ctrl_Fast" title="Ctrl_Fast" class="code2code">
+Ctrl_Fast
+</a>
+
+</td>
+<td width="22%" align="left" valign="top" style="border-style: none">
+&#160;
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+29
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+4
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+21
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+1
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td width="22%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_c.html#fcn_Ctrl_Init" title="Ctrl_Init" class="code2code">
+Ctrl_Init
+</a>
+
+</td>
+<td width="22%" align="left" valign="top" style="border-style: none">
+&#160;
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+10
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+41
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+1
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td width="22%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_c.html#fcn_Ctrl_Slow" title="Ctrl_Slow" class="code2code">
+Ctrl_Slow
+</a>
+
+</td>
+<td width="22%" align="left" valign="top" style="border-style: none">
+&#160;
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+35
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+5
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+23
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+1
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td width="22%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_fast_c.html#fcn_ctrl_fast" title="ctrl_fast" class="code2code">
+ctrl_fast
+</a>
+
+</td>
+<td width="22%" align="left" valign="top" style="border-style: none">
+<table width="100%" cellpadding="1" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<span style="white-space:nowrap" title="Ctrl_Fast has one call site of ctrl_fast."><a href="ctrl_c.html#fcn_Ctrl_Fast" title="Ctrl_Fast" class="code2code">
+Ctrl_Fast
+</a>
+</span>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+29
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+29
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+217
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+404
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+33
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td width="22%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_fast_c.html#fcn_autocal_in_progress" title="autocal_in_progress is a static function in ctrl_fast.c." class="code2code">
+autocal_in_progress
+</a>
+
+</td>
+<td width="22%" align="left" valign="top" style="border-style: none">
+<table width="100%" cellpadding="1" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<span style="white-space:nowrap" title="ctrl_fast has one call site of ctrl_fast.c:autocal_in_progress."><a href="ctrl_fast_c.html#fcn_ctrl_fast" title="ctrl_fast" class="code2code">
+ctrl_fast
+</a>
+</span>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+163
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+172
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+27
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td width="22%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_fast_c.html#fcn_ctrl_fast_Init" title="ctrl_fast_Init" class="code2code">
+ctrl_fast_Init
+</a>
+
+</td>
+<td width="22%" align="left" valign="top" style="border-style: none">
+<table width="100%" cellpadding="1" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<span style="white-space:nowrap" title="Ctrl_Init has one call site of ctrl_fast_Init."><a href="ctrl_c.html#fcn_Ctrl_Init" title="Ctrl_Init" class="code2code">
+Ctrl_Init
+</a>
+</span>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+27
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+71
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+1
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td width="22%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_slow_c.html#fcn_ctrl_slow" title="ctrl_slow" class="code2code">
+ctrl_slow
+</a>
+
+</td>
+<td width="22%" align="left" valign="top" style="border-style: none">
+<table width="100%" cellpadding="1" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<span style="white-space:nowrap" title="Ctrl_Slow has one call site of ctrl_slow."><a href="ctrl_c.html#fcn_Ctrl_Slow" title="Ctrl_Slow" class="code2code">
+Ctrl_Slow
+</a>
+</span>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+35
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+35
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+189
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+426
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+35
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td width="22%" align="left" valign="top" style="border-style: none">
+<a href="ctrl_slow_c.html#fcn_ctrl_slow_Init" title="ctrl_slow_Init" class="code2code">
+ctrl_slow_Init
+</a>
+
+</td>
+<td width="22%" align="left" valign="top" style="border-style: none">
+<table width="100%" cellpadding="1" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<span style="white-space:nowrap" title="Ctrl_Init has one call site of ctrl_slow_Init."><a href="ctrl_c.html#fcn_Ctrl_Init" title="Ctrl_Init" class="code2code">
+Ctrl_Init
+</a>
+</span>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+0
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+13
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+52
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+1
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td width="22%" align="left" valign="top" style="border-style: none">
+fabsf
+</td>
+<td width="22%" align="left" valign="top" style="border-style: none">
+<table width="100%" cellpadding="1" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<span style="white-space:nowrap" title="ctrl_fast has one call site of fabsf."><a href="ctrl_fast_c.html#fcn_ctrl_fast" title="ctrl_fast" class="code2code">
+ctrl_fast
+</a>
+</span>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<span style="white-space:nowrap" title="ctrl_slow has one call site of fabsf."><a href="ctrl_slow_c.html#fcn_ctrl_slow" title="ctrl_slow" class="code2code">
+ctrl_slow
+</a>
+</span>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+<i title="Definition of this function is not found.">Not available</i>
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+-
+</td>
+
+</tr>
+<tr style="background-color: #eeeeff">
+<td width="22%" align="left" valign="top" style="border-style: none">
+fmaxf
+</td>
+<td width="22%" align="left" valign="top" style="border-style: none">
+<table width="100%" cellpadding="1" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<span style="white-space:nowrap" title="ctrl_fast.c:autocal_in_progress has one call site of fmaxf."><a href="ctrl_fast_c.html#fcn_autocal_in_progress" title="autocal_in_progress is a static function in ctrl_fast.c." class="code2code">
+autocal_in_progress
+</a>
+</span>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+<i title="Definition of this function is not found.">Not available</i>
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+-
+</td>
+
+</tr>
+<tr style="background-color: #ffffff">
+<td width="22%" align="left" valign="top" style="border-style: none">
+sqrtf
+</td>
+<td width="22%" align="left" valign="top" style="border-style: none">
+<table width="100%" cellpadding="1" cellspacing="0" border="0">
+<tr>
+<td align="left" valign="top">
+<span style="white-space:nowrap" title="ctrl_fast has one call site of sqrtf."><a href="ctrl_fast_c.html#fcn_ctrl_fast" title="ctrl_fast" class="code2code">
+ctrl_fast
+</a>
+</span>
+</td>
+
+</tr>
+<tr>
+<td align="left" valign="top">
+<span style="white-space:nowrap" title="ctrl_slow has one call site of sqrtf."><a href="ctrl_slow_c.html#fcn_ctrl_slow" title="ctrl_slow" class="code2code">
+ctrl_slow
+</a>
+</span>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+<i title="Definition of this function is not found.">Not available</i>
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+-
+</td>
+<td width="11%" align="right" valign="top" style="border-style: none">
+-
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+</table>
+
+</body>
+
+</html>
