@@ -1,19 +1,29 @@
+SimParams.PwmFrq = 30.0e3;
+SimParams.Ts = 1.0e-5;
+
+%% Motor parameters.
 MtrParams = struct;
 MtrParams.Vdc = 48;
 MtrParams.SpdNom  = 3e3;
 
-%% BLDC motor parameters;
 MtrParams.Rs = 0.25;
 MtrParams.Ls = 1.4e-4;
 MtrParams.Lm = 0;
 MtrParams.Ms = 7.5e-7;
 MtrParams.Ld = MtrParams.Ls + MtrParams.Ms + (3/2) * MtrParams.Lm;
 MtrParams.Lq = MtrParams.Ls + MtrParams.Ms - (3/2) * MtrParams.Lm;
+MtrParams.Kf = 1e-4;
 
 MtrParams.Poles = 4;
 MtrParams.Ktrq   = 0.12;
 MtrParams.MFlux = MtrParams.Ktrq / ((3/2) * MtrParams.Poles);
 MtrParams.Jm = 1.9e-4;
+
+MtrParams.PPR = 5e3;
+MtrParams.EncCnts = 4 * MtrParams.PPR;
+
+MtrParams.IfbkSnsNoise = 0.1; % Sensor noise on current measurement.
+MtrParams.IfbkOfs = [0., 0., 0.]; % Current sensor offset.
 
 %% Open loop parameters;
 fsw = 10e3;
@@ -43,4 +53,38 @@ Vd_max = 1;
 Vq_max = 1;
 
 %% From measurements to engenering units - Parameters;
-CPR = 500;
+CtrlParams.IfbkBW = 4e3;
+CtrlParams.IfbkKi = CtrlParams.IfbkBW * MtrParams.Rs;
+CtrlParams.IfbkKp = CtrlParams.IfbkBW * MtrParams.Ls;
+
+CtrlParams.SpdBW = 1e3;
+CtrlParams.SpdKi = CtrlParams.SpdBW * MtrParams.Kf;
+CtrlParams.SpdKp = CtrlParams.SpdBW * MtrParams.Jm;
+% CtrlParams.SpdKi = CtrlParams.SpdBW / MtrParams.Kdc;
+% CtrlParams.SpdKp = MtrParams.Tau * CtrlParams.SpdKi;
+
+CtrlParams.TsPos = 0.01;
+CtrlParams.PosKp = (4 / CtrlParams.TsPos);
+CtrlParams.PosKi = 0.0;
+
+SmDiffParams.AccMax = 9e4;
+SmDiffParams.Ki = 1.1 * SmDiffParams.AccMax;
+SmDiffParams.Kp = sqrt(SmDiffParams.AccMax);
+
+%% Disturbance observer tuning.
+% Observer form:
+% e = z1 - y;
+% dz1/dt = z1 - k1 * e;
+% dz2/dt = z2 + b * u - K2 * e;
+% dz3/dt = z3 - k3 * e;
+
+% Observer tuning:
+AdrcParams.Tsettle = 0.002;
+AdrcParams.w0 = 4. / AdrcParams.Tsettle;
+AdrcParams.K1 = 3 * AdrcParams.w0;
+AdrcParams.K2 = 3 * AdrcParams.w0 ^ 2;
+AdrcParams.K3 = AdrcParams.w0 ^ 3;
+
+% Update code generating DD.
+disp('Updating Ctrl_DD data dictionary.');
+run('ctrl_DD');

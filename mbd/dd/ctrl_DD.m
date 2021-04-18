@@ -1,3 +1,7 @@
+%% Sampling rates.
+FastTsample = 1. / 30e3;
+MainTsample = 1e-3;
+
 %% Fast sampling time 30khz
 TsFast = Simulink.Parameter;
 TsFast.StorageClass = 'Auto';
@@ -6,7 +10,17 @@ TsFast.DataType = 'single';
 TsFast.Min = [];
 TsFast.Max = [];
 TsFast.DocUnits = '';
-TsFast.Value = 1./30e3;
+TsFast.Value = FastTsample;
+
+%% Enable x-coupling and b-emf comp.
+Cfg_EnblDynComp = Simulink.Parameter;
+Cfg_EnblDynComp.StorageClass = 'Auto';
+Cfg_EnblDynComp.Description = 'Enable x-coupling and b-emf comp';
+Cfg_EnblDynComp.DataType = 'boolean';
+Cfg_EnblDynComp.Min = [];
+Cfg_EnblDynComp.Max = [];
+Cfg_EnblDynComp.DocUnits = '';
+Cfg_EnblDynComp.Value = true;
 
 %% Enable autocalibration at startup.
 Cfg_AutoCalEnbl = Simulink.Parameter;
@@ -16,7 +30,7 @@ Cfg_AutoCalEnbl.DataType = 'boolean';
 Cfg_AutoCalEnbl.Min = [];
 Cfg_AutoCalEnbl.Max = [];
 Cfg_AutoCalEnbl.DocUnits = '';
-Cfg_AutoCalEnbl.Value = true;
+Cfg_AutoCalEnbl.Value = false;
 
 %% Current contoller bandwith.
 Cfg_IfbkCtrlBW = Simulink.Parameter;
@@ -29,14 +43,14 @@ Cfg_IfbkCtrlBW.DocUnits = '';
 Cfg_IfbkCtrlBW.Value = 2e3;
 
 %% Configuration parameters.
-Cfg_SpdSnsSrc = Simulink.Parameter;
-Cfg_SpdSnsSrc.StorageClass = 'Auto';
-Cfg_SpdSnsSrc.Description = 'Speed signal source: Sensor(0), SM Diff(1), Linear Observer(2).';
-Cfg_SpdSnsSrc.DataType = 'uint32';
-Cfg_SpdSnsSrc.Min = [];
-Cfg_SpdSnsSrc.Max = [];
-Cfg_SpdSnsSrc.DocUnits = '';
-Cfg_SpdSnsSrc.Value = 1;
+Cfg_SpdSnsEnbl = Simulink.Parameter;
+Cfg_SpdSnsEnbl.StorageClass = 'Auto';
+Cfg_SpdSnsEnbl.Description = 'System has speed sensor.';
+Cfg_SpdSnsEnbl.DataType = 'boolean';
+Cfg_SpdSnsEnbl.Min = [];
+Cfg_SpdSnsEnbl.Max = [];
+Cfg_SpdSnsEnbl.DocUnits = '';
+Cfg_SpdSnsEnbl.Value = 0;
 
 %% Enable Load Observer.
 Cfg_EnblLoadObs = Simulink.Parameter;
@@ -378,7 +392,7 @@ DistObs_J.DataType = 'single';
 DistObs_J.Min = [];
 DistObs_J.Max = [];
 DistObs_J.DocUnits = '';
-DistObs_J.Value = MotorParams.J;
+DistObs_J.Value = MtrParams.Jm;
 
 %% Encoder definition.
 EncCnts = Simulink.Parameter;
@@ -388,7 +402,7 @@ EncCnts.DataType = 'single';
 EncCnts.Min = [];
 EncCnts.Max = [];
 EncCnts.DocUnits = '';
-EncCnts.Value = MotorParams.PPR;
+EncCnts.Value = MtrParams.PPR;
 
 %% Encoder resolution.
 EncResDeg = Simulink.Parameter;
@@ -398,7 +412,7 @@ EncResDeg.DataType = 'single';
 EncResDeg.Min = [];
 EncResDeg.Max = [];
 EncResDeg.DocUnits = '';
-EncResDeg.Value = 360. / MotorParams.PPR;
+EncResDeg.Value = 360. / MtrParams.PPR;
 
 %% Main sampling time (1khz)
 TsMain = Simulink.Parameter;
@@ -408,7 +422,7 @@ TsMain.DataType = 'single';
 TsMain.Min = [];
 TsMain.Max = [];
 TsMain.DocUnits = '';
-TsMain.Value = 1e-3;
+TsMain.Value = MainTsample;
 
 
 %% Signal definitions
