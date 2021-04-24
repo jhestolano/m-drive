@@ -12,6 +12,66 @@ TsFast.Max = [];
 TsFast.DocUnits = '';
 TsFast.Value = FastTsample;
 
+%% Motor resistance.
+Cfg_MtrRs = Simulink.Parameter;
+Cfg_MtrRs.StorageClass = 'Auto';
+Cfg_MtrRs.Description = 'Motor resistance';
+Cfg_MtrRs.DataType = 'single';
+Cfg_MtrRs.Min = [];
+Cfg_MtrRs.Max = [];
+Cfg_MtrRs.DocUnits = '';
+Cfg_MtrRs.Value = MtrParams.Rs;
+
+%% Motor inductance.
+Cfg_MtrLs = Simulink.Parameter;
+Cfg_MtrLs.StorageClass = 'Auto';
+Cfg_MtrLs.Description = 'Motor inductance';
+Cfg_MtrLs.DataType = 'single';
+Cfg_MtrLs.Min = [];
+Cfg_MtrLs.Max = [];
+Cfg_MtrLs.DocUnits = '';
+Cfg_MtrLs.Value = MtrParams.Ls;
+
+%% Motor inertia.
+Cfg_MtrJm = Simulink.Parameter;
+Cfg_MtrJm.StorageClass = 'Auto';
+Cfg_MtrJm.Description = 'Motor rotor inertia.';
+Cfg_MtrJm.DataType = 'single';
+Cfg_MtrJm.Min = [];
+Cfg_MtrJm.Max = [];
+Cfg_MtrJm.DocUnits = '';
+Cfg_MtrJm.Value = MtrParams.Jm;
+
+%% Motor friction.
+Cfg_MtrKf = Simulink.Parameter;
+Cfg_MtrKf.StorageClass = 'Auto';
+Cfg_MtrKf.Description = 'Rotor friction coefficient';
+Cfg_MtrKf.DataType = 'single';
+Cfg_MtrKf.Min = [];
+Cfg_MtrKf.Max = [];
+Cfg_MtrKf.DocUnits = '';
+Cfg_MtrKf.Value = MtrParams.Kf;
+
+%%  Motor torque constant.
+Cfg_MtrKtrq = Simulink.Parameter;
+Cfg_MtrKtrq.StorageClass = 'Auto';
+Cfg_MtrKtrq.Description = 'Motor torque constant';
+Cfg_MtrKtrq.DataType = 'single';
+Cfg_MtrKtrq.Min = [];
+Cfg_MtrKtrq.Max = [];
+Cfg_MtrKtrq.DocUnits = '';
+Cfg_MtrKtrq.Value = MtrParams.Ktrq;
+
+%% Enable distrubance compensation.
+Cfg_DistTrqFfwdEnbl = Simulink.Parameter;
+Cfg_DistTrqFfwdEnbl.StorageClass = 'Auto';
+Cfg_DistTrqFfwdEnbl.Description = 'Enable disturbance compensation';
+Cfg_DistTrqFfwdEnbl.DataType = 'boolean';
+Cfg_DistTrqFfwdEnbl.Min = [];
+Cfg_DistTrqFfwdEnbl.Max = [];
+Cfg_DistTrqFfwdEnbl.DocUnits = '';
+Cfg_DistTrqFfwdEnbl.Value = true;
+
 %% Enable x-coupling and b-emf comp.
 Cfg_EnblDynComp = Simulink.Parameter;
 Cfg_EnblDynComp.StorageClass = 'Auto';
@@ -50,7 +110,7 @@ Cfg_SpdSnsEnbl.DataType = 'boolean';
 Cfg_SpdSnsEnbl.Min = [];
 Cfg_SpdSnsEnbl.Max = [];
 Cfg_SpdSnsEnbl.DocUnits = '';
-Cfg_SpdSnsEnbl.Value = 0;
+Cfg_SpdSnsEnbl.Value = false;
 
 %% Enable Load Observer.
 Cfg_EnblLoadObs = Simulink.Parameter;

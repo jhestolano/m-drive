@@ -1,4 +1,5 @@
 mbd/cache
+mbd/codegen/slprj
 
 # Prerequisites
 *.d
