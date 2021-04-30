@@ -11,7 +11,7 @@
 #include "apptasks.h"
 #include "command.h"
 
-__attribute__((section("ccmram")))
+__attribute__((section(".ccmram")))
 uint8_t ucHeap[configTOTAL_HEAP_SIZE];
 
 static void SystemClock_Config(void);
