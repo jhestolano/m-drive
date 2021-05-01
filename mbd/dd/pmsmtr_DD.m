@@ -16,7 +16,7 @@ MtrParams.Ld = MtrParams.Ls + MtrParams.Ms + (3/2) * MtrParams.Lm;
 MtrParams.Lq = MtrParams.Ls + MtrParams.Ms - (3/2) * MtrParams.Lm;
 MtrParams.Kf = 1e-4;
 
-MtrParams.Poles = 4;
+MtrParams.Poles = 12;
 MtrParams.Ktrq   = 0.12;
 MtrParams.MFlux = MtrParams.Ktrq / ((3/2) * MtrParams.Poles);
 MtrParams.Jm = 1.9e-4;
