@@ -1,5 +1,7 @@
 mbd/cache
-mbd/codegen/slprj
+mbd/codegen/**
+!mbd/codegen/*.c
+!mbd/codegen/*.h
 
 # Prerequisites
 *.d
