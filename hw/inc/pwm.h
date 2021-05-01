@@ -18,9 +18,11 @@
 /*******************************************************************************
 * PWM MACRO DEFINITIONS.
 *******************************************************************************/
+/* Main outputs. */
 #define UH_PWM_PORT (GPIOA)
 #define VH_PWM_PORT (GPIOA)
 #define WH_PWM_PORT (GPIOA)
+#define XH_PWM_PORT (GPIOA)
 
 #define UH_PWM_PIN (GPIO_PIN_8)
 #define VH_PWM_PIN (GPIO_PIN_9)
@@ -29,6 +31,20 @@
 #define UH_PWM_CHANNEL (TIM_CHANNEL_1)
 #define VH_PWM_CHANNEL (TIM_CHANNEL_2)
 #define WH_PWM_CHANNEL (TIM_CHANNEL_3)
+
+/* Complementary outputs. */
+#define UH_N_PWM_PORT (GPIOB)
+#define VH_N_PWM_PORT (GPIOB)
+#define WH_N_PWM_PORT (GPIOB)
+#define XH_N_PWM_PORT (GPIOB)
+
+#define UH_N_PWM_PIN (GPIO_PIN_13)
+#define VH_N_PWM_PIN (GPIO_PIN_0)
+#define WH_N_PWM_PIN (GPIO_PIN_1)
+
+#define UH_N_PWM_CHANNEL (TIM_CHANNEL_1)
+#define VH_N_PWM_CHANNEL (TIM_CHANNEL_2)
+#define WH_N_PWM_CHANNEL (TIM_CHANNEL_3)
 
 /*******************************************************************************
 * PWM REGISTER CALCULATIONS
@@ -55,7 +71,16 @@ PRD: Waveform period (Seconds).
 #define PWM_GPIO_CONF {                                                        \
   .Pin = UH_PWM_PIN | VH_PWM_PIN | WH_PWM_PIN,                                 \
   .Mode = GPIO_MODE_AF_PP,                                                     \
-  .Pull = GPIO_PULLDOWN,                                                       \
+  .Pull = GPIO_PULLUP, /* Bridge is active low. */                             \
+  .Speed = GPIO_SPEED_FREQ_HIGH,                                               \
+  .Alternate = GPIO_AF6_TIM1,                                                  \
+}   
+
+
+#define PWM_GPIO_COMP_CONF {                                                   \
+  .Pin = UH_N_PWM_PIN | VH_N_PWM_PIN | WH_N_PWM_PIN,                           \
+  .Mode = GPIO_MODE_AF_PP,                                                     \
+  .Pull = GPIO_PULLUP, /* Bridge is active low. */                             \
   .Speed = GPIO_SPEED_FREQ_HIGH,                                               \
   .Alternate = GPIO_AF6_TIM1,                                                  \
 }   
@@ -100,11 +125,11 @@ PRD: Waveform period (Seconds).
 #define PWM_OC_CONF {                                                          \
   .OCMode = TIM_OCMODE_PWM1,                                                   \
   .Pulse = 0,                                                                  \
-  .OCPolarity = TIM_OCPOLARITY_HIGH,                                           \
-  .OCNPolarity = TIM_OCNPOLARITY_HIGH,                                         \
+  .OCPolarity = TIM_OCPOLARITY_LOW, /* Bridge is active low. */                \
+  .OCNPolarity = TIM_OCNPOLARITY_LOW, /* Complementary output active low. */   \
   .OCFastMode = TIM_OCFAST_DISABLE,                                            \
-  .OCIdleState = TIM_OCIDLESTATE_RESET,                                        \
-  .OCNIdleState = TIM_OCNIDLESTATE_RESET,                                      \
+  .OCIdleState = TIM_OCIDLESTATE_SET,                                          \
+  .OCNIdleState = TIM_OCNIDLESTATE_SET,                                        \
 }
 
 /*******************************************************************************
@@ -149,7 +174,7 @@ PRD: Waveform period (Seconds).
   .OffStateRunMode = TIM_OSSR_ENABLE,                                          \
   .OffStateIDLEMode = TIM_OSSI_ENABLE,                                         \
   .LockLevel = TIM_LOCKLEVEL_1,                                                \
-  .DeadTime = 0,                                                               \
+  .DeadTime = 100, /* 100ns Deadtime. */                                       \
   .BreakState = TIM_BREAK_DISABLE,                                             \
   .BreakPolarity = TIM_BREAKPOLARITY_HIGH,                                     \
   .BreakFilter = 0,                                                            \

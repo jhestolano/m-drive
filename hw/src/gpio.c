@@ -32,13 +32,13 @@ void GPIO_Init(void) {
   HAL_GPIO_Init(XH_PWM_ENABLE_PORT, &s_gpioa_pwm_enable_conf);
 
   /* Start motor unarmed. Wait for Motor interface to enable it. */
-  HAL_GPIO_Init(BKIN2_PORT, &s_gpioa_bkin2_conf);
-  HAL_GPIO_WritePin(BKIN2_PORT, BKIN2_PIN, GPIO_PIN_RESET);
+  /* HAL_GPIO_Init(BKIN2_PORT, &s_gpioa_bkin2_conf); */
+  /* HAL_GPIO_WritePin(BKIN2_PORT, BKIN2_PIN, GPIO_PIN_RESET); */
 
   /* Configure DIAG pin external interrupt. */
-  HAL_GPIO_Init(DIAG_PORT, &s_gpioa_diag_conf);
-  HAL_NVIC_SetPriority(DIAG_IT_EXTI_IRQn, DIAG_IT_PRIO, DIAG_IT_SUBPRIO);
-  HAL_NVIC_EnableIRQ(DIAG_IT_EXTI_IRQn);
+  /* HAL_GPIO_Init(DIAG_PORT, &s_gpioa_diag_conf); */
+  /* HAL_NVIC_SetPriority(DIAG_IT_EXTI_IRQn, DIAG_IT_PRIO, DIAG_IT_SUBPRIO); */
+  /* HAL_NVIC_EnableIRQ(DIAG_IT_EXTI_IRQn); */
 
   HAL_GPIO_WritePin(GREEN_LED_PORT, GREEN_LED_PIN, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(XH_PWM_ENABLE_PORT, UH_PWM_ENABLE_PIN | VH_PWM_ENABLE_PIN | WH_PWM_ENABLE_PIN, GPIO_PIN_RESET);
