@@ -1,4 +1,4 @@
-PROJ_NAME=bldc
+PROJ_NAME=mdrive
 BUILD_DIR=./build
 
 # Path to dependencies.
@@ -12,7 +12,7 @@ RTOS_DIR=./rtos
 
 HAL_SRC_DIR=./hal/src
 
-UCMD_DIR=./libs/ucmd
+# UCMD_DIR=./libs/ucmd
 
 CODEGEN_DIR=./mbd/codegen/ctrl_ert_rtw
 
@@ -27,7 +27,7 @@ INC_DIRS+=./app/inc
 INC_DIRS+=$(RTOS_INC)
 INC_DIRS+=$(HAL_INC)
 INC_DIRS+=./libs/printf
-INC_DIRS+=./libs/ucmd
+# INC_DIRS+=./libs/ucmd
 INC_DIRS+=$(CODEGEN_DIR)
 
 SRCS=app/src/main.c
@@ -40,16 +40,16 @@ SRCS+=hw/src/enc.c
 SRCS+=app/src/apptasks.c
 SRCS+=app/src/app.c
 SRCS+=app/src/mtrif.c
-SRCS+=app/src/command.c
+# SRCS+=app/src/command.c
 SRCS+=sys/src/system_stm32f3xx.c
 SRCS+=sys/src/startup_stm32f302x8.s
 SRCS+=sys/src/stm32f3xx_it.c
 
 # Code generated files.
-SRCS+=$(CODEGEN_DIR)/ctrl.c
-SRCS+=$(CODEGEN_DIR)/ctrl_fast.c
-SRCS+=$(CODEGEN_DIR)/ctrl_slow.c
-SRCS+=$(CODEGEN_DIR)/ctrl_data.c
+# SRCS+=$(CODEGEN_DIR)/ctrl.c
+# SRCS+=$(CODEGEN_DIR)/ctrl_fast.c
+# SRCS+=$(CODEGEN_DIR)/ctrl_slow.c
+# SRCS+=$(CODEGEN_DIR)/ctrl_data.c
 
 SRCS+=$(HAL_SRC_DIR)/stm32f3xx_hal.c
 SRCS+=$(HAL_SRC_DIR)/stm32f3xx_hal_cortex.c
@@ -65,10 +65,10 @@ SRCS+=$(HAL_SRC_DIR)/stm32f3xx_hal_uart.c
 SRCS+=$(HAL_SRC_DIR)/stm32f3xx_hal_uart_ex.c
 
 # Location for command utility.
-SRCS+=$(UCMD_DIR)/ucmd.c
-SRCS+=$(UCMD_DIR)/line.c
-SRCS+=$(UCMD_DIR)/err.c
-SRCS+=$(UCMD_DIR)/utils.c
+# SRCS+=$(UCMD_DIR)/ucmd.c
+# SRCS+=$(UCMD_DIR)/line.c
+# SRCS+=$(UCMD_DIR)/err.c
+# SRCS+=$(UCMD_DIR)/utils.c
 
 # This is the location for printf.c file implementation from Embdedded Artistry.
 SRCS+=./libs/printf/printf.c
