@@ -14,7 +14,7 @@ HAL_SRC_DIR=./hal/src
 
 # UCMD_DIR=./libs/ucmd
 
-CODEGEN_DIR=./mbd/codegen/ctrl_ert_rtw
+CODEGEN_DIR=./mbd/codegen/pmsmctrl_ert_rtw
 
 HAL_INC=./hal/inc
 
@@ -46,10 +46,7 @@ SRCS+=sys/src/startup_stm32f302x8.s
 SRCS+=sys/src/stm32f3xx_it.c
 
 # Code generated files.
-# SRCS+=$(CODEGEN_DIR)/ctrl.c
-# SRCS+=$(CODEGEN_DIR)/ctrl_fast.c
-# SRCS+=$(CODEGEN_DIR)/ctrl_slow.c
-# SRCS+=$(CODEGEN_DIR)/ctrl_data.c
+SRCS+=$(CODEGEN_DIR)/pmsmctrl.c
 
 SRCS+=$(HAL_SRC_DIR)/stm32f3xx_hal.c
 SRCS+=$(HAL_SRC_DIR)/stm32f3xx_hal_cortex.c
