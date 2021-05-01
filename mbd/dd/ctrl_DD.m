@@ -12,6 +12,36 @@ TsFast.Max = [];
 TsFast.DocUnits = '';
 TsFast.Value = FastTsample;
 
+%% DC bus voltage.
+Cfg_StepToEncCnts = Simulink.Parameter;
+Cfg_StepToEncCnts.StorageClass = 'Auto';
+Cfg_StepToEncCnts.Description = 'DC bus voltage.';
+Cfg_StepToEncCnts.DataType = 'single';
+Cfg_StepToEncCnts.Min = [];
+Cfg_StepToEncCnts.Max = [];
+Cfg_StepToEncCnts.DocUnits = '';
+Cfg_StepToEncCnts.Value = MtrParams.Vdc;
+
+%% Step to cnts convesion.
+Cfg_StepToEncCnts = Simulink.Parameter;
+Cfg_StepToEncCnts.StorageClass = 'Auto';
+Cfg_StepToEncCnts.Description = 'Defines how many encoder counts per step.';
+Cfg_StepToEncCnts.DataType = 'int32';
+Cfg_StepToEncCnts.Min = [];
+Cfg_StepToEncCnts.Max = [];
+Cfg_StepToEncCnts.DocUnits = '';
+Cfg_StepToEncCnts.Value = 10;
+
+%% Use observer position estimate as actual position signal.
+Cfg_UseObsPosEst = Simulink.Parameter;
+Cfg_UseObsPosEst.StorageClass = 'Auto';
+Cfg_UseObsPosEst.Description = 'Use observer position estimate.';
+Cfg_UseObsPosEst.DataType = 'boolean';
+Cfg_UseObsPosEst.Min = [];
+Cfg_UseObsPosEst.Max = [];
+Cfg_UseObsPosEst.DocUnits = '';
+Cfg_UseObsPosEst.Value = false;
+
 %% Motor resistance.
 Cfg_MtrRs = Simulink.Parameter;
 Cfg_MtrRs.StorageClass = 'Auto';
@@ -463,6 +493,16 @@ EncCnts.Min = [];
 EncCnts.Max = [];
 EncCnts.DocUnits = '';
 EncCnts.Value = MtrParams.PPR;
+
+%% Encoder to radians.
+EncCntsToRads = Simulink.Parameter;
+EncCntsToRads.StorageClass = 'Auto';
+EncCntsToRads.Description = 'Encoder to radians conversion.';
+EncCntsToRads.DataType = 'single';
+EncCntsToRads.Min = [];
+EncCntsToRads.Max = [];
+EncCntsToRads.DocUnits = '';
+EncCntsToRads.Value = 2. * pi / MtrParams.EncCnts;
 
 %% Encoder resolution.
 EncResDeg = Simulink.Parameter;

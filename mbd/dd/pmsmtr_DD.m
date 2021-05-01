@@ -1,4 +1,6 @@
 SimParams.PwmFrq = 30.0e3;
+
+% Used by local simscape solver inside motor model.
 SimParams.Ts = 1.0e-5;
 
 %% Motor parameters.
