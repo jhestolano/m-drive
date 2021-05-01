@@ -492,7 +492,7 @@ EncCnts.DataType = 'single';
 EncCnts.Min = [];
 EncCnts.Max = [];
 EncCnts.DocUnits = '';
-EncCnts.Value = MtrParams.PPR;
+EncCnts.Value = MtrParams.EncCnts;
 
 %% Encoder to radians.
 EncCntsToRads = Simulink.Parameter;

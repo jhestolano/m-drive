@@ -5,16 +5,20 @@
 #include "app.h"
 #include "adc.h"
 #include "rtwtypes.h"
-#include "ctrl.h"
-#include "DBG_BUS.h"
+#include "pmsmctrl.h"
 #include "stdlib.h"
 #include "gpio.h"
+
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MAX(a,b) (((a)>(b))?(a):(b))
 
 #define MTRIF_TO_DEG (0.1f) /* App layer position resolution is 0.1 degrees
                                represented as int. For example, a value of
                                13 represents 1.3 degrees. */
 #define MTRIF_TO_MILLIS (1.0e3f) /* Convert to millis (amps, volts, etc.) */
 #define MTRIF_FROM_MILLIS (1.0e-3f) /* Convert back from millis. */
+
+#define MTRIF_TO_PWM_DC(x) ((uint32_t)((x) * (float)APP_PWM_MAX_DC)) /* To timer base */
 
 typedef struct MtrIf_tag {
 
@@ -24,11 +28,19 @@ typedef struct MtrIf_tag {
 
   float dist_trq; /* Disturbance torque estimation. */
 
+  float mtr_trq_act; /* Motor unfiltered instantaneous torque */
+
   float pos_est; /* Position estimation by dustrbance observer. */
 
-  float pwm_rqst; /* Output of 30khz controller. */
+  float pwm_rqst[APP_PARAMS_MOTOR_PHASES]; /* Output of 30khz controller. */
 
   float ifbk_tgt; /* Output of 1khz controller. */
+
+  float motn_ctrl_cmd; /* Output of motion controller */
+
+  float ifbk_act[APP_PARAMS_MOTOR_PHASES]; /* Holds the motor currents. */
+
+  float pwm_mod_wave[APP_PARAMS_MOTOR_PHASES]; /* Holds the modulation wave. */
 
   float mtr_tgt; /* Target for 1khz controller. The meaning (units) of this
                     depends on the control mode: Position, Speed or Current
@@ -44,50 +56,32 @@ typedef struct MtrIf_tag {
 
   MtrCtlMd_T ctrl_md; /* Position, Speed or Current control mode. */
 
+
 } MtrIf_S;
 
 static volatile MtrIf_S _mtr_if_s;
 
-volatile int32_t IfbkBuffer[1000];
+static RT_MODEL _pmsmctrl_obj_s;
 
 /* Function called within interrupt context from ADC. */
 static void _mtr_if_adc_isr_callback(void *params) {
-  static int32_t cnt;
-  static int32_t tmr;
-  static int32_t idx;
   (void)params;
-  if(_mtr_if_s.ctrl_fast_is_init) {
-    rtU.MtrIf_Pos =  MtrIf_GetPos();
-    rtU.MtrIf_IfbkAct = MtrIf_GetIfbk();
-    rtU.MtrIf_SpdSns = 0.0f; /* No speed sensor. */
-    rtU.MtrIf_CtrlMd = PosCtrlMd;
-    /* rtU.MtrIf_Tgt = 10.0f * 3.14159f; */
-    rtU.MtrIf_Tgt = 359;
-    Ctrl_Fast();
-    MtrIf_SetVin(rtY.MtrIf_CtrlCmd);
-    _mtr_if_s.mtr_spd = rtY.MtrIf_SpdEst;
-    if((cnt < 1000) && (rtY.DBG_BUS_OUT.Status == 1)) {
-      IfbkBuffer[cnt] = rtU.MtrIf_IfbkAct;
-      cnt++;
-    } else {
-      /* Nothing */
-    }
-    if(tmr++ >= 30e3) {
-      GPIO_LedToggle();
-      tmr = 0;
-    }
-  }
+  /* This is where the fast control task needs to be called. */
+  /* This function is attached to the ADC isr. */
+  MtrIf_Foc();
+
 }
 
 void MtrIf_Init(void) {
-  real32_T mtrref; // Ignore value.
   MTRIF_LOCK();
   ADC_AttachISRCallback(_mtr_if_adc_isr_callback);
-  Ctrl_Init();
   /* Control task at 30khz is ready. */
   _mtr_if_s.ctrl_fast_is_init = true;
   /* Control task at 1khz is ready. */
   _mtr_if_s.ctrl_is_init = true;
+
+  Pmsm_InitCtrl(&_pmsmctrl_obj_s);
+
   MTRIF_UNLOCK();
   App_ArmMotor();
 }
@@ -103,6 +97,14 @@ void MtrIf_SetVin(float mtrvin) {
   } else {
     App_SetPwmVoltage(MTRIF_POS_PH, 0);
     App_SetPwmVoltage(MTRIF_NEG_PH, 0);
+  }
+}
+
+void MtrIf_SetPwm(float* pwm) {
+  for(uint8_t i = 0; i < (uint8_t)PwmChMax_E; i++) {
+    pwm[i] = MIN(-1.0f, pwm[i]);
+    pwm[i] = MAX(1.0f, pwm[i]);
+    App_SetPwmDutyCycle((PwmCh_E)i, MTRIF_TO_PWM_DC(pwm[i]));
   }
 }
 
@@ -167,10 +169,6 @@ float MtrIf_GetIfbkTgt(void) {
   return ifbk_tgt;
 }
 
-void MtrIf_Ctl(void) {
-  return;
-}
-
 MtrCtlMd_T MtrIf_GetCtlMd(void) {
   return _mtr_if_s.ctrl_md;
 }
@@ -181,4 +179,29 @@ void MtrIf_SetCtlMd(MtrCtlMd_T ctrl_md) {
 
 void MtrIf_SetTgt(float tgt) {
   _mtr_if_s.mtr_tgt = tgt;
+}
+
+void MtrIf_Foc(void) {
+  Trig_Pmsm_Foc(
+    &_pmsmctrl_obj_s,
+    (real32_T*)_mtr_if_s.ifbk_act,
+    PwmCtrlMd,
+    (real32_T*)_mtr_if_s.pwm_mod_wave,
+    (real32_T*)_mtr_if_s.pwm_rqst,
+    (real32_T*)&_mtr_if_s.mtr_trq_act
+  );
+
+  /* Immediately update duty cycle. */
+  MtrIf_SetPwm(_mtr_if_s.pwm_rqst);
+}
+
+void MtrIf_MotnCtrl(void) {
+  Trig_Pmsm_MotnCtrl(
+    &_pmsmctrl_obj_s,
+    App_GetEncCnts(),
+    PwmCtrlMd,
+    (real32_T)0.3f, /* Target duty cycle. Control will ramp up over 1s. */
+    (real32_T*)&_mtr_if_s.mtr_spd
+  );
+
 }

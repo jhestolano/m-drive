@@ -64,4 +64,8 @@ MtrCtlMd_T MtrIf_GetCtlMd(void);
 
 void MtrIf_SetTgt(float tgt);
 
+void MtrIf_MotnCtrl(void);
+
+void MtrIf_Foc(void);
+
 #endif // _MTRIF_H_

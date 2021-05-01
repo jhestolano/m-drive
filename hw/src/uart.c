@@ -1,7 +1,6 @@
 #include "uart.h"
 #include <string.h>
 #include "dbg.h"
-#include "line.h"
 
 /*-----------------------------------------------------------------------------
  * Macro definitions.

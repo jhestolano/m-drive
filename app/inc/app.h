@@ -3,6 +3,16 @@
 
 #include "stdint.h"
 
+
+/*******************************************************************************
+* System Definitions:                                                          *
+*******************************************************************************/
+#define APP_PWM_MAX_DC (10000)
+#define APP_ADC_MAX_VOLTS (3300)
+
+/*******************************************************************************
+* System Parameters:                                                           *
+*******************************************************************************/
 #define APP_PARAMS_IFBK_R (330) /* Shunt resistance [mOhms]. */
 #define APP_PARAMS_IFBK_R_INV (3) /*Inverse of shunt resistance [1 / Ohms]. */
 #define APP_PARAMS_IFBK_GAIN (2) /* Amplifier current circuit gain. */
@@ -18,7 +28,7 @@
 #define APP_PARAMS_TEMP_BIAS (25000) /* Temperature bias [mdegC]. */
 #define APP_PARAMS_TEMP_V_BIAS (1055) /* Temperature voltage bias [mV]. */
 #define APP_PARAMS_TEMP_GAIN (43) /* Sensor gain [mdegC / mV]. */
-#define APP_PARAMS_ENC_COUNTS (400) /* Encoder counts per revolution (4x mode) */
+#define APP_PARAMS_ENC_COUNTS (20000) /* Encoder counts per revolution (4x mode) */
 #define APP_PARAMS_ENC_RES (9) /* Encoder resolution in 0.1 deg resolution. */
 #define APP_PARAMS_POS_RES (10) /* Represents 0.1 deg resolution of position signal. */
 #define APP_PARAMS_MOTOR_J (110) /* Motor inertia in g/mm^2 units. Actual: 1.10127e-7 kg/m^2 */
@@ -26,6 +36,8 @@
 #define APP_PARAMS_MOTOR_KF (11012) /* Motor friction in g*mm^2*s/rad. Actual: 1.10127e-5 */
 #define APP_PARAMS_DEG_TO_RAD (0.017453292519943f) /* pi / 180 constant */
 #define APP_PARAMS_RADpS_TO_RPM (9.549296585513721f) /* 30 / pi scaling. */
+
+#define APP_PARAMS_MOTOR_PHASES (3) /* 3-phase motor */
 
 /* Voltage over which is not possible to read shunt resistor that is powering the phase. This is due to the fact */
 /* that the shunt resistor is located on the negative side of the bridge. At 100% duty-cycle, the shunt resistor */
@@ -104,5 +116,7 @@ void App_ArmDrive(void);
 void App_DisarmDrive(void);
 
 int32_t App_GetCurrent(IfbkPh_E);
+
+int32_t App_GetEncCnts(void);
 
 #endif // __APP_H__

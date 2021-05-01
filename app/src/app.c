@@ -110,6 +110,10 @@ int32_t App_GetPosition(void) {
   return (int32_t)(cnts * APP_PARAMS_ENC_RES);
 }
 
+int32_t App_GetEncCnts(void) {
+  return ENC_GetCnt();
+}
+
 void App_DisarmPhase(GpioCh_E pin) {
   if(pin >= GpioChMax_E) {
     return;
