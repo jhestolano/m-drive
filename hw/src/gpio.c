@@ -18,6 +18,7 @@ void GPIO_Init(void) {
 
   GPIO_InitTypeDef s_gpioc_input_conf = GPIOC_INPUT_CONF;
   GPIO_InitTypeDef s_gpioa_output_conf = GPIOA_OUTPUT_CONF;
+  GPIO_InitTypeDef s_gpiob_output_conf = GPIOB_OUTPUT_CONF;
   GPIO_InitTypeDef s_gpioa_pwm_enable_conf = GPIOA_PWM_ENABLE_CONF;
   GPIO_InitTypeDef s_gpioa_bkin2_conf = GPIOA_BKIN2_CONF;
   GPIO_InitTypeDef s_gpioa_diag_conf = GPIOA_DIAG_CONF;
@@ -28,7 +29,8 @@ void GPIO_Init(void) {
   __HAL_RCC_GPIOF_CLK_ENABLE();
 
   HAL_GPIO_Init(USR_BUTTON_PORT, &s_gpioc_input_conf);
-  HAL_GPIO_Init(RED_LED_PORT, &s_gpioa_output_conf);
+  HAL_GPIO_Init(RED_LED_PORT, &s_gpiob_output_conf);
+  HAL_GPIO_Init(GREEN_LED_PORT, &s_gpioa_output_conf);
   HAL_GPIO_Init(XH_PWM_ENABLE_PORT, &s_gpioa_pwm_enable_conf);
 
   /* Start motor unarmed. Wait for Motor interface to enable it. */
@@ -41,6 +43,7 @@ void GPIO_Init(void) {
   /* HAL_NVIC_EnableIRQ(DIAG_IT_EXTI_IRQn); */
 
   HAL_GPIO_WritePin(GREEN_LED_PORT, GREEN_LED_PIN, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(RED_LED_PORT, RED_LED_PIN, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(XH_PWM_ENABLE_PORT, UH_PWM_ENABLE_PIN | VH_PWM_ENABLE_PIN | WH_PWM_ENABLE_PIN, GPIO_PIN_RESET);
 
   return;
@@ -48,6 +51,7 @@ void GPIO_Init(void) {
 
 void GPIO_LedToggle(void) {
   HAL_GPIO_TogglePin(RED_LED_PORT, RED_LED_PIN);
+  HAL_GPIO_TogglePin(GREEN_LED_PORT, GREEN_LED_PIN);
   return;
 }
 

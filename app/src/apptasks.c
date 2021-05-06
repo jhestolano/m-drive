@@ -58,10 +58,16 @@ void AppTask_MotorControl(void* params) {
 #ifdef __SLOG__
   float signal_buff[APP_TASK_MOTOR_CONTROL_N_SIGNALS] = {0};
 #endif
+  uint32_t cnt = 0;
   for(;;) {
 
     /* Motor control goes here. */
     MtrIf_MotnCtrl();
+
+    if(cnt++ > 1e3) {
+      GPIO_LedToggle();
+      cnt = 0;
+    }
 
 #ifdef __SLOG__
     xStreamBufferSend(stream_buff,

@@ -87,14 +87,14 @@ OBJS:=$(SRCS:%=$(BUILD_DIR)/%.o)
 CC=arm-none-eabi-gcc
 OBJCOPY=arm-none-eabi-objcopy
 OBJDUMP=arm-none-eabi-objdump
-GDB=arm-none-eabi-gdb-py
+GDB=arm-none-eabi-gdb
 SZ=arm-none-eabi-size
 
 # Project Defines.
 DEFS=-DSTM32F302x8 \
 	-D__SLOG__ \
 	-DUSE_HAL_DRIVER \
-#	-D__DBG__ \
+	-D__DBG__ \
 
 TARGET_FLAGS=-mcpu=cortex-m4 \
 	-mthumb \
@@ -102,7 +102,7 @@ TARGET_FLAGS=-mcpu=cortex-m4 \
 	-mfloat-abi=hard \
 
 CFLAGS=$(TARGET_FLAGS) \
-	-g \
+	-ggdb \
 	-Os \
 	-Wall \
 	-lc \
@@ -158,7 +158,7 @@ all:
 
 # before you start gdb, you must start st-util
 debug:
-	st-util &
+#	st-util &
 	$(GDB) $(BUILD_DIR)/$(PROJ_NAME).elf
 	killall st-util
 
