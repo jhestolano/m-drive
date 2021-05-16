@@ -90,3 +90,4 @@ AdrcParams.K3 = AdrcParams.w0 ^ 3;
 % Update code generating DD.
 disp('Updating Ctrl_DD data dictionary.');
 run('ctrl_DD');
+run('task_bus');

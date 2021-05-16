@@ -1,18 +1,19 @@
-classdef AutoCalSt < Simulink.IntEnumType
-    % AUTOCALST Auto-Calibration State.
-    %   Defines the auto-calibration status/state.
+classdef CtrlMgrSt < Simulink.IntEnumType
+    % CTRLMGRST Control mode manager State.
+    %   Defines the manager control mode status/state.
     enumeration
       ErrIndTooSmall(-1),
       ErrIndTooLarge(-2),
       ErrResTooSmall(-3),
       ErrResTooLarge(-4),
       NotStarted(0),
-      IndID(1);
-      IndIDCoolDown(2),
-      ResID(3)
-      IfbkOfsID(4)
-      TrqCnstID(5)
-      InertiaID(6)
+      AnglOfsCal(1),
+      IndID(2);
+      IndIDCoolDown(3),
+      ResID(4)
+      IfbkOfsID(5)
+      TrqCnstID(6)
+      InertiaID(7)
       Done(255),
     end
 

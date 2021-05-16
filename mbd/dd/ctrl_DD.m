@@ -12,15 +12,45 @@ TsFast.Max = [];
 TsFast.DocUnits = '';
 TsFast.Value = FastTsample;
 
-%% DC bus voltage.
-Cfg_StepToEncCnts = Simulink.Parameter;
-Cfg_StepToEncCnts.StorageClass = 'Auto';
-Cfg_StepToEncCnts.Description = 'DC bus voltage.';
-Cfg_StepToEncCnts.DataType = 'single';
-Cfg_StepToEncCnts.Min = [];
-Cfg_StepToEncCnts.Max = [];
-Cfg_StepToEncCnts.DocUnits = '';
-Cfg_StepToEncCnts.Value = MtrParams.Vdc;
+%% Enable offset calibration.
+Cfg_TmOfsCal = Simulink.Parameter;
+Cfg_TmOfsCal.StorageClass = 'Auto';
+Cfg_TmOfsCal.Description = 'Offset calibration time window (seconds).';
+Cfg_TmOfsCal.DataType = 'single';
+Cfg_TmOfsCal.Min = [];
+Cfg_TmOfsCal.Max = [];
+Cfg_TmOfsCal.DocUnits = '';
+Cfg_TmOfsCal.Value = 0.5;
+
+%% Enable offset calibration.
+Cfg_EnblOfsCal = Simulink.Parameter;
+Cfg_EnblOfsCal.StorageClass = 'Auto';
+Cfg_EnblOfsCal.Description = 'Enable offset calibration at startup.';
+Cfg_EnblOfsCal.DataType = 'boolean';
+Cfg_EnblOfsCal.Min = [];
+Cfg_EnblOfsCal.Max = [];
+Cfg_EnblOfsCal.DocUnits = '';
+Cfg_EnblOfsCal.Value = true;
+
+%% Initial angle during offset calibration.
+Cfg_OfsCalAnglInit = Simulink.Parameter;
+Cfg_OfsCalAnglInit.StorageClass = 'Auto';
+Cfg_OfsCalAnglInit.Description = 'Initial angle during offset calibration';
+Cfg_OfsCalAnglInit.DataType = 'int32';
+Cfg_OfsCalAnglInit.Min = [];
+Cfg_OfsCalAnglInit.Max = [];
+Cfg_OfsCalAnglInit.DocUnits = '';
+Cfg_OfsCalAnglInit.Value = -MtrParams.EncCnts / 4.;
+
+%% Duty cycle during angle offset cal.
+Cfg_AnglOfsCalPwmDuty = Simulink.Parameter;
+Cfg_AnglOfsCalPwmDuty.StorageClass = 'Auto';
+Cfg_AnglOfsCalPwmDuty.Description = 'Duty cycle during angle offset cal';
+Cfg_AnglOfsCalPwmDuty.DataType = 'single';
+Cfg_AnglOfsCalPwmDuty.Min = [];
+Cfg_AnglOfsCalPwmDuty.Max = [];
+Cfg_AnglOfsCalPwmDuty.DocUnits = '';
+Cfg_AnglOfsCalPwmDuty.Value = 0.2;
 
 %% Step to cnts convesion.
 Cfg_StepToEncCnts = Simulink.Parameter;
