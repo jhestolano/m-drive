@@ -20,6 +20,9 @@
 
 /* Shared type includes */
 #include "multiword_types.h"
+
+/* Includes for objects with custom storage classes. */
+#include "cfg_params.h"
 #include "mw_cmsis.h"
 
 /* Macros for accessing real-time model data structure */
@@ -55,8 +58,11 @@ typedef struct {
   real32_T Add;                        /* '<S58>/Add' */
   real32_T MtrIf_TrqAct;               /* '<S30>/Data Type Conversion2' */
   real32_T MtrIf_SpdOut_i;             /* '<S30>/Data Type Conversion1' */
+  real32_T Gain3;                      /* '<S45>/Gain3' */
+  real32_T Gain;                       /* '<S45>/Gain' */
   real32_T PwmRqst;                    /* '<S9>/EncOfsCal' */
   real32_T PwmRqst_g;                  /* '<S12>/ResIdCal' */
+  int32_T obs_enc_cnts;                /* '<S30>/Data Type Conversion4' */
   int32_T Ticks;                       /* '<S9>/EncOfsCal' */
   MtrCtrlMd_T CtrlMdRqst;              /* '<S9>/EncOfsCal' */
   MtrCtrlMd_T CtrlMdRqst_i;            /* '<S11>/IndIdCal' */
@@ -192,30 +198,14 @@ extern void Trig_Pmsm_GetOut(RT_MODEL *const pmsm_ctrl_M, real32_T
  * Block '<S54>/Gain2' : Unused code path elimination
  * Block '<Root>/SpdCtrl' : Unused code path elimination
  * Block '<Root>/ElecAngl' : Unused code path elimination
- * Block '<S30>/Switch1' : Eliminated due to constant selection input
- * Block '<S43>/Switch' : Eliminated due to constant selection input
- * Block '<S44>/Switch' : Eliminated due to constant selection input
  * Block '<S54>/Data Type Conversion' : Eliminate redundant data type conversion
  * Block '<S54>/Data Type Conversion2' : Eliminate redundant data type conversion
- * Block '<S54>/Switch2' : Eliminated due to constant selection input
  * Block '<S6>/Data Type Conversion' : Eliminate redundant data type conversion
  * Block '<S6>/Data Type Conversion1' : Eliminate redundant data type conversion
  * Block '<S6>/Data Type Conversion2' : Eliminate redundant data type conversion
  * Block '<S6>/Data Type Conversion3' : Eliminate redundant data type conversion
  * Block '<S6>/Data Type Conversion4' : Eliminate redundant data type conversion
  * Block '<S6>/Data Type Conversion5' : Eliminate redundant data type conversion
- * Block '<S30>/Constant1' : Unused code path elimination
- * Block '<S30>/Data Type Conversion4' : Unused code path elimination
- * Block '<S30>/Gain4' : Unused code path elimination
- * Block '<S41>/Constant3' : Unused code path elimination
- * Block '<S41>/Constant4' : Unused code path elimination
- * Block '<S43>/Constant2' : Unused code path elimination
- * Block '<S43>/Constant3' : Unused code path elimination
- * Block '<S43>/Product' : Unused code path elimination
- * Block '<S44>/Constant2' : Unused code path elimination
- * Block '<S44>/Constant3' : Unused code path elimination
- * Block '<S44>/Product' : Unused code path elimination
- * Block '<S54>/Constant3' : Unused code path elimination
  */
 
 /*-

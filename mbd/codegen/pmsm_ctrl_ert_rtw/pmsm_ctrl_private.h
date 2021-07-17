@@ -76,6 +76,6 @@ extern void calc_mod_wave(RT_MODEL * const pmsm_ctrl_M, const real32_T rtu_dq0[3
   real32_T rtu_elec_angle, real32_T rty_pwm_dc[3], real32_T rty_mod_wave[3]);
 extern void calc_elec_angle(RT_MODEL * const pmsm_ctrl_M, int32_T
   rtu_mtr_enc_cnts, real32_T *rty_elec_angle, real32_T *rty_mtr_pos, int32_T
-  rtp_enc_cnts_int, int32_T rtp_n_poles);
+  rtp_enc_cnts_int, uint8_T rtp_n_poles);
 
 #endif                                 /* RTW_HEADER_pmsm_ctrl_private_h_ */
