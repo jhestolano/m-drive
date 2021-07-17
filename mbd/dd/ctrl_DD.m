@@ -50,7 +50,7 @@ Cfg_AnglOfsCalPwmDuty.DataType = 'single';
 Cfg_AnglOfsCalPwmDuty.Min = [];
 Cfg_AnglOfsCalPwmDuty.Max = [];
 Cfg_AnglOfsCalPwmDuty.DocUnits = '';
-Cfg_AnglOfsCalPwmDuty.Value = 0.2;
+Cfg_AnglOfsCalPwmDuty.Value = 0.20;
 
 %% Step to cnts convesion.
 Cfg_StepToEncCnts = Simulink.Parameter;
@@ -515,14 +515,24 @@ DistObs_J.DocUnits = '';
 DistObs_J.Value = MtrParams.Jm;
 
 %% Encoder definition.
-EncCnts = Simulink.Parameter;
-EncCnts.StorageClass = 'Auto';
-EncCnts.Description = 'Encoder counts';
-EncCnts.DataType = 'single';
-EncCnts.Min = [];
-EncCnts.Max = [];
-EncCnts.DocUnits = '';
-EncCnts.Value = MtrParams.EncCnts;
+Cfg_EncCnts = Simulink.Parameter;
+Cfg_EncCnts.StorageClass = 'Auto';
+Cfg_EncCnts.Description = 'Encoder counts';
+Cfg_EncCnts.DataType = 'single';
+Cfg_EncCnts.Min = [];
+Cfg_EncCnts.Max = [];
+Cfg_EncCnts.DocUnits = '';
+Cfg_EncCnts.Value = MtrParams.EncCnts;
+
+%% Encoder definition.
+Cfg_EncCntsInt = Simulink.Parameter;
+Cfg_EncCntsInt.StorageClass = 'Auto';
+Cfg_EncCntsInt.Description = 'Encoder counts w/ int32 data type.';
+Cfg_EncCntsInt.DataType = 'int32';
+Cfg_EncCntsInt.Min = [];
+Cfg_EncCntsInt.Max = [];
+Cfg_EncCntsInt.DocUnits = '';
+Cfg_EncCntsInt.Value = MtrParams.EncCnts;
 
 %% Encoder to radians.
 EncCntsToRads = Simulink.Parameter;

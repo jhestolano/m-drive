@@ -11,6 +11,8 @@
 #include "mtrif.h"
 #include "math.h"
 #include "gpio.h"
+#include "mtrif.h"
+#include "command.h"
 
 #define SLOG_START_FRAME (0x00CD00AB)
 /* Size definition in bytes. */
@@ -20,14 +22,19 @@
 #define SLOG_BUFF_SIZE ((size_t)(SLOG_START_FRAME_SIZE + SLOG_MOTOR_CONTROL_BUFF_SIZE + SLOG_ADC_ISR_BUFF_SIZE))
 
 void AppTask_LowPrio(void* params) {
+#ifdef __SLOG__
   const uint32_t SlogStartFrame = (uint32_t)SLOG_START_FRAME;
   uint8_t buff_signal_log[SLOG_BUFF_SIZE] = {0};
-  TickType_t last_wake_time = xTaskGetTickCount();
   StreamBufferHandle_t stream_buff_motor_control = (StreamBufferHandle_t)params;
+#endif
+  TickType_t last_wake_time = xTaskGetTickCount();
+
+  command_init();
+
   for(;;) {
 
     /* Application code goes here. */
-    /* command_update(); */
+    command_exec();
 
 #ifdef __SLOG__
     /*-----------------------------------------------------------------------------
@@ -53,23 +60,45 @@ void AppTask_LowPrio(void* params) {
 
 void AppTask_MotorControl(void* params) {
   TickType_t last_wake_time = xTaskGetTickCount();
-  StreamBufferHandle_t stream_buff = (StreamBufferHandle_t)params;
-  MtrIf_Init();
+  MtrParams_S mtr_params;
+  MtrDbg_S mtr_dbg;
+  float ifbk_dq[2];
+  float pwm_dq[2];
+
 #ifdef __SLOG__
+  StreamBufferHandle_t stream_buff = (StreamBufferHandle_t)params;
   float signal_buff[APP_TASK_MOTOR_CONTROL_N_SIGNALS] = {0};
 #endif
-  uint32_t cnt = 0;
+
+  MtrIf_Init();
+
   for(;;) {
 
     /* Motor control goes here. */
-    MtrIf_MotnCtrl();
+    MtrIf_CtrlSlow();
 
-    if(cnt++ > 1e3) {
-      GPIO_LedToggle();
-      cnt = 0;
-    }
+    /* Get data from control layer. */
+    MtrIf_GetMtrParams(&mtr_params);
+    MtrIf_GetDbg(&mtr_dbg);
+    MtrIf_GetIfbkDq(ifbk_dq);
+    MtrIf_GetPwmDq(pwm_dq);
 
 #ifdef __SLOG__
+    signal_buff[0] = (float)MtrIf_GetPos();
+    signal_buff[1] = (float)MtrIf_GetSpd();
+    signal_buff[2] = (float)MtrIf_GetIfbkPh(IfbkPhA_E);
+    signal_buff[3] = (float)MtrIf_GetIfbkPh(IfbkPhB_E);
+    signal_buff[4] = (float)MtrIf_GetIfbkPh(IfbkPhC_E);
+    signal_buff[5] = (float)MtrIf_GetPwmDcCh(PwmChA_E);
+    signal_buff[6] = (float)MtrIf_GetPwmDcCh(PwmChB_E);
+    signal_buff[7] = (float)MtrIf_GetPwmDcCh(PwmChC_E);
+    signal_buff[8] = mtr_dbg.e_angl; /* Electrical angle. */
+    signal_buff[9] = mtr_dbg.i_abc_lpf[0];
+    signal_buff[10] = mtr_dbg.i_abc_lpf[1];
+    signal_buff[11] = mtr_dbg.i_abc_lpf[2];
+    signal_buff[12] = mtr_dbg.i_dq0[0]; /* D-component. */
+    signal_buff[13] = mtr_dbg.i_dq0[1]; /* Q-component. */
+
     xStreamBufferSend(stream_buff,
         (void*)signal_buff,
         sizeof(signal_buff),

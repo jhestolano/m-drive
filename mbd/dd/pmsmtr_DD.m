@@ -5,23 +5,23 @@ SimParams.Ts = 1.0e-5;
 
 %% Motor parameters.
 MtrParams = struct;
-MtrParams.Vdc = 48;
-MtrParams.SpdNom  = 3e3;
+MtrParams.Vdc = 12;
+MtrParams.SpdNom = 4000.;
 
-MtrParams.Rs = 0.25;
-MtrParams.Ls = 1.4e-4;
-MtrParams.Lm = 0;
-MtrParams.Ms = 7.5e-7;
+MtrParams.Rs = 1.8 / 2.;
+MtrParams.Ls = 2.6e-3 / 2.;
+MtrParams.Lm = 0.;
+MtrParams.Ms = 0.;
 MtrParams.Ld = MtrParams.Ls + MtrParams.Ms + (3/2) * MtrParams.Lm;
 MtrParams.Lq = MtrParams.Ls + MtrParams.Ms - (3/2) * MtrParams.Lm;
-MtrParams.Kf = 1e-4;
+MtrParams.Kf = 0.;
 
-MtrParams.Poles = 12;
-MtrParams.Ktrq   = 0.12;
+MtrParams.Poles = 4; % Number of pole pairs.
+MtrParams.Ktrq   = 0.035;
 MtrParams.MFlux = MtrParams.Ktrq / ((3/2) * MtrParams.Poles);
-MtrParams.Jm = 1.9e-4;
+MtrParams.Jm = 24.e-6;
 
-MtrParams.PPR = 5e3;
+MtrParams.PPR = 600;
 MtrParams.EncCnts = 4 * MtrParams.PPR;
 
 MtrParams.IfbkSnsNoise = 0.1; % Sensor noise on current measurement.
@@ -90,4 +90,3 @@ AdrcParams.K3 = AdrcParams.w0 ^ 3;
 % Update code generating DD.
 disp('Updating Ctrl_DD data dictionary.');
 run('ctrl_DD');
-run('task_bus');

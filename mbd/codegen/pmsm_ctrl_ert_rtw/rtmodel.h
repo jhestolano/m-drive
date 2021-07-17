@@ -1,7 +1,7 @@
 /*
  * rtmodel.h
  *
- * Code generation for Simulink model "pmsmctrl".
+ * Code generation for Simulink model "pmsm_ctrl".
  *
  * Simulink Coder version                : 8.14 (R2018a) 06-Feb-2018
  *
@@ -14,7 +14,7 @@
 
 #ifndef RTW_HEADER_rtmodel_h_
 #define RTW_HEADER_rtmodel_h_
-#include "pmsmctrl.h"
+#include "pmsm_ctrl.h"
 
 /*
  * ROOT_IO_FORMAT: 0 (Individual arguments)

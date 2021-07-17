@@ -1,5 +1,5 @@
-function dbg_bus() 
-% DBG_BUS initializes a set of bus objects in the MATLAB base workspace 
+function MtrIf_InType() 
+% MTRIF_INTYPE initializes a set of bus objects in the MATLAB base workspace 
 
 % Bus object: DBG_BUS 
 clear elems;
@@ -143,4 +143,134 @@ DBG_BUS.Alignment = -1;
 DBG_BUS.Elements = elems;
 clear elems;
 assignin('base','DBG_BUS', DBG_BUS);
+
+% Bus object: MtrIf_InType 
+clear elems;
+elems(1) = Simulink.BusElement;
+elems(1).Name = 'mtrif_enc_cnts';
+elems(1).Dimensions = 1;
+elems(1).DimensionsMode = 'Fixed';
+elems(1).DataType = 'int32';
+elems(1).SampleTime = -1;
+elems(1).Complexity = 'real';
+elems(1).Min = [];
+elems(1).Max = [];
+elems(1).DocUnits = '';
+elems(1).Description = '';
+
+elems(2) = Simulink.BusElement;
+elems(2).Name = 'mtrif_ifbk_act';
+elems(2).Dimensions = 3;
+elems(2).DimensionsMode = 'Fixed';
+elems(2).DataType = 'single';
+elems(2).SampleTime = -1;
+elems(2).Complexity = 'real';
+elems(2).Min = [];
+elems(2).Max = [];
+elems(2).DocUnits = '';
+elems(2).Description = '';
+
+elems(3) = Simulink.BusElement;
+elems(3).Name = 'mtrif_spd_sns';
+elems(3).Dimensions = 1;
+elems(3).DimensionsMode = 'Fixed';
+elems(3).DataType = 'single';
+elems(3).SampleTime = -1;
+elems(3).Complexity = 'real';
+elems(3).Min = [];
+elems(3).Max = [];
+elems(3).DocUnits = '';
+elems(3).Description = '';
+
+elems(4) = Simulink.BusElement;
+elems(4).Name = 'mtrif_ctrl_md';
+elems(4).Dimensions = 1;
+elems(4).DimensionsMode = 'Fixed';
+elems(4).DataType = 'Enum: MtrCtrlMd';
+elems(4).SampleTime = -1;
+elems(4).Complexity = 'real';
+elems(4).Min = [];
+elems(4).Max = [];
+elems(4).DocUnits = '';
+elems(4).Description = '';
+
+elems(5) = Simulink.BusElement;
+elems(5).Name = 'mtrif_tgt';
+elems(5).Dimensions = 1;
+elems(5).DimensionsMode = 'Fixed';
+elems(5).DataType = 'single';
+elems(5).SampleTime = -1;
+elems(5).Complexity = 'real';
+elems(5).Min = [];
+elems(5).Max = [];
+elems(5).DocUnits = '';
+elems(5).Description = '';
+
+elems(6) = Simulink.BusElement;
+elems(6).Name = 'mtrif_cal_rqst';
+elems(6).Dimensions = 1;
+elems(6).DimensionsMode = 'Fixed';
+elems(6).DataType = 'Enum: MtrCtrlCal';
+elems(6).SampleTime = -1;
+elems(6).Complexity = 'real';
+elems(6).Min = [];
+elems(6).Max = [];
+elems(6).DocUnits = '';
+elems(6).Description = '';
+
+MtrIf_InType = Simulink.Bus;
+MtrIf_InType.HeaderFile = '';
+MtrIf_InType.Description = sprintf('Structure that holds all neccessary controller input signals.');
+MtrIf_InType.DataScope = 'Auto';
+MtrIf_InType.Alignment = -1;
+MtrIf_InType.Elements = elems;
+clear elems;
+assignin('base','MtrIf_InType', MtrIf_InType);
+
+% Bus object: TASK_BUS 
+clear elems;
+elems(1) = Simulink.BusElement;
+elems(1).Name = 'v_abc';
+elems(1).Dimensions = 3;
+elems(1).DimensionsMode = 'Fixed';
+elems(1).DataType = 'single';
+elems(1).SampleTime = -1;
+elems(1).Complexity = 'real';
+elems(1).Min = [];
+elems(1).Max = [];
+elems(1).DocUnits = '';
+elems(1).Description = '';
+
+elems(2) = Simulink.BusElement;
+elems(2).Name = 'ctrl_mgr_st';
+elems(2).Dimensions = 1;
+elems(2).DimensionsMode = 'Fixed';
+elems(2).DataType = 'Enum: CtrlMgrSt';
+elems(2).SampleTime = -1;
+elems(2).Complexity = 'real';
+elems(2).Min = [];
+elems(2).Max = [];
+elems(2).DocUnits = '';
+elems(2).Description = '';
+
+elems(3) = Simulink.BusElement;
+elems(3).Name = 'enc_ofs_cnts';
+elems(3).Dimensions = 1;
+elems(3).DimensionsMode = 'Fixed';
+elems(3).DataType = 'int32';
+elems(3).SampleTime = -1;
+elems(3).Complexity = 'real';
+elems(3).Min = [];
+elems(3).Max = [];
+elems(3).DocUnits = '';
+elems(3).Description = '';
+
+TASK_BUS = Simulink.Bus;
+TASK_BUS.HeaderFile = '';
+TASK_BUS.Description = '';
+TASK_BUS.DataScope = 'Auto';
+TASK_BUS.Alignment = -1;
+TASK_BUS.Elements = elems;
+clear elems;
+assignin('base','TASK_BUS', TASK_BUS);
 

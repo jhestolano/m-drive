@@ -1,56 +1,67 @@
+#include <string.h>
 #include "command.h"
-#include "ucmd.h"
-#include "line.h"
-#include "dbg.h"
+#include "anchor/console/console.h"
+#include "uart.h"
+#include "gpio.h"
 
-extern void GPIO_LedToggle(void);
-extern void MtrIf_SetVin(int32_t);
+#define COMMAND_LOCK UART_DisableIRQ
+#define COMMAND_UNLOCK UART_EnableIRQ
 
-/******************************************************************************/
-/* Callback definitions. */
-/******************************************************************************/
-static ErrCode_e command_led_toggle(Arg_s* args, void* usrargs) {
-  (void)args;
-  (void)usrargs;
-  GPIO_LedToggle();
-  return E_OK;
+#define BUFF_SIZE (64)
+
+typedef struct Buff_tag {
+  uint8_t mem[BUFF_SIZE]; /* Memory. */
+  size_t cnt; /* Number of elements in buffer. */
+} Buff_S;
+
+const console_init_t init_console;
+Buff_S buff;
+
+/* Command defintions. */
+CONSOLE_COMMAND_DEF(led_set, "Set user LED value",
+    CONSOLE_INT_ARG_DEF(value, "The value <0-1>")
+);
+static void led_set_command_handler(const led_set_args_t* args) {
+  HAL_GPIO_WritePin(RED_LED_PORT, RED_LED_PIN, (GPIO_PinState)args->value);
 }
 
-static ErrCode_e command_motor_vin(Arg_s* args, void* usrargs) {
-  int32_t data = -1;
-  (void)usrargs;
-  if(UCMD_ARG_IS_VALID(args, 0)) {
-    data = UCMD_ARG(args, 0, int32_t);
-    MtrIf_SetVin(data);
+CONSOLE_COMMAND_DEF(set_dc, "Set motor duty cycle Q-Axis",
+    CONSOLE_INT_ARG_DEF(value, "The value <0-100>")
+);
+static void set_dc_command_handler(const set_dc_args_t* args) {
+
+}
+/* End of command definitions. */
+
+/* Wrappers for Tx / Rx UART communication. */
+static void wrap_write_fnc(const char* str) {
+  UART_Puts(str);
+}
+
+static void wrap_read_fnc(uint8_t ch) {
+  /* This is interrupt context. Keep it short. */
+  if(buff.cnt < BUFF_SIZE) {
+    buff.mem[buff.cnt] = ch;
+    buff.cnt++;
   }
-  DBG_DEBUG("motor data: %d\n\r", data);
-  return E_OK;
 }
-
-/******************************************************************************/
-/* Table definition. */
-/******************************************************************************/
-const uCmdInfo_s CommandTable_a[] = {
-  {"led_toggle", command_led_toggle, UCMD_ARG_NONE, UCMD_ARG_USER_NONE},
-  {"motor_vin", command_motor_vin, {{E_ARG_I32, 'v'}}, UCMD_ARG_USER_NONE},
-  /* Keep this element last. Denotes end of table. */
-  UCMD_TABLE_END,
-};
+/* End of wrappers. */
 
 void command_init(void) {
-  Line_Init();
-  uCmd_InitTable(CommandTable_a, UCMD_GET_TABLE_SIZE(CommandTable_a));
+  const console_init_t init_console = {
+    .write_function = wrap_write_fnc,
+  };
+  bzero((void*)&buff, sizeof(buff));
+  console_init(&init_console);
+  console_command_register(led_set);
+  console_command_register(set_dc);
+  UART_AttachRxCallback(wrap_read_fnc);
 }
 
-void command_update(void) {
-  uCmd_Loop();
-}
-
-void command_uart_rx_callback(uint8_t data) {
-  Line_AddChar(data);
-  if(Line_BuffIsFull()) {
-    DBG_WARN("Buffer is full!\n\r");
-  } if(Line_BuffIsOvrFlwn()) {
-    DBG_WARN("Buffer overflow!!\n\r");
-  }
+void command_exec(void) {
+  /* Handle console processing and buffering here. */
+  COMMAND_LOCK();
+  console_process(buff.mem, buff.cnt);
+  buff.cnt = 0;
+  COMMAND_UNLOCK();
 }

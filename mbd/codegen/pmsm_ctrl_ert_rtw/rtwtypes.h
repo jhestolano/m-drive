@@ -1,9 +1,9 @@
 /*
  * rtwtypes.h
  *
- * Code generation for model "pmsmctrl".
+ * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.198
+ * Model version              : 1.676
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */

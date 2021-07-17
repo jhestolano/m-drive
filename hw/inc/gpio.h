@@ -53,19 +53,10 @@
   .Pull = GPIO_NOPULL,                                                         \
 }
 /*******************************************************************************
- * GPIO RED LED CONFIGURATION.
-*******************************************************************************/
-#define GPIOB_OUTPUT_CONF {                                                    \
-  .Pin = RED_LED_PIN,                                                          \
-  .Mode = GPIO_MODE_OUTPUT_PP,                                                 \
-  .Pull = GPIO_NOPULL,                                                         \
-  .Speed = GPIO_SPEED_FREQ_LOW,                                                \
-}
-/*******************************************************************************
  * GPIO GREEN LED CONFIGURATION.
 *******************************************************************************/
 #define GPIOA_OUTPUT_CONF {                                                    \
-  .Pin = GREEN_LED_PIN,                                                        \
+  .Pin = RED_LED_PIN,                                                        \
   .Mode = GPIO_MODE_OUTPUT_PP,                                                 \
   .Pull = GPIO_NOPULL,                                                         \
   .Speed = GPIO_SPEED_FREQ_LOW,                                                \

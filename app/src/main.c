@@ -11,7 +11,7 @@
 #include "apptasks.h"
 #include "command.h"
 
-__attribute__((section(".ccmram")))
+/* __attribute__((section("ccmram"))) */
 uint8_t ucHeap[configTOTAL_HEAP_SIZE];
 
 static void SystemClock_Config(void);
@@ -31,9 +31,7 @@ int main(void)
   );
 
   HwInit();
-  /* command_init(); */
-  /* UART_AttachRxCallback(command_uart_rx_callback); */
-  /* UART_EnableIRQ(); */
+  UART_EnableIRQ();
 
   /*-----------------------------------------------------------------------------
    * Low priority task for logging, command line, etc. 

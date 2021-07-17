@@ -5,8 +5,6 @@
 
 void command_init(void);
 
-void command_update(void);
-
-void command_uart_rx_callback(uint8_t);
+void command_exec(void);
 
 #endif // _COMMAND_H_

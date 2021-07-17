@@ -1,4 +1,4 @@
-PROJ_NAME=mdrive
+PROJ_NAME=bldc
 BUILD_DIR=./build
 
 # Path to dependencies.
@@ -12,9 +12,9 @@ RTOS_DIR=./rtos
 
 HAL_SRC_DIR=./hal/src
 
-# UCMD_DIR=./libs/ucmd
+CMSIS_DSP_DIR=./libs/CMSIS/DSP
 
-CODEGEN_DIR=./mbd/codegen/pmsmctrl_ert_rtw
+CODEGEN_DIR=./mbd/codegen/pmsm_ctrl_ert_rtw
 
 HAL_INC=./hal/inc
 
@@ -27,7 +27,8 @@ INC_DIRS+=./app/inc
 INC_DIRS+=$(RTOS_INC)
 INC_DIRS+=$(HAL_INC)
 INC_DIRS+=./libs/printf
-# INC_DIRS+=./libs/ucmd
+INC_DIRS+=./libs/console/include/
+INC_DIRS+=$(CMSIS_DSP_DIR)/Include/
 INC_DIRS+=$(CODEGEN_DIR)
 
 SRCS=app/src/main.c
@@ -40,13 +41,13 @@ SRCS+=hw/src/enc.c
 SRCS+=app/src/apptasks.c
 SRCS+=app/src/app.c
 SRCS+=app/src/mtrif.c
-# SRCS+=app/src/command.c
+SRCS+=app/src/command.c
 SRCS+=sys/src/system_stm32f3xx.c
 SRCS+=sys/src/startup_stm32f302x8.s
 SRCS+=sys/src/stm32f3xx_it.c
 
 # Code generated files.
-SRCS+=$(CODEGEN_DIR)/pmsmctrl.c
+SRCS+=$(CODEGEN_DIR)/pmsm_ctrl.c
 
 SRCS+=$(HAL_SRC_DIR)/stm32f3xx_hal.c
 SRCS+=$(HAL_SRC_DIR)/stm32f3xx_hal_cortex.c
@@ -61,14 +62,12 @@ SRCS+=$(HAL_SRC_DIR)/stm32f3xx_hal_tim_ex.c
 SRCS+=$(HAL_SRC_DIR)/stm32f3xx_hal_uart.c
 SRCS+=$(HAL_SRC_DIR)/stm32f3xx_hal_uart_ex.c
 
-# Location for command utility.
-# SRCS+=$(UCMD_DIR)/ucmd.c
-# SRCS+=$(UCMD_DIR)/line.c
-# SRCS+=$(UCMD_DIR)/err.c
-# SRCS+=$(UCMD_DIR)/utils.c
 
 # This is the location for printf.c file implementation from Embdedded Artistry.
 SRCS+=./libs/printf/printf.c
+
+# Shell console.
+SRCS+=./libs/console/src/console.c
  
 # This is the location of port.c file.
 SRCS+=$(RTOS_DIR)/ARM_CM4F/port.c
@@ -81,20 +80,28 @@ SRCS+=$(RTOS_DIR)/queue.c
 SRCS+=$(RTOS_DIR)/list.c
 SRCS+=$(RTOS_DIR)/stream_buffer.c
 
+# CMSIS Math functions.
+SRCS+=$(CMSIS_DSP_DIR)/Source/FastMathFunctions/arm_sin_f32.c
+SRCS+=$(CMSIS_DSP_DIR)/Source/FastMathFunctions/arm_cos_f32.c
+SRCS+=$(CMSIS_DSP_DIR)/Source/CommonTables/arm_common_tables.c
+
 # SRCS:=$(shell find $(SRC_DIRS) -name *.c)
 OBJS:=$(SRCS:%=$(BUILD_DIR)/%.o)
 
 CC=arm-none-eabi-gcc
 OBJCOPY=arm-none-eabi-objcopy
 OBJDUMP=arm-none-eabi-objdump
+#GDB=arm-none-eabi-gdb-py
 GDB=arm-none-eabi-gdb
 SZ=arm-none-eabi-size
 
 # Project Defines.
 DEFS=-DSTM32F302x8 \
-	-D__SLOG__ \
+	-DARM_MATH_CM4 \
+	-D__FPU_PRESENT \
 	-DUSE_HAL_DRIVER \
-	-D__DBG__ \
+	-D__SLOG__ \
+#	-D__DBG__ \
 
 TARGET_FLAGS=-mcpu=cortex-m4 \
 	-mthumb \
@@ -102,7 +109,7 @@ TARGET_FLAGS=-mcpu=cortex-m4 \
 	-mfloat-abi=hard \
 
 CFLAGS=$(TARGET_FLAGS) \
-	-ggdb \
+	-g \
 	-Os \
 	-Wall \
 	-lc \
@@ -150,6 +157,9 @@ clean:
 flash:
 	st-flash write $(BUILD_DIR)/$(PROJ_NAME).bin 0x8000000
 
+erase:
+	st-flash erase
+
 stlink:
 	st-util -p4242
 
@@ -158,8 +168,8 @@ all:
 
 # before you start gdb, you must start st-util
 debug:
-#	st-util &
 	$(GDB) $(BUILD_DIR)/$(PROJ_NAME).elf
-	killall st-util
+#	st-util &
+#	killall st-util
 
-.PHONY: dump clean flash stlink all debug hal rtos $(PROJ_NAME)
+.PHONY: dump clean flash stlink all debug hal rtos $(PROJ_NAME) erase

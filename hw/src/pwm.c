@@ -23,11 +23,7 @@ void Pwm_ErroHandler(char* errmsg) {
 void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* s_pwm_conf) {
   UNUSED(s_pwm_conf);
 
-  /* Main output configuration. */
   GPIO_InitTypeDef s_pwm_gpio_conf = PWM_GPIO_CONF;
-
-  /* Complementary signal configuration. */
-  GPIO_InitTypeDef s_pwm_comp_gpio_conf = PWM_GPIO_COMP_CONF;
 
   if(!__HAL_RCC_TIM1_IS_CLK_ENABLED()){
       __HAL_RCC_TIM1_CLK_ENABLE();
@@ -37,12 +33,7 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* s_pwm_conf) {
     __HAL_RCC_GPIOA_CLK_ENABLE();
   }
 
-  if(!__HAL_RCC_GPIOB_IS_CLK_ENABLED()) {
-    __HAL_RCC_GPIOB_CLK_ENABLE();
-  }
-
-  HAL_GPIO_Init(XH_PWM_PORT, &s_pwm_gpio_conf);
-  HAL_GPIO_Init(XH_N_PWM_PORT, &s_pwm_comp_gpio_conf);
+  HAL_GPIO_Init(GPIOA, &s_pwm_gpio_conf);
 }
 
 void PWM_Init(void) {
