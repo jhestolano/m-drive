@@ -2,6 +2,7 @@ mbd/cache
 mbd/codegen/*
 !mbd/codegen/*.c
 !mbd/codegen/*.h
+tags
 
 # Prerequisites
 *.d
