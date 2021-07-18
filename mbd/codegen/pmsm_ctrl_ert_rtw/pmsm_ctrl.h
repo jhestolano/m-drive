@@ -3,7 +3,7 @@
  *
  * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.676
+ * Model version              : 1.698
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */
@@ -48,7 +48,6 @@ typedef struct {
   real32_T Saturation1[3];             /* '<S35>/Saturation1' */
   real32_T Gain1[3];                   /* '<S51>/Gain1' */
   real32_T DataTypeConversion[3];      /* '<S52>/Data Type Conversion' */
-  real32_T OutportBufferForvdq0_ctrl[3];
   real32_T Add_p[3];                   /* '<S23>/Add' */
   real32_T Saturation;                 /* '<S57>/Saturation' */
   real32_T DiscreteTimeIntegrator1;    /* '<S60>/Discrete-Time Integrator1' */
@@ -62,7 +61,6 @@ typedef struct {
   real32_T Gain;                       /* '<S45>/Gain' */
   real32_T PwmRqst;                    /* '<S9>/EncOfsCal' */
   real32_T PwmRqst_g;                  /* '<S12>/ResIdCal' */
-  int32_T obs_enc_cnts;                /* '<S30>/Data Type Conversion4' */
   int32_T Ticks;                       /* '<S9>/EncOfsCal' */
   MtrCtrlMd_T CtrlMdRqst;              /* '<S9>/EncOfsCal' */
   MtrCtrlMd_T CtrlMdRqst_i;            /* '<S11>/IndIdCal' */
@@ -75,8 +73,9 @@ typedef struct {
 
 /* Block states (default storage) for system '<Root>' */
 typedef struct {
-  real32_T UnitDelay_DSTATE[3];        /* '<S40>/Unit Delay' */
+  real32_T UnitDelay_DSTATE_o[3];      /* '<S40>/Unit Delay' */
   real32_T ifbk_abc_sum[3];            /* '<S10>/ResIdCal' */
+  real32_T UnitDelay_DSTATE;           /* '<S79>/Unit Delay' */
   real32_T DiscreteTimeIntegrator_DSTATE;/* '<S69>/Discrete-Time Integrator' */
   real32_T DiscreteTimeIntegrator1_DSTATE;/* '<S60>/Discrete-Time Integrator1' */
   real32_T DiscreteTimeIntegrator_DSTATE_h;/* '<S60>/Discrete-Time Integrator' */
@@ -138,9 +137,16 @@ extern const Calib_OutType pmsm_ctrl_rtZCalib_OutType;/* Calib_OutType ground */
  * these signals and export their symbols.
  *
  */
+extern real32_T DBG_mtrif_ifbk_act_w_ofs[3];/* '<S81>/Subtract' */
+extern real32_T DBG_mtrif_v_bus_lpf;   /* '<S79>/Add1' */
 extern real32_T DBG_e_angl;            /* '<S30>/calc_elec_angle' */
+extern real32_T DBG_ifbk_q_tgt;        /* '<S34>/Product' */
 extern real32_T DBG_i_abc_lpf[3];      /* '<S40>/Add1' */
 extern real32_T DBG_i_dq0[3];          /* '<S42>/Gain1' */
+extern real32_T DBG_obs_load_trq;      /* '<S32>/Product1' */
+extern real32_T DBG_ifbk_ctrl_v_dq0[3];/*  */
+extern int32_T DBG_mtrif_enc_cnts_w_ofs;/* '<S80>/Subtract' */
+extern int32_T DBG_obs_enc_cnts;       /* '<S30>/Data Type Conversion4' */
 
 /*
  * Exported States
@@ -163,8 +169,8 @@ extern void Trig_Pmsm_Init(RT_MODEL *const pmsm_ctrl_M);
 /* Exported entry point function */
 extern void Trig_Pmsm_SetIn(RT_MODEL *const pmsm_ctrl_M, int32_T
   rtU_MtrIf_EncCnts, real32_T rtU_MtrIf_IfbkAct[3], real32_T rtU_MtrIf_SpdSns,
-  MtrCtrlMd_T rtU_MtrIf_CtrlMd, real32_T rtU_MtrIf_Tgt[3], MtrCtrlCal_T
-  rtU_MtrIf_CtrlCalRqst);
+  MtrCtrlMd_T rtU_MtrIf_CtrlMd, real32_T rtU_MtrIf_Tgt[3], real32_T
+  rtU_MtrIf_VBus, MtrCtrlCal_T rtU_MtrIf_CtrlCalRqst);
 
 /* Exported entry point function */
 extern void Trig_Pmsm_CtrlMgr(RT_MODEL *const pmsm_ctrl_M);
@@ -191,7 +197,6 @@ extern void Trig_Pmsm_GetOut(RT_MODEL *const pmsm_ctrl_M, real32_T
  * Block '<S10>/Display' : Unused code path elimination
  * Block '<S11>/Display' : Unused code path elimination
  * Block '<S12>/Display' : Unused code path elimination
- * Block '<S32>/Product1' : Unused code path elimination
  * Block '<S36>/Scope' : Unused code path elimination
  * Block '<Root>/DistObs' : Unused code path elimination
  * Block '<Root>/IfbkCtrl' : Unused code path elimination
@@ -206,6 +211,7 @@ extern void Trig_Pmsm_GetOut(RT_MODEL *const pmsm_ctrl_M, real32_T
  * Block '<S6>/Data Type Conversion3' : Eliminate redundant data type conversion
  * Block '<S6>/Data Type Conversion4' : Eliminate redundant data type conversion
  * Block '<S6>/Data Type Conversion5' : Eliminate redundant data type conversion
+ * Block '<S6>/Data Type Conversion6' : Eliminate redundant data type conversion
  */
 
 /*-
@@ -301,8 +307,9 @@ extern void Trig_Pmsm_GetOut(RT_MODEL *const pmsm_ctrl_M, real32_T
  * '<S76>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags/Compare To Constant6'
  * '<S77>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags/Compare To Constant7'
  * '<S78>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags/Compare To Constant8'
- * '<S79>'  : 'pmsm_ctrl/SetInputs/enc_ofs_comp'
- * '<S80>'  : 'pmsm_ctrl/SetInputs/ifbk_ofs_comp'
+ * '<S79>'  : 'pmsm_ctrl/SetInputs/D-1LPF'
+ * '<S80>'  : 'pmsm_ctrl/SetInputs/enc_ofs_comp'
+ * '<S81>'  : 'pmsm_ctrl/SetInputs/ifbk_ofs_comp'
  */
 
 /*-

@@ -29,13 +29,14 @@ typedef struct MtrDbg_tag {
   float i_abc_lpf[3];
   float e_angl;
   float i_dq0[3];
+  int32_t enc_cnts_ofs;
+  float i_abc_ofs[3];
+  float v_bus_lpf; /* Bus voltage. */
+  float ifbk_q_tgt;
+  float ifbk_ctrl_v_dq0[3];
+  int32_t obs_enc_cnts;
+  float obs_load_trq;
 } MtrDbg_S;
-
-#define MTRIF_POS_PH (PwmChA_E)
-#define MTRIF_NEG_PH (PwmChC_E)
-
-#define MTRIF_POS_PH_IFBK (IfbkPhA_E)
-#define MTRIF_NEG_PH_IFBK (IfbkPhC_E)
 
 /* Might need to add other interrupts that might share data. */
 #define MTRIF_LOCK() __disable_irq()
@@ -52,11 +53,9 @@ void MtrIf_CtrlSlow(void);
 
 void MtrIf_CtrlFast(void);
 
-void MtrIf_SetVin(float mtrvin);
+float MtrIf_GetVBus(void);
 
-void MtrIf_GetVin(float* vin);
-
-void MtrIf_GetIfbk(float* ifbk);
+float MtrIf_GetTemp(void);
 
 void MtrIf_GetIfbkDq(float* ifbk);
 
@@ -64,17 +63,9 @@ float MtrIf_GetPos(void);
 
 float MtrIf_GetSpd(void);
 
-float MtrIf_GetPosEst(void);
+void MtrIf_SetCtlMd(MtrCtlMd_T ctlmd, float* target);
 
-void MtrIf_SetIfbk(float ifbktgt);
-
-float MtrIf_GetTgt(void);
-
-void MtrIf_SetCtlMd(MtrCtlMd_T ctlmd);
-
-MtrCtlMd_T MtrIf_GetCtlMd(void);
-
-void MtrIf_SetTgt(float tgt);
+void MtrIf_GetCtlMd(MtrCtlMd_T* ctlmd, float* target);
 
 void MtrIf_SetPwmDc(float* pwm_a);
 
@@ -85,6 +76,8 @@ void MtrIf_GetPwmDq(float* pwm_dq);
 void MtrIf_GetModWave(float* mod_wave);
 
 float MtrIf_GetIfbkPh(IfbkPh_E ph); 
+
+void MtrIf_GetIfbk(float* ifbk);
 
 float MtrIf_GetPwmDcCh(PwmCh_E ch);
 

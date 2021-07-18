@@ -16,6 +16,20 @@ TsFast.CoderInfo.CustomStorageClass = 'ExportToFile';
 TsFast.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
 TsFast.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
 
+%% Bus voltage.
+Cfg_VBus = Simulink.Parameter;
+Cfg_VBus.StorageClass = 'Auto';
+Cfg_VBus.Description = 'Bus voltage';
+Cfg_VBus.DataType = 'single';
+Cfg_VBus.Min = [];
+Cfg_VBus.Max = [];
+Cfg_VBus.DocUnits = '';
+Cfg_VBus.Value = 12.0;
+Cfg_VBus.CoderInfo.StorageClass = 'Custom';
+Cfg_VBus.CoderInfo.CustomStorageClass = 'ExportToFile';
+Cfg_VBus.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
+Cfg_VBus.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
+
 %% Number of pole pairs.
 Cfg_PolePairs = Simulink.Parameter;
 Cfg_PolePairs.StorageClass = 'Auto';
@@ -29,6 +43,48 @@ Cfg_PolePairs.CoderInfo.StorageClass = 'Custom';
 Cfg_PolePairs.CoderInfo.CustomStorageClass = 'ExportToFile';
 Cfg_PolePairs.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
 Cfg_PolePairs.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
+
+%% Motor Inductance.
+Cfg_Ls = Simulink.Parameter;
+Cfg_Ls.StorageClass = 'Auto';
+Cfg_Ls.Description = 'Motor inductance (phase)';
+Cfg_Ls.DataType = 'single';
+Cfg_Ls.Min = [];
+Cfg_Ls.Max = [];
+Cfg_Ls.DocUnits = '';
+Cfg_Ls.Value = 0.0013;
+Cfg_Ls.CoderInfo.StorageClass = 'Custom';
+Cfg_Ls.CoderInfo.CustomStorageClass = 'ExportToFile';
+Cfg_Ls.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
+Cfg_Ls.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
+
+%% Motor Resistance.
+Cfg_Rs = Simulink.Parameter;
+Cfg_Rs.StorageClass = 'Auto';
+Cfg_Rs.Description = 'Motor resistance (phase).';
+Cfg_Rs.DataType = 'single';
+Cfg_Rs.Min = [];
+Cfg_Rs.Max = [];
+Cfg_Rs.DocUnits = '';
+Cfg_Rs.Value = 1.4;
+Cfg_Rs.CoderInfo.StorageClass = 'Custom';
+Cfg_Rs.CoderInfo.CustomStorageClass = 'ExportToFile';
+Cfg_Rs.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
+Cfg_Rs.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
+
+%% Motor Flux.
+Cfg_MFlux = Simulink.Parameter;
+Cfg_MFlux.StorageClass = 'Auto';
+Cfg_MFlux.Description = 'Motor flux';
+Cfg_MFlux.DataType = 'single';
+Cfg_MFlux.Min = [];
+Cfg_MFlux.Max = [];
+Cfg_MFlux.DocUnits = '';
+Cfg_MFlux.Value = 0.0058;
+Cfg_MFlux.CoderInfo.StorageClass = 'Custom';
+Cfg_MFlux.CoderInfo.CustomStorageClass = 'ExportToFile';
+Cfg_MFlux.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
+Cfg_MFlux.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
 
 %% Enable offset calibration.
 Cfg_TmOfsCal = Simulink.Parameter;
@@ -206,7 +262,7 @@ Cfg_EnblDynComp.DataType = 'boolean';
 Cfg_EnblDynComp.Min = [];
 Cfg_EnblDynComp.Max = [];
 Cfg_EnblDynComp.DocUnits = '';
-Cfg_EnblDynComp.Value = true;
+Cfg_EnblDynComp.Value = false;
 Cfg_EnblDynComp.CoderInfo.StorageClass = 'Custom';
 Cfg_EnblDynComp.CoderInfo.CustomStorageClass = 'ExportToFile';
 Cfg_EnblDynComp.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';

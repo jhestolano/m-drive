@@ -15,7 +15,6 @@
 
 typedef struct MtrIf_State_tag {
   uint8_t is_init;
-  uint8_t cal_done;
   float pwm_dc[3];
   float mod_wave[3];
   float mtr_ifbk[3];
@@ -23,6 +22,9 @@ typedef struct MtrIf_State_tag {
   float mtr_trq;
   float pwm_dq[2];
   float ifbk_dq[2];
+  float ctrl_tgt[3];
+  MtrCtrlMd_T ctrl_md_rqst;
+  MtrCtrlMd_T ctrl_md_act;
 } MtrIf_State_S;
 
 MtrIf_State_S _mtr_if_s = {0};
@@ -46,6 +48,9 @@ static void _mtr_if_adc_isr_callback(void *params) {
 RT_MODEL pmsm_ctrl_obj;
 
 void MtrIf_Init(void) {
+
+  bzero(&_mtr_if_s, sizeof(MtrIf_State_S));
+
   MTRIF_LOCK();
 
   ADC_AttachISRCallback(_mtr_if_adc_isr_callback);
@@ -55,6 +60,7 @@ void MtrIf_Init(void) {
   _mtr_if_s.is_init = true;
 
   MTRIF_UNLOCK();
+
   App_ArmMotor();
 }
 
@@ -75,6 +81,8 @@ void MtrIf_CtrlFast(void) {
   MtrCtrlCal_T cal_rqst;
   float ctrl_tgt[3] = {0.f};
 
+  MtrIf_GetIfbk(&_mtr_if_s.mtr_ifbk[0]);
+
   switch(st) {
     case 0: /* Offset calibration */
     ctrl_md = CTRL_MD_CAL;
@@ -84,50 +92,66 @@ void MtrIf_CtrlFast(void) {
       st++;
       tmr = 0;
     }
+    /* Trig_Pmsm_SetIn( */
+    /*   &pmsm_ctrl_obj, */
+    /*   App_GetEncCnt(), /1* Encoder counts *1/ */
+    /*   (real32_T*)&_mtr_if_s.mtr_ifbk[0], /1* Array with phase currents. *1/ */
+    /*   (real32_T)0.0f, /1* Speed sensor *1/ */
+    /*   CTRL_MD_CAL, /1* Control mode *1/ */
+    /*   (real32_T*)ctrl_tgt, /1* Target *1/ */
+    /*   (real32_T)MtrIf_GetVBus(), /1* Bus voltage. *1/ */
+    /*   CAL_ENC_OFS /1* Calibration request. *1/ */
+    /* ); */
     break;
 
-  /*   case 1: /1* Inductance calibration *1/ */
-  /*   ctrl_md = CTRL_MD_CAL; */
-  /*   cal_rqst = CAL_IND_ID; */
-  /*   tmr++; */
-  /*   if(tmr >= 60e3) { */
-  /*     st++; */
-  /*     tmr = 0; */
-  /*   } */
-  /*   break; */
+    case 1: /* Ifbk offset calibration */
+    ctrl_md = CTRL_MD_CAL;
+    cal_rqst = CAL_IFBK_OFS;
+    tmr++;
+    if(tmr >= 60e3) {
+      st++;
+      tmr = 0;
+    }
+    break;
 
-  /*   case 2: /1* Resistance calibration *1/ */
-  /*   ctrl_md = CTRL_MD_CAL; */
-  /*   cal_rqst = CAL_RES_ID; */
-  /*   tmr++; */
-  /*   if(tmr >= 60e3) { */
-  /*     st++; */
-  /*     tmr = 0; */
-  /*   } */
-  /*   break; */
+    case 2: /* Inductance calibration */
+    ctrl_md = CTRL_MD_CAL;
+    cal_rqst = CAL_IND_ID;
+    tmr++;
+    if(tmr >= 60e3) {
+      st++;
+      tmr = 0;
+    }
+    break;
 
-  /*   case 3: /1* Ifbk offset calibration *1/ */
-  /*   ctrl_md = CTRL_MD_CAL; */
-  /*   cal_rqst = CAL_IFBK_OFS; */
-  /*   tmr++; */
-  /*   if(tmr >= 60e3) { */
-  /*     st++; */
-  /*     tmr = 0; */
-  /*   } */
-  /*   break; */
+    case 3: /* Resistance calibration */
+    ctrl_md = CTRL_MD_CAL;
+    cal_rqst = CAL_RES_ID;
+    tmr++;
+    if(tmr >= 60e3) {
+      st++;
+      tmr = 0;
+    }
+    break;
+
 
     default: /* Just spin it. */
-    ctrl_md = CTRL_MD_DQ_PWM;
-    ctrl_tgt[0] = 0.0f;
-    ctrl_tgt[1] = 0.20; /* Q-component */
-    ctrl_tgt[2] = 0.0f;
+    ctrl_md = CTRL_MD_IFBK;
+    ctrl_tgt[0] = 0.3f;
     cal_rqst = CAL_NONE;
     tmr = 0;
     st = 255; /* Stay here @ default */
+    /* Trig_Pmsm_SetIn( */
+    /*   &pmsm_ctrl_obj, */
+    /*   App_GetEncCnt(), /1* Encoder counts *1/ */
+    /*   (real32_T*)&_mtr_if_s.mtr_ifbk[0], /1* Array with phase currents. *1/ */
+    /*   (real32_T)0.0f, /1* Speed sensor *1/ */
+    /*   _mtr_if_s.ctrl_md_rqst, /1* Control mode *1/ */
+    /*   (real32_T*)&_mtr_if_s.ctrl_tgt, */
+    /*   (real32_T)MtrIf_GetVBus(), /1* Bus voltage. *1/ */
+    /*   CAL_NONE /1* Calibration request. *1/ */
+    /* ); */
   }
-
-
-  MtrIf_GetIfbk(&_mtr_if_s.mtr_ifbk[0]);
 
   Trig_Pmsm_SetIn(
     &pmsm_ctrl_obj,
@@ -135,9 +159,12 @@ void MtrIf_CtrlFast(void) {
     (real32_T*)&_mtr_if_s.mtr_ifbk[0], /* Array with phase currents. */
     (real32_T)0.0f, /* Speed sensor */
     ctrl_md, /* Control mode */
-    (real32_T*)&ctrl_tgt, /* Control target. */
+    (real32_T*)ctrl_tgt, /* Target */
+    (real32_T)MtrIf_GetVBus(), /* Bus voltage. */
     cal_rqst /* Calibration request. */
   );
+
+
 
   Trig_Pmsm_Foc(&pmsm_ctrl_obj);
 
@@ -152,20 +179,6 @@ void MtrIf_CtrlFast(void) {
   );
 
   MtrIf_SetPwmDc(&_mtr_if_s.pwm_dc[0]);
-}
-
-void MtrIf_SetVin(float mtrvin) {
-  int32_t vin = (int32_t)(mtrvin * MTRIF_TO_MILLIS);
-  if(vin > 0) {
-    App_SetPwmVoltage(MTRIF_POS_PH, (uint32_t)vin);
-    App_SetPwmVoltage(MTRIF_NEG_PH, 0);
-  } else if(vin < 0){
-    App_SetPwmVoltage(MTRIF_POS_PH, 0);
-    App_SetPwmVoltage(MTRIF_NEG_PH, (uint32_t)(-vin));
-  } else {
-    App_SetPwmVoltage(MTRIF_POS_PH, 0);
-    App_SetPwmVoltage(MTRIF_NEG_PH, 0);
-  }
 }
 
 void MtrIf_SetPwmDc(float* pwm_a) {
@@ -188,14 +201,13 @@ float MtrIf_GetPwmDcCh(PwmCh_E ch) {
     return (float)App_GetPwmDutyCycle((PwmCh_E)ch) / (float)APP_PWM_MAX_DC;
 }
 
-void MtrIf_GetVin(float* vin) {
-  if(vin) {
-    for(size_t i = 0; i < PwmChMax_E; i++) {
-      vin[i] = MTRIF_FROM_MILLIS * (float)App_GetPwmVoltage((PwmCh_E)i);
-    }
-  }
+float MtrIf_GetVBus(void) {
+  return (float)App_GetBusVoltage() * MTRIF_FROM_MILLIS;
 }
 
+float MtrIf_GetTemp(void) {
+  return (float)App_GetTemp() * MTRIF_FROM_MILLIS;
+}
 
 void MtrIf_GetIfbk(float* ifbk) {
   if(ifbk) {
@@ -231,14 +243,6 @@ float MtrIf_GetPos(void) {
   return (float)App_GetPosition() * (MTRIF_TO_DEG);
 }
 
-float MtrIf_GetPosEst(void) {
-  float pos_est;
-  MTRIF_LOCK();
-  /* pos_est = _mtr_if_s.pos_est; */
-  MTRIF_UNLOCK();
-  return pos_est;
-}
-
 float MtrIf_GetSpd(void) {
   float spd;
   MTRIF_LOCK();
@@ -255,17 +259,33 @@ float MtrIf_GetTrq(void) {
   return trq;
 }
 
-MtrCtlMd_T MtrIf_GetCtlMd(void) {
-  /* return _mtr_if_s.ctrl_md; */
-  return (MtrCtlMd_T)0;
+void MtrIf_GetCtlMd(MtrCtlMd_T* ctrl_md, float* target) {
+  if(ctrl_md && target) {
+    MTRIF_LOCK();
+    *ctrl_md = _mtr_if_s.ctrl_md_act;
+    target[0] = _mtr_if_s.ctrl_tgt[0];
+    target[1] = _mtr_if_s.ctrl_tgt[1];
+    target[2] = _mtr_if_s.ctrl_tgt[2];
+    MTRIF_UNLOCK();
+  }
 }
 
-void MtrIf_SetCtlMd(MtrCtlMd_T ctrl_md) {
-  /* _mtr_if_s.ctrl_md = ctrl_md; */
-}
+void MtrIf_SetCtlMd(MtrCtlMd_T ctrl_md, float* target) {
+  if(target) {
+    MTRIF_LOCK();
+    _mtr_if_s.ctrl_md_rqst = ctrl_md;
 
-void MtrIf_SetTgt(float tgt) {
-  /* _mtr_if_s.mtr_tgt = tgt; */
+    /* For now set actual to request. Later down the road, validation */
+    /* checks will be needed to honor a mode request. */
+    _mtr_if_s.ctrl_md_act = ctrl_md;
+
+    _mtr_if_s.ctrl_tgt[0] = target[0];
+    _mtr_if_s.ctrl_tgt[1] = target[1];
+    _mtr_if_s.ctrl_tgt[2] = target[2];
+
+    MTRIF_UNLOCK();
+
+  }
 }
 
 void MtrIf_GetModWave(float* mod_wave) {
@@ -302,6 +322,17 @@ void MtrIf_GetDbg(MtrDbg_S* dbg) {
     dbg->i_dq0[0] = (float)DBG_i_dq0[0];
     dbg->i_dq0[1] = (float)DBG_i_dq0[1];
     dbg->i_dq0[2] = (float)DBG_i_dq0[2];
+    dbg->enc_cnts_ofs = (int32_t)DBG_mtrif_enc_cnts_w_ofs;
+    dbg->i_abc_ofs[0] = (float)DBG_mtrif_ifbk_act_w_ofs[0];
+    dbg->i_abc_ofs[1] = (float)DBG_mtrif_ifbk_act_w_ofs[1];
+    dbg->i_abc_ofs[2] = (float)DBG_mtrif_ifbk_act_w_ofs[2];
+    dbg->v_bus_lpf = (float)DBG_mtrif_v_bus_lpf;
+    dbg->obs_enc_cnts = (int32_t)DBG_obs_enc_cnts;
+    dbg->ifbk_q_tgt = (float)DBG_ifbk_q_tgt;
+    dbg->ifbk_ctrl_v_dq0[0] = (float)DBG_ifbk_ctrl_v_dq0[0];
+    dbg->ifbk_ctrl_v_dq0[1] = (float)DBG_ifbk_ctrl_v_dq0[1];
+    dbg->ifbk_ctrl_v_dq0[2] = (float)DBG_ifbk_ctrl_v_dq0[2];
+    dbg->obs_load_trq = (float)DBG_obs_load_trq;
     MTRIF_UNLOCK();
   }
 }

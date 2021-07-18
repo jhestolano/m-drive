@@ -441,6 +441,18 @@ elems(6).Max = [];
 elems(6).DocUnits = '';
 elems(6).Description = '';
 
+elems(7) = Simulink.BusElement;
+elems(7).Name = 'mtrif_v_bus';
+elems(7).Dimensions = 1;
+elems(7).DimensionsMode = 'Fixed';
+elems(7).DataType = 'single';
+elems(7).SampleTime = -1;
+elems(7).Complexity = 'real';
+elems(7).Min = [];
+elems(7).Max = [];
+elems(7).DocUnits = '';
+elems(7).Description = sprintf('Voltage Bus measurement.');
+
 MtrIf_InType = Simulink.Bus;
 MtrIf_InType.HeaderFile = '';
 MtrIf_InType.Description = sprintf('Structure that holds all neccessary controller input signals.');

@@ -53,7 +53,7 @@ int32_t App_GetCurrent(IfbkPh_E ifbk) {
   if(ifbk >= IfbkPhMax_E) {
     return INT32_MAX;
   }
-  mvolts = (int32_t)App_GetVoltage((VAdcCh_E)ifbk) - (int32_t)APP_PARAMS_IFBK_BIAS;
+  mvolts = (int32_t)APP_PARAMS_IFBK_BIAS - (int32_t)App_GetVoltage((VAdcCh_E)ifbk);
   return (int32_t)(APP_PARAMS_IFBK_R_INV * (mvolts) / (int32_t)APP_PARAMS_IFBK_GAIN);
 }
 

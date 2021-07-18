@@ -18,6 +18,9 @@
 #define APP_PARAMS_ENC_RES (15) /* Encoder resolution in 0.01 deg resolution. */
 #define APP_PARAMS_DEG_TO_RAD (0.017453292519943f) /* pi / 180 constant */
 #define APP_PARAMS_RADpS_TO_RPM (9.549296585513721f) /* 30 / pi scaling. */
+#define APP_PARAMS_VBUS (12000) /* 12 millivolts */
+/* #define APP_PARAMS_VBUS_V_DIV_INV ((169.0e3f + 9.31e3f) / 9.31e3f) /1* Volt. Divider *1/ */
+/* #define APP_PARAMS_VBUS_SCL (APP_PARAMS_VBUS) / (APP_PARAMS_VBUS_V_DIV_INV) */
 
 #define APP_PWM_MAX_DC (10000)
 #define APP_ADC_MAX_VOLTS (3300)

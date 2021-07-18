@@ -3,7 +3,7 @@
  *
  * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.676
+ * Model version              : 1.698
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */
@@ -94,6 +94,9 @@ typedef struct {
   MtrCtrlMd_T mtrif_ctrl_md;
   real32_T mtrif_tgt[3];
   MtrCtrlCal_T mtrif_cal_rqst;
+
+  /* Voltage Bus measurement. */
+  real32_T mtrif_v_bus;
 } MtrIf_InType;
 
 #endif

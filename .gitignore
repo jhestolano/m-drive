@@ -3,6 +3,7 @@ mbd/codegen/*
 !mbd/codegen/*.c
 !mbd/codegen/*.h
 tags
+*.slx.autosave
 
 # Prerequisites
 *.d

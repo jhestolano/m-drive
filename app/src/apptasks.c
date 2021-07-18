@@ -84,11 +84,15 @@ void AppTask_MotorControl(void* params) {
     MtrIf_GetPwmDq(pwm_dq);
 
 #ifdef __SLOG__
-    signal_buff[0] = (float)MtrIf_GetPos();
+    /* signal_buff[0] = (float)MtrIf_GetPos(); */
+    signal_buff[0] = (float)mtr_dbg.enc_cnts_ofs;
     signal_buff[1] = (float)MtrIf_GetSpd();
-    signal_buff[2] = (float)MtrIf_GetIfbkPh(IfbkPhA_E);
-    signal_buff[3] = (float)MtrIf_GetIfbkPh(IfbkPhB_E);
-    signal_buff[4] = (float)MtrIf_GetIfbkPh(IfbkPhC_E);
+    /* signal_buff[2] = (float)MtrIf_GetIfbkPh(IfbkPhA_E); */
+    /* signal_buff[3] = (float)MtrIf_GetIfbkPh(IfbkPhB_E); */
+    /* signal_buff[4] = (float)MtrIf_GetIfbkPh(IfbkPhC_E); */
+    signal_buff[2] = (float)mtr_dbg.i_abc_ofs[0];
+    signal_buff[3] = (float)mtr_dbg.i_abc_ofs[1];
+    signal_buff[4] = (float)mtr_dbg.i_abc_ofs[2];
     signal_buff[5] = (float)MtrIf_GetPwmDcCh(PwmChA_E);
     signal_buff[6] = (float)MtrIf_GetPwmDcCh(PwmChB_E);
     signal_buff[7] = (float)MtrIf_GetPwmDcCh(PwmChC_E);
@@ -98,6 +102,12 @@ void AppTask_MotorControl(void* params) {
     signal_buff[11] = mtr_dbg.i_abc_lpf[2];
     signal_buff[12] = mtr_dbg.i_dq0[0]; /* D-component. */
     signal_buff[13] = mtr_dbg.i_dq0[1]; /* Q-component. */
+    signal_buff[14] = (float)MtrIf_GetVBus();
+    signal_buff[15] = mtr_dbg.v_bus_lpf;
+    signal_buff[16] = (float)MtrIf_GetTemp();
+    signal_buff[17] = mtr_dbg.ifbk_q_tgt;
+    signal_buff[18] = (float)mtr_dbg.obs_enc_cnts;
+    signal_buff[19] = (float)mtr_dbg.obs_load_trq;
 
     xStreamBufferSend(stream_buff,
         (void*)signal_buff,

@@ -81,7 +81,7 @@ SmDiffParams.Kp = sqrt(SmDiffParams.AccMax);
 % dz3/dt = z3 - k3 * e;
 
 % Observer tuning:
-AdrcParams.Tsettle = 0.002;
+AdrcParams.Tsettle = 0.010;
 AdrcParams.w0 = 4. / AdrcParams.Tsettle;
 AdrcParams.K1 = 3 * AdrcParams.w0;
 AdrcParams.K2 = 3 * AdrcParams.w0 ^ 2;
