@@ -16,6 +16,20 @@ TsFast.CoderInfo.CustomStorageClass = 'ExportToFile';
 TsFast.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
 TsFast.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
 
+%% Trajectory planner.
+Cfg_EnblTrajPlan = Simulink.Parameter;
+Cfg_EnblTrajPlan.StorageClass = 'Auto';
+Cfg_EnblTrajPlan.Description = 'Enable trajectory planner (speed and position).';
+Cfg_EnblTrajPlan.DataType = 'boolean';
+Cfg_EnblTrajPlan.Min = [];
+Cfg_EnblTrajPlan.Max = [];
+Cfg_EnblTrajPlan.DocUnits = '';
+Cfg_EnblTrajPlan.Value = false;
+Cfg_EnblTrajPlan.CoderInfo.StorageClass = 'Custom';
+Cfg_EnblTrajPlan.CoderInfo.CustomStorageClass = 'ExportToFile';
+Cfg_EnblTrajPlan.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
+Cfg_EnblTrajPlan.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
+
 %% Bus voltage.
 Cfg_VBus = Simulink.Parameter;
 Cfg_VBus.StorageClass = 'Auto';
@@ -734,7 +748,7 @@ DistObs_J.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
 Cfg_EncCnts = Simulink.Parameter;
 Cfg_EncCnts.StorageClass = 'Auto';
 Cfg_EncCnts.Description = 'Encoder counts';
-Cfg_EncCnts.DataType = 'single';
+Cfg_EncCnts.DataType = 'int32';
 Cfg_EncCnts.Min = [];
 Cfg_EncCnts.Max = [];
 Cfg_EncCnts.DocUnits = '';
@@ -743,20 +757,6 @@ Cfg_EncCnts.CoderInfo.StorageClass = 'Custom';
 Cfg_EncCnts.CoderInfo.CustomStorageClass = 'ExportToFile';
 Cfg_EncCnts.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
 Cfg_EncCnts.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Encoder definition.
-Cfg_EncCntsInt = Simulink.Parameter;
-Cfg_EncCntsInt.StorageClass = 'Auto';
-Cfg_EncCntsInt.Description = 'Encoder counts w/ int32 data type.';
-Cfg_EncCntsInt.DataType = 'int32';
-Cfg_EncCntsInt.Min = [];
-Cfg_EncCntsInt.Max = [];
-Cfg_EncCntsInt.DocUnits = '';
-Cfg_EncCntsInt.Value = MtrParams.EncCnts;
-Cfg_EncCntsInt.CoderInfo.StorageClass = 'Custom';
-Cfg_EncCntsInt.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_EncCntsInt.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_EncCntsInt.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
 
 %% Encoder to radians.
 EncCntsToRads = Simulink.Parameter;

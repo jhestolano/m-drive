@@ -3,7 +3,7 @@
  *
  * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.698
+ * Model version              : 1.700
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */
@@ -1087,14 +1087,10 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
           CalData_nPoles = -1;
           pmsm_ctrl_M->blockIO.CtrlMdRqst = CTRL_MD_OFF;
           pmsm_ctrl_M->blockIO.CalMgrStRqst = ST_DONE;
-          if (-Cfg_EncCnts < 2.14748365E+9F) {
-            if (-Cfg_EncCnts >= -2.14748365E+9F) {
-              CalData_EncOfs = (int32_T)-Cfg_EncCnts;
-            } else {
-              CalData_EncOfs = MIN_int32_T;
-            }
-          } else {
+          if (Cfg_EncCnts <= MIN_int32_T) {
             CalData_EncOfs = MAX_int32_T;
+          } else {
+            CalData_EncOfs = -Cfg_EncCnts;
           }
         } else if ((pmsm_ctrl_M->blockIO.Ticks < 0) &&
                    (pmsm_ctrl_M->dwork.ticks_inc < MIN_int32_T
@@ -1155,14 +1151,10 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
         CalData_nPoles = -1;
         pmsm_ctrl_M->blockIO.CtrlMdRqst = CTRL_MD_OFF;
         pmsm_ctrl_M->blockIO.CalMgrStRqst = ST_DONE;
-        if (-Cfg_EncCnts < 2.14748365E+9F) {
-          if (-Cfg_EncCnts >= -2.14748365E+9F) {
-            CalData_EncOfs = (int32_T)-Cfg_EncCnts;
-          } else {
-            CalData_EncOfs = MIN_int32_T;
-          }
-        } else {
+        if (Cfg_EncCnts <= MIN_int32_T) {
           CalData_EncOfs = MAX_int32_T;
+        } else {
+          CalData_EncOfs = -Cfg_EncCnts;
         }
         break;
 
@@ -1238,11 +1230,9 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
     /* Outputs for Atomic SubSystem: '<S9>/calc_mod_wave' */
 
     /* BusCreator: '<S9>/Bus Creator' incorporates:
-     *  DataTypeConversion: '<S9>/Data Type Conversion'
      *  Gain: '<S9>/Gain'
      */
-    calc_mod_wave(pmsm_ctrl_M, rtb_TmpSignalConversionAtcalc_i, 6.28318548F /
-                  Cfg_EncCnts * (real32_T)pmsm_ctrl_M->blockIO.Ticks,
+    calc_mod_wave(pmsm_ctrl_M, rtb_TmpSignalConversionAtcalc_i, 0.0F,
                   pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst,
                   pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst);
 
@@ -1376,7 +1366,7 @@ void Trig_Pmsm_Foc(RT_MODEL *const pmsm_ctrl_M)
    *  DataTypeConversion: '<S30>/Data Type Conversion3'
    */
   calc_elec_angle(pmsm_ctrl_M, pmsm_ctrl_M->blockIO.BusCreator.mtrif_enc_cnts,
-                  &DBG_e_angl, &rtb_Divide2, Cfg_EncCntsInt, Cfg_PolePairs);
+                  &DBG_e_angl, &rtb_Divide2, Cfg_EncCnts, Cfg_PolePairs);
 
   /* End of Outputs for SubSystem: '<S30>/calc_elec_angle' */
 
@@ -1742,7 +1732,7 @@ void Trig_Pmsm_Foc(RT_MODEL *const pmsm_ctrl_M)
    *  DiscreteIntegrator: '<S39>/Discrete-Time Integrator'
    *  Gain: '<S30>/Gain4'
    */
-  DBG_obs_enc_cnts = (int32_T)(real32_T)floor(Cfg_EncCnts / 6.28318548F *
+  DBG_obs_enc_cnts = (int32_T)(real32_T)floor(1.0F / EncCntsToRads *
     pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTAT_ke);
 
   /* DataTypeConversion: '<S30>/Data Type Conversion2' */

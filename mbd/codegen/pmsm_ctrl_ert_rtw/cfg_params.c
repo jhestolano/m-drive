@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'pmsm_ctrl'.
  *
- * Model version                  : 1.698
+ * Model version                  : 1.700
  * Simulink Coder version         : 8.14 (R2018a) 06-Feb-2018
- * C/C++ source code generated on : Sat Jul 17 23:10:38 2021
+ * C/C++ source code generated on : Tue Jul 20 20:27:14 2021
  */
 
 #include "rtwtypes.h"
@@ -17,8 +17,7 @@
 /* Definition for custom storage class: ExportToFile */
 boolean_T Cfg_AutoCalEnbl = 0;         /* Enable ifbk loop autocalibration at startup */
 boolean_T Cfg_EnblDynComp = 0;         /* Enable x-coupling and b-emf comp */
-real32_T Cfg_EncCnts = 2400.0F;        /* Encoder counts */
-int32_T Cfg_EncCntsInt = 2400;         /* Encoder counts w/ int32 data type. */
+int32_T Cfg_EncCnts = 2400;            /* Encoder counts */
 real32_T Cfg_IfbkCtrlBW = 2000.0F;     /* Current controller bandwith (rad/s) */
 real32_T Cfg_Ls = 0.0013F;             /* Motor inductance (phase) */
 real32_T Cfg_MFlux = 0.0058F;          /* Motor flux */
