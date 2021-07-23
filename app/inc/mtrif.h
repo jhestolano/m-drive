@@ -5,6 +5,9 @@
 #include "adc.h"
 #include "app.h"
 #include "cmsis_gcc.h"
+#include "pmsm_ctrl.h"
+
+typedef DBG_Struct_type MtrDbg_S;
 
 typedef enum {
   MtrCtlMdPos_E = 0,
@@ -24,19 +27,6 @@ typedef struct MtrParams_tag {
   float inertia; /* Rotor inertia. */
   float ifbk_ofs[3]; /* Current offsets. */
 } MtrParams_S;
-
-typedef struct MtrDbg_tag {
-  float i_abc_lpf[3];
-  float e_angl;
-  float i_dq0[3];
-  int32_t enc_cnts_ofs;
-  float i_abc_ofs[3];
-  float v_bus_lpf; /* Bus voltage. */
-  float ifbk_q_tgt;
-  float ifbk_ctrl_v_dq0[3];
-  int32_t obs_enc_cnts;
-  float obs_load_trq;
-} MtrDbg_S;
 
 /* Might need to add other interrupts that might share data. */
 #define MTRIF_LOCK() __disable_irq()

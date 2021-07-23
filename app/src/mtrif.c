@@ -13,6 +13,8 @@
 #define MTRIF_TO_MILLIS (1.0e3f) /* Convert to millis (amps, volts, etc.) */
 #define MTRIF_FROM_MILLIS (1.0e-3f) /* Convert back from millis. */
 
+extern DBG_Struct_type DBG_Struct;
+
 typedef struct MtrIf_State_tag {
   uint8_t is_init;
   float pwm_dc[3];
@@ -25,6 +27,7 @@ typedef struct MtrIf_State_tag {
   float ctrl_tgt[3];
   MtrCtrlMd_T ctrl_md_rqst;
   MtrCtrlMd_T ctrl_md_act;
+  uint8_t is_busy;
 } MtrIf_State_S;
 
 MtrIf_State_S _mtr_if_s = {0};
@@ -59,6 +62,8 @@ void MtrIf_Init(void) {
 
   _mtr_if_s.is_init = true;
 
+  _mtr_if_s.is_busy = false;
+
   MTRIF_UNLOCK();
 
   App_ArmMotor();
@@ -66,9 +71,8 @@ void MtrIf_Init(void) {
 
 void MtrIf_CtrlSlow(void) {
 
-  boolean_T cal_actv;
   Trig_Pmsm_CtrlMgr(&pmsm_ctrl_obj);
-  Trig_Pmsm_Cal(&pmsm_ctrl_obj, &cal_actv);
+  Trig_Pmsm_Cal(&pmsm_ctrl_obj);
   Trig_Pmsm_MotnCtrl(&pmsm_ctrl_obj);
 
 }
@@ -85,6 +89,7 @@ void MtrIf_CtrlFast(void) {
 
   switch(st) {
     case 0: /* Offset calibration */
+    _mtr_if_s.is_busy = true;
     ctrl_md = CTRL_MD_CAL;
     cal_rqst = CAL_ENC_OFS;
     tmr++;
@@ -92,16 +97,6 @@ void MtrIf_CtrlFast(void) {
       st++;
       tmr = 0;
     }
-    /* Trig_Pmsm_SetIn( */
-    /*   &pmsm_ctrl_obj, */
-    /*   App_GetEncCnt(), /1* Encoder counts *1/ */
-    /*   (real32_T*)&_mtr_if_s.mtr_ifbk[0], /1* Array with phase currents. *1/ */
-    /*   (real32_T)0.0f, /1* Speed sensor *1/ */
-    /*   CTRL_MD_CAL, /1* Control mode *1/ */
-    /*   (real32_T*)ctrl_tgt, /1* Target *1/ */
-    /*   (real32_T)MtrIf_GetVBus(), /1* Bus voltage. *1/ */
-    /*   CAL_ENC_OFS /1* Calibration request. *1/ */
-    /* ); */
     break;
 
     case 1: /* Ifbk offset calibration */
@@ -114,43 +109,38 @@ void MtrIf_CtrlFast(void) {
     }
     break;
 
-    case 2: /* Inductance calibration */
-    ctrl_md = CTRL_MD_CAL;
-    cal_rqst = CAL_IND_ID;
-    tmr++;
-    if(tmr >= 60e3) {
-      st++;
-      tmr = 0;
-    }
-    break;
+    /* case 2: /1* Inductance calibration *1/ */
+    /* _mtr_if_s.is_busy = true; */
+    /* ctrl_md = CTRL_MD_CAL; */
+    /* cal_rqst = CAL_IND_ID; */
+    /* tmr++; */
+    /* if(tmr >= 60e3) { */
+    /*   st++; */
+    /*   tmr = 0; */
+    /* } */
+    /* break; */
 
-    case 3: /* Resistance calibration */
-    ctrl_md = CTRL_MD_CAL;
-    cal_rqst = CAL_RES_ID;
-    tmr++;
-    if(tmr >= 60e3) {
-      st++;
-      tmr = 0;
-    }
-    break;
+    /* case 3: /1* Resistance calibration *1/ */
+    /* _mtr_if_s.is_busy = true; */
+    /* ctrl_md = CTRL_MD_CAL; */
+    /* cal_rqst = CAL_RES_ID; */
+    /* tmr++; */
+    /* if(tmr >= 60e3) { */
+    /*   st++; */
+    /*   tmr = 0; */
+    /* } */
+    /* break; */
 
 
     default: /* Just spin it. */
-    ctrl_md = CTRL_MD_IFBK;
-    ctrl_tgt[0] = 0.3f;
+    _mtr_if_s.is_busy = false;
     cal_rqst = CAL_NONE;
     tmr = 0;
     st = 255; /* Stay here @ default */
-    /* Trig_Pmsm_SetIn( */
-    /*   &pmsm_ctrl_obj, */
-    /*   App_GetEncCnt(), /1* Encoder counts *1/ */
-    /*   (real32_T*)&_mtr_if_s.mtr_ifbk[0], /1* Array with phase currents. *1/ */
-    /*   (real32_T)0.0f, /1* Speed sensor *1/ */
-    /*   _mtr_if_s.ctrl_md_rqst, /1* Control mode *1/ */
-    /*   (real32_T*)&_mtr_if_s.ctrl_tgt, */
-    /*   (real32_T)MtrIf_GetVBus(), /1* Bus voltage. *1/ */
-    /*   CAL_NONE /1* Calibration request. *1/ */
-    /* ); */
+    MtrIf_GetCtlMd(&ctrl_md, &ctrl_tgt[0]);
+    ctrl_md = CTRL_MD_IFBK;
+    ctrl_tgt[0] = 0.3;
+
   }
 
   Trig_Pmsm_SetIn(
@@ -163,8 +153,6 @@ void MtrIf_CtrlFast(void) {
     (real32_T)MtrIf_GetVBus(), /* Bus voltage. */
     cal_rqst /* Calibration request. */
   );
-
-
 
   Trig_Pmsm_Foc(&pmsm_ctrl_obj);
 
@@ -315,24 +303,7 @@ void MtrIf_GetMtrParams(MtrParams_S* params) {
 void MtrIf_GetDbg(MtrDbg_S* dbg) {
   if(dbg) {
     MTRIF_LOCK();
-    dbg->e_angl = (float)DBG_e_angl;
-    dbg->i_abc_lpf[0] = (float)DBG_i_abc_lpf[0];
-    dbg->i_abc_lpf[1] = (float)DBG_i_abc_lpf[1];
-    dbg->i_abc_lpf[2] = (float)DBG_i_abc_lpf[2];
-    dbg->i_dq0[0] = (float)DBG_i_dq0[0];
-    dbg->i_dq0[1] = (float)DBG_i_dq0[1];
-    dbg->i_dq0[2] = (float)DBG_i_dq0[2];
-    dbg->enc_cnts_ofs = (int32_t)DBG_mtrif_enc_cnts_w_ofs;
-    dbg->i_abc_ofs[0] = (float)DBG_mtrif_ifbk_act_w_ofs[0];
-    dbg->i_abc_ofs[1] = (float)DBG_mtrif_ifbk_act_w_ofs[1];
-    dbg->i_abc_ofs[2] = (float)DBG_mtrif_ifbk_act_w_ofs[2];
-    dbg->v_bus_lpf = (float)DBG_mtrif_v_bus_lpf;
-    dbg->obs_enc_cnts = (int32_t)DBG_obs_enc_cnts;
-    dbg->ifbk_q_tgt = (float)DBG_ifbk_q_tgt;
-    dbg->ifbk_ctrl_v_dq0[0] = (float)DBG_ifbk_ctrl_v_dq0[0];
-    dbg->ifbk_ctrl_v_dq0[1] = (float)DBG_ifbk_ctrl_v_dq0[1];
-    dbg->ifbk_ctrl_v_dq0[2] = (float)DBG_ifbk_ctrl_v_dq0[2];
-    dbg->obs_load_trq = (float)DBG_obs_load_trq;
+    memcpy((void*)dbg, (void*)&DBG_Struct, sizeof(DBG_Struct_type));
     MTRIF_UNLOCK();
   }
 }

@@ -3,7 +3,7 @@
  *
  * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.730
+ * Model version              : 1.731
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */
@@ -115,6 +115,25 @@ typedef struct {
   boolean_T IfbkCtrl_MODE;             /* '<S34>/IfbkCtrl' */
 } DW;
 
+/* Type definition for custom storage class: Struct */
+typedef struct DBG_Struct_tag {
+  int32_T mtr_if_enc_cnts;
+  int32_T obs_enc_cnts;
+  real32_T e_angl;
+  real32_T i_abc_lpf[3];
+  real32_T i_dq0[3];
+  real32_T ifbk_ctrl_v_dq0[3];
+  real32_T ifbk_q_tgt;
+  real32_T motn_ctrl_cmd;
+  real32_T mtr_load_obs;
+  real32_T mtrif_ifbk_act[3];
+  real32_T mtrif_v_bus;
+  real32_T traj_plan_grd;
+  real32_T traj_plan_ref;
+  boolean_T enbl_motn_ctrl;
+  boolean_T traj_plan_is_enbl;
+} DBG_Struct_type;
+
 /* model data, for system '<S20>/get_mtr_ifbk_sum' */
 typedef struct {
   DW_get_mtr_ifbk_sum dwork;
@@ -137,30 +156,6 @@ struct tag_RTM {
 
 /* External data declarations for dependent source files */
 extern const Calib_OutType pmsm_ctrl_rtZCalib_OutType;/* Calib_OutType ground */
-
-/*
- * Exported Global Signals
- *
- * Note: Exported global signals are block signals with an exported global
- * storage class designation.  Code generation will declare the memory for
- * these signals and export their symbols.
- *
- */
-extern real32_T DBG_mtrif_ifbk_act_w_ofs[3];/* '<S81>/Subtract' */
-extern real32_T DBG_mtrif_v_bus_lpf;   /* '<S79>/Add1' */
-extern real32_T DBG_motn_ctrl_cmd;     /* '<S54>/Data Type Conversion4' */
-extern real32_T DBG_traj_plan_grd;     /* '<S60>/Discrete-Time Integrator' */
-extern real32_T DBG_traj_plan_ref;     /* '<S60>/Discrete-Time Integrator1' */
-extern real32_T DBG_e_angl;            /* '<S30>/calc_elec_angle' */
-extern real32_T DBG_ifbk_q_tgt;        /* '<S34>/Product' */
-extern real32_T DBG_i_abc_lpf[3];      /* '<S40>/Add1' */
-extern real32_T DBG_i_dq0[3];          /* '<S42>/Gain1' */
-extern real32_T DBG_obs_load_trq;      /* '<S32>/Product1' */
-extern real32_T DBG_ifbk_ctrl_v_dq0[3];/*  */
-extern int32_T DBG_mtrif_enc_cnts_w_ofs;/* '<S80>/Subtract' */
-extern int32_T DBG_obs_enc_cnts;       /* '<S30>/Data Type Conversion4' */
-extern boolean_T DBG_enbl_motn_ctrl;   /* '<S4>/Logical Operator' */
-extern boolean_T DBG_traj_plan_is_enbl;/* '<S56>/Logical Operator' */
 
 /*
  * Exported States
@@ -203,6 +198,11 @@ extern void Trig_Pmsm_GetOut(RT_MODEL *const pmsm_ctrl_M, real32_T
   rtY_MtrIf_PwmDc[3], real32_T rtY_MtrIf_ModWave[3], real32_T *rtY_MtrIf_TrqAct,
   real32_T *rtY_MtrIf_SpdAct, real32_T rtY_MtrIf_IfbkDq[2], real32_T
   rtY_MtrIf_PwmDq[2]);
+
+/* Exported data declaration */
+
+/* Declaration for custom storage class: Struct */
+extern DBG_Struct_type DBG_Struct;
 
 /*-
  * These blocks were eliminated from the model due to optimizations:
