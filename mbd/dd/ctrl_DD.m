@@ -2,6 +2,7 @@
 FastTsample = 1. / 30e3;
 MainTsample = 1e-3;
 
+
 %% Fast sampling time 30khz
 TsFast = Simulink.Parameter;
 TsFast.StorageClass = 'Auto';
@@ -128,6 +129,34 @@ Cfg_EnblOfsCal.CoderInfo.CustomStorageClass = 'ExportToFile';
 Cfg_EnblOfsCal.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
 Cfg_EnblOfsCal.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
 
+%% Duty cycle during resistance calibration.
+Cfg_ResCalPwmDuty = Simulink.Parameter;
+Cfg_ResCalPwmDuty.StorageClass = 'Auto';
+Cfg_ResCalPwmDuty.Description = 'Duty cycle during resistance calibration';
+Cfg_ResCalPwmDuty.DataType = 'single';
+Cfg_ResCalPwmDuty.Min = [];
+Cfg_ResCalPwmDuty.Max = [];
+Cfg_ResCalPwmDuty.DocUnits = '';
+Cfg_ResCalPwmDuty.Value = 0.2;
+Cfg_ResCalPwmDuty.CoderInfo.StorageClass = 'Custom';
+Cfg_ResCalPwmDuty.CoderInfo.CustomStorageClass = 'ExportToFile';
+Cfg_ResCalPwmDuty.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
+Cfg_ResCalPwmDuty.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
+
+%% Duty cycle during inductance calibration.
+Cfg_IndCalPwmDuty = Simulink.Parameter;
+Cfg_IndCalPwmDuty.StorageClass = 'Auto';
+Cfg_IndCalPwmDuty.Description = 'Duty cycle during inductance calibration';
+Cfg_IndCalPwmDuty.DataType = 'single';
+Cfg_IndCalPwmDuty.Min = [];
+Cfg_IndCalPwmDuty.Max = [];
+Cfg_IndCalPwmDuty.DocUnits = '';
+Cfg_IndCalPwmDuty.Value = 0.2;
+Cfg_IndCalPwmDuty.CoderInfo.StorageClass = 'Custom';
+Cfg_IndCalPwmDuty.CoderInfo.CustomStorageClass = 'ExportToFile';
+Cfg_IndCalPwmDuty.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
+Cfg_IndCalPwmDuty.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
+
 %% Initial angle during offset calibration.
 Cfg_OfsCalAnglInit = Simulink.Parameter;
 Cfg_OfsCalAnglInit.StorageClass = 'Auto';
@@ -151,10 +180,24 @@ Cfg_AnglOfsCalPwmDuty.Min = [];
 Cfg_AnglOfsCalPwmDuty.Max = [];
 Cfg_AnglOfsCalPwmDuty.DocUnits = '';
 Cfg_AnglOfsCalPwmDuty.Value = 0.20;
-Cfg_StepToEncCnts.CoderInfo.StorageClass = 'Custom';
-Cfg_StepToEncCnts.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_StepToEncCnts.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_StepToEncCnts.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
+Cfg_AnglOfsCalPwmDuty.CoderInfo.StorageClass = 'Custom';
+Cfg_AnglOfsCalPwmDuty.CoderInfo.CustomStorageClass = 'ExportToFile';
+Cfg_AnglOfsCalPwmDuty.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
+Cfg_AnglOfsCalPwmDuty.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
+
+%% Duty cycle during angle offset cal.
+Cfg_EncOfsCalPwmDuty = Simulink.Parameter;
+Cfg_EncOfsCalPwmDuty.StorageClass = 'Auto';
+Cfg_EncOfsCalPwmDuty.Description = 'Duty cycle during encoder offset cal';
+Cfg_EncOfsCalPwmDuty.DataType = 'single';
+Cfg_EncOfsCalPwmDuty.Min = [];
+Cfg_EncOfsCalPwmDuty.Max = [];
+Cfg_EncOfsCalPwmDuty.DocUnits = '';
+Cfg_EncOfsCalPwmDuty.Value = 0.20;
+Cfg_EncOfsCalPwmDuty.CoderInfo.StorageClass = 'Custom';
+Cfg_EncOfsCalPwmDuty.CoderInfo.CustomStorageClass = 'ExportToFile';
+Cfg_EncOfsCalPwmDuty.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
+Cfg_EncOfsCalPwmDuty.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
 
 %% Step to cnts convesion.
 Cfg_StepToEncCnts = Simulink.Parameter;
@@ -337,217 +380,6 @@ Cfg_EnblLoadObs.CoderInfo.StorageClass = 'Custom';
 Cfg_EnblLoadObs.CoderInfo.CustomStorageClass = 'ExportToFile';
 Cfg_EnblLoadObs.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
 Cfg_EnblLoadObs.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-
-%% Cycle counts during motor torque identification.
-Cfg_TrqCnstIDCntThshld = Simulink.Parameter;
-Cfg_TrqCnstIDCntThshld.StorageClass = 'Auto';
-Cfg_TrqCnstIDCntThshld.Description = 'Motor voltage during torque constant ID.';
-Cfg_TrqCnstIDCntThshld.DataType = 'int32';
-Cfg_TrqCnstIDCntThshld.Min = [];
-Cfg_TrqCnstIDCntThshld.Max = [];
-Cfg_TrqCnstIDCntThshld.DocUnits = '';
-Cfg_TrqCnstIDCntThshld.Value = 200e-3 / TsFast.Value;
-Cfg_TrqCnstIDCntThshld.CoderInfo.StorageClass = 'Custom';
-Cfg_TrqCnstIDCntThshld.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_TrqCnstIDCntThshld.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_TrqCnstIDCntThshld.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Voltage applied during torque constant identification.
-Cfg_TrqCnstIDMtrVin = Simulink.Parameter;
-Cfg_TrqCnstIDMtrVin.StorageClass = 'Auto';
-Cfg_TrqCnstIDMtrVin.Description = 'Motor voltage during torque constant ID';
-Cfg_TrqCnstIDMtrVin.DataType = 'single';
-Cfg_TrqCnstIDMtrVin.Min = [];
-Cfg_TrqCnstIDMtrVin.Max = [];
-Cfg_TrqCnstIDMtrVin.DocUnits = '';
-Cfg_TrqCnstIDMtrVin.Value = 12;
-Cfg_TrqCnstIDMtrVin.CoderInfo.StorageClass = 'Custom';
-Cfg_TrqCnstIDMtrVin.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_TrqCnstIDMtrVin.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_TrqCnstIDMtrVin.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Current sensor offset identification counts.
-Cfg_OfsIDCntThshld = Simulink.Parameter;
-Cfg_OfsIDCntThshld.StorageClass = 'Auto';
-Cfg_OfsIDCntThshld.Description = 'Inductance ID cycles.';
-Cfg_OfsIDCntThshld.DataType = 'int32';
-Cfg_OfsIDCntThshld.Min = [];
-Cfg_OfsIDCntThshld.Max = [];
-Cfg_OfsIDCntThshld.DocUnits = '';
-Cfg_OfsIDCntThshld.Value = 1000;
-Cfg_OfsIDCntThshld.CoderInfo.StorageClass = 'Custom';
-Cfg_OfsIDCntThshld.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_OfsIDCntThshld.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_OfsIDCntThshld.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Ifbk autocal cycle counts: inductance.
-Cfg_IndIDCntThshld = Simulink.Parameter;
-Cfg_IndIDCntThshld.StorageClass = 'Auto';
-Cfg_IndIDCntThshld.Description = 'Inductance ID cycles.';
-Cfg_IndIDCntThshld.DataType = 'int32';
-Cfg_IndIDCntThshld.Min = [];
-Cfg_IndIDCntThshld.Max = [];
-Cfg_IndIDCntThshld.DocUnits = '';
-Cfg_IndIDCntThshld.Value = 0.5 / TsFast.Value;
-Cfg_IndIDCntThshld.CoderInfo.StorageClass = 'Custom';
-Cfg_IndIDCntThshld.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_IndIDCntThshld.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_IndIDCntThshld.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Ifbk autocal cycle counts: resistance.
-Cfg_ResIDCntThshld = Simulink.Parameter;
-Cfg_ResIDCntThshld.StorageClass = 'Auto';
-Cfg_ResIDCntThshld.Description = 'Resistance ID cycles.';
-Cfg_ResIDCntThshld.DataType = 'int32';
-Cfg_ResIDCntThshld.Min = [];
-Cfg_ResIDCntThshld.Max = [];
-Cfg_ResIDCntThshld.DocUnits = '';
-Cfg_ResIDCntThshld.Value = 300;
-Cfg_ResIDCntThshld.CoderInfo.StorageClass = 'Custom';
-Cfg_ResIDCntThshld.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_ResIDCntThshld.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_ResIDCntThshld.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Inductance ID phase voltage.
-Cfg_IndIDMtrVin = Simulink.Parameter;
-Cfg_IndIDMtrVin.StorageClass = 'Auto';
-Cfg_IndIDMtrVin.Description = 'Inductance ID Phase motor input voltage';
-Cfg_IndIDMtrVin.DataType = 'single';
-Cfg_IndIDMtrVin.Min = [];
-Cfg_IndIDMtrVin.Max = [];
-Cfg_IndIDMtrVin.DocUnits = '';
-Cfg_IndIDMtrVin.Value = 12;
-Cfg_IndIDMtrVin.CoderInfo.StorageClass = 'Custom';
-Cfg_IndIDMtrVin.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_IndIDMtrVin.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_IndIDMtrVin.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Inductance On/Off switching ticks.
-Cfg_IndIDTs = Simulink.Parameter;
-Cfg_IndIDTs.StorageClass = 'Auto';
-Cfg_IndIDTs.Description = 'Indutance ID sampling time.';
-Cfg_IndIDTs.DataType = 'single';
-Cfg_IndIDTs.Min = [];
-Cfg_IndIDTs.Max = [];
-Cfg_IndIDTs.DocUnits = '';
-Cfg_IndIDTs.Value = 1e-3;
-Cfg_IndIDTs.CoderInfo.StorageClass = 'Custom';
-Cfg_IndIDTs.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_IndIDTs.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_IndIDTs.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Inductance On/Off switching ticks.
-Cfg_IndIDSwTicks = Simulink.Parameter;
-Cfg_IndIDSwTicks.StorageClass = 'Auto';
-Cfg_IndIDSwTicks.Description = 'Indutance ID On/Off switching ticks';
-Cfg_IndIDSwTicks.DataType = 'int32';
-Cfg_IndIDSwTicks.Min = [];
-Cfg_IndIDSwTicks.Max = [];
-Cfg_IndIDSwTicks.DocUnits = '';
-Cfg_IndIDSwTicks.Value = Cfg_IndIDTs.Value / TsFast.Value;
-Cfg_IndIDSwTicks.CoderInfo.StorageClass = 'Custom';
-Cfg_IndIDSwTicks.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_IndIDSwTicks.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_IndIDSwTicks.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Inductance ID done cooldown ticks.
-Cfg_IndIDCoolDownTicks = Simulink.Parameter;
-Cfg_IndIDCoolDownTicks.StorageClass = 'Auto';
-Cfg_IndIDCoolDownTicks.Description = 'Inductance ID done cooldown ticks';
-Cfg_IndIDCoolDownTicks.DataType = 'int32';
-Cfg_IndIDCoolDownTicks.Min = [];
-Cfg_IndIDCoolDownTicks.Max = [];
-Cfg_IndIDCoolDownTicks.DocUnits = '';
-Cfg_IndIDCoolDownTicks.Value = 100e-3 / TsFast.Value;
-Cfg_IndIDCoolDownTicks.CoderInfo.StorageClass = 'Custom';
-Cfg_IndIDCoolDownTicks.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_IndIDCoolDownTicks.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_IndIDCoolDownTicks.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Inductance ID done cooldown ticks.
-Cfg_ResIDCoolDownTicks = Simulink.Parameter;
-Cfg_ResIDCoolDownTicks.StorageClass = 'Auto';
-Cfg_ResIDCoolDownTicks.Description = 'Resistance ID done cooldown ticks';
-Cfg_ResIDCoolDownTicks.DataType = 'int32';
-Cfg_ResIDCoolDownTicks.Min = [];
-Cfg_ResIDCoolDownTicks.Max = [];
-Cfg_ResIDCoolDownTicks.DocUnits = '';
-Cfg_ResIDCoolDownTicks.Value = 100e-3 / TsFast.Value;
-Cfg_ResIDCoolDownTicks.CoderInfo.StorageClass = 'Custom';
-Cfg_ResIDCoolDownTicks.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_ResIDCoolDownTicks.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_ResIDCoolDownTicks.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Resistance ID motor input voltage.
-Cfg_ResIDMtrVin = Simulink.Parameter;
-Cfg_ResIDMtrVin.StorageClass = 'Auto';
-Cfg_ResIDMtrVin.Description = 'Resistance ID motor input voltage';
-Cfg_ResIDMtrVin.DataType = 'single';
-Cfg_ResIDMtrVin.Min = [];
-Cfg_ResIDMtrVin.Max = [];
-Cfg_ResIDMtrVin.DocUnits = '';
-Cfg_ResIDMtrVin.Value = 12.0;
-Cfg_ResIDMtrVin.CoderInfo.StorageClass = 'Custom';
-Cfg_ResIDMtrVin.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_ResIDMtrVin.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_ResIDMtrVin.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Resistance maximum value for identification.
-Cfg_ResIDMaxThshld = Simulink.Parameter;
-Cfg_ResIDMaxThshld.StorageClass = 'Auto';
-Cfg_ResIDMaxThshld.Description = 'Resistance maximum value for Identification';
-Cfg_ResIDMaxThshld.DataType = 'single';
-Cfg_ResIDMaxThshld.Min = [];
-Cfg_ResIDMaxThshld.Max = [];
-Cfg_ResIDMaxThshld.DocUnits = '';
-Cfg_ResIDMaxThshld.Value = 1000.0;
-Cfg_ResIDMaxThshld.CoderInfo.StorageClass = 'Custom';
-Cfg_ResIDMaxThshld.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_ResIDMaxThshld.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_ResIDMaxThshld.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Resistance minimum value for identification.
-Cfg_ResIDMinThshld = Simulink.Parameter;
-Cfg_ResIDMinThshld.StorageClass = 'Auto';
-Cfg_ResIDMinThshld.Description = 'Resistance minimum value for Identification';
-Cfg_ResIDMinThshld.DataType = 'single';
-Cfg_ResIDMinThshld.Min = [];
-Cfg_ResIDMinThshld.Max = [];
-Cfg_ResIDMinThshld.DocUnits = '';
-Cfg_ResIDMinThshld.Value = 1e-4;
-Cfg_ResIDMinThshld.CoderInfo.StorageClass = 'Custom';
-Cfg_ResIDMinThshld.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_ResIDMinThshld.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_ResIDMinThshld.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Inductance minimum value for identification.
-Cfg_IndIDMinThshld = Simulink.Parameter;
-Cfg_IndIDMinThshld.StorageClass = 'Auto';
-Cfg_IndIDMinThshld.Description = 'Inductance minimum value for Identification';
-Cfg_IndIDMinThshld.DataType = 'single';
-Cfg_IndIDMinThshld.Min = [];
-Cfg_IndIDMinThshld.Max = [];
-Cfg_IndIDMinThshld.DocUnits = '';
-Cfg_IndIDMinThshld.Value = 1e-6;
-Cfg_IndIDMinThshld.CoderInfo.StorageClass = 'Custom';
-Cfg_IndIDMinThshld.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_IndIDMinThshld.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_IndIDMinThshld.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Inductance maximum value for identification.
-Cfg_IndIDMaxThshld = Simulink.Parameter;
-Cfg_IndIDMaxThshld.StorageClass = 'Auto';
-Cfg_IndIDMaxThshld.Description = 'Inductance maximum value for Identification';
-Cfg_IndIDMaxThshld.DataType = 'single';
-Cfg_IndIDMaxThshld.Min = [];
-Cfg_IndIDMaxThshld.Max = [];
-Cfg_IndIDMaxThshld.DocUnits = '';
-Cfg_IndIDMaxThshld.Value = 0.1;
-Cfg_IndIDMaxThshld.CoderInfo.StorageClass = 'Custom';
-Cfg_IndIDMaxThshld.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_IndIDMaxThshld.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_IndIDMaxThshld.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
 
 %% PID-P term.
 IfbkCtrl_Kp = Simulink.Parameter;

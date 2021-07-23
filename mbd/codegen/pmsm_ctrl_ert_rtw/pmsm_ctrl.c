@@ -3,7 +3,7 @@
  *
  * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.700
+ * Model version              : 1.728
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */
@@ -16,21 +16,20 @@
 #define IN_done                        ((uint8_T)1U)
 #define IN_res_id_actv                 ((uint8_T)2U)
 #define IN_res_id_init                 ((uint8_T)3U)
-#define PWM_R_CAL_DUTY                 (0.2F)
 #define TICK_R_CAL                     (100U)
-#define TICK_WAIT_SETTLE               (30U)
+#define TICK_R_CAL_WAIT_SETTLE         (30U)
 
 /* Named constants for Chart: '<S11>/IndIdCal' */
 #define IN_ind_id_actv                 ((uint8_T)2U)
 #define IN_neg_cycle                   ((uint8_T)1U)
 #define IN_pos_cycle                   ((uint8_T)2U)
-#define PWM_L_CAL_DUTY                 (0.2F)
 #define TICK_L_CAL                     (1000U)
+#define TICK_L_CAL_WAIT_SETTLE         (30U)
 
 /* Named constants for Chart: '<S10>/ResIdCal' */
 #define IN_mtr_angl_ofs_cal_actv       ((uint8_T)1U)
 #define IN_mtr_angl_ofs_cal_done       ((uint8_T)2U)
-#define TICK_WAIT_SETTLE_d             (500U)
+#define TICK_IFBK_OFS_WAIT_SETTLE      (500U)
 
 /* Named constants for Chart: '<S9>/EncOfsCal' */
 #define IN_calc_enc_ofs_move_forward   ((uint8_T)1U)
@@ -39,8 +38,11 @@
 #define IN_enc_cnts_err                ((uint8_T)4U)
 #define IN_move_back_calc_enc_ofs      ((uint8_T)5U)
 #define IN_mtr_n_poles_enc_ofs_init    ((uint8_T)6U)
-#define TICKS_TGT                      (19200)
-#define WAIT_SETTLE_TICKS              (100U)
+#define POLES_CAL_MAX                  (20)
+#define POLES_CAL_MIN                  (1)
+#define TICK_ENC_OFS_WAIT_SETTLE       (200U)
+#define TICK_INC_MIN                   (100)
+#define TICK_OFS_CAL_RAMP              (500U)
 
 const Calib_OutType pmsm_ctrl_rtZCalib_OutType = {
   CTRL_MD_OFF,                         /* ctrl_md_rqst */
@@ -54,6 +56,9 @@ const Calib_OutType pmsm_ctrl_rtZCalib_OutType = {
 /* Exported block signals */
 real32_T DBG_mtrif_ifbk_act_w_ofs[3];  /* '<S81>/Subtract' */
 real32_T DBG_mtrif_v_bus_lpf;          /* '<S79>/Add1' */
+real32_T DBG_motn_ctrl_cmd;            /* '<S54>/Data Type Conversion4' */
+real32_T DBG_traj_plan_grd;            /* '<S60>/Discrete-Time Integrator' */
+real32_T DBG_traj_plan_ref;            /* '<S60>/Discrete-Time Integrator1' */
 real32_T DBG_e_angl;                   /* '<S30>/calc_elec_angle' */
 real32_T DBG_ifbk_q_tgt;               /* '<S34>/Product' */
 real32_T DBG_i_abc_lpf[3];             /* '<S40>/Add1' */
@@ -62,6 +67,8 @@ real32_T DBG_obs_load_trq;             /* '<S32>/Product1' */
 real32_T DBG_ifbk_ctrl_v_dq0[3];       /*  */
 int32_T DBG_mtrif_enc_cnts_w_ofs;      /* '<S80>/Subtract' */
 int32_T DBG_obs_enc_cnts;              /* '<S30>/Data Type Conversion4' */
+boolean_T DBG_enbl_motn_ctrl;          /* '<S4>/Logical Operator' */
+boolean_T DBG_traj_plan_is_enbl;       /* '<S56>/Logical Operator' */
 
 /* Exported block states */
 real32_T CalData_L;                    /* '<S2>/Data Store Memory1' */
@@ -190,6 +197,19 @@ int32_T div_nde_s32_floor(int32_T numerator, int32_T denominator)
 {
   return (((numerator < 0) != (denominator < 0)) && (numerator % denominator !=
            0) ? -1 : 0) + numerator / denominator;
+}
+
+uint32_T div_nzp_usu32_sat(int32_T numerator, uint32_T denominator)
+{
+  uint32_T quotient;
+  if (numerator < 0) {
+    quotient = 0U;
+  } else {
+    quotient = (numerator < 0 ? ~(uint32_T)numerator + 1U : (uint32_T)numerator)
+      / denominator;
+  }
+
+  return quotient;
 }
 
 /*
@@ -574,18 +594,27 @@ void Trig_Pmsm_CtrlMgr(RT_MODEL *const pmsm_ctrl_M)
 }
 
 /* Model step function */
-void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
+void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M)
 {
   int8_T rtPrevAction;
   int8_T rtAction;
   real32_T rtb_TmpSignalConversionAtcalc_i[3];
+  real32_T rtb_DataTypeConversion_f[3];
+  MtrCtrlMd_T rtb_CtrlMdRqst;
+  CalMgrSt_T rtb_CalMgrStRqst;
   real32_T rtb_PwmRqst_l;
   int32_T qY;
 
   /* RootInportFunctionCallGenerator: '<Root>/RootFcnCall_InsertedFor_Trig_Pmsm_Cal_at_outport_1' incorporates:
    *  SubSystem: '<Root>/CalibRoutines'
    */
-  /* SwitchCase: '<S2>/Switch Case' */
+  /* SwitchCase: '<S2>/Switch Case' incorporates:
+   *  Constant: '<S9>/Constant'
+   *  DataTypeConversion: '<S9>/Data Type Cnversion1'
+   *  DataTypeConversion: '<S9>/Data Type Conversion'
+   *  Gain: '<S9>/Gain'
+   *  Product: '<S9>/Divide'
+   */
   rtPrevAction = pmsm_ctrl_M->dwork.SwitchCase_ActiveSubsystem;
   rtAction = -1;
   switch (pmsm_ctrl_M->blockIO.ctrl_cal_act) {
@@ -661,7 +690,7 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
       pmsm_ctrl_M->dwork.is_c5_pmsm_ctrl = IN_res_id_init;
       pmsm_ctrl_M->dwork.temporalCounter_i1_l = 0U;
       pmsm_ctrl_M->blockIO.CtrlMdRqst_p = CTRL_MD_RAW_PWM;
-      pmsm_ctrl_M->blockIO.PwmRqst_g = PWM_R_CAL_DUTY;
+      pmsm_ctrl_M->blockIO.PwmRqst_g = Cfg_ResCalPwmDuty;
       pmsm_ctrl_M->blockIO.CalMgrStRqst_h = ST_RES_ID;
       pmsm_ctrl_M->dwork.ifbk_sum = 0.0F;
       CalData_Res = -1.0F;
@@ -671,7 +700,7 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
         pmsm_ctrl_M->blockIO.CtrlMdRqst_p = CTRL_MD_OFF;
         pmsm_ctrl_M->blockIO.CalMgrStRqst_h = ST_DONE;
         pmsm_ctrl_M->blockIO.PwmRqst_g = (real32_T)0.;
-        CalData_Res = (real32_T)(0.800000011920929 /
+        CalData_Res = (real32_T)(Cfg_ResCalPwmDuty * 0.66666666666666663 * 6.0 /
           (pmsm_ctrl_M->dwork.ifbk_sum / (real32_T)TICK_R_CAL));
         break;
 
@@ -681,8 +710,8 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
           pmsm_ctrl_M->blockIO.CtrlMdRqst_p = CTRL_MD_OFF;
           pmsm_ctrl_M->blockIO.CalMgrStRqst_h = ST_DONE;
           pmsm_ctrl_M->blockIO.PwmRqst_g = (real32_T)0.;
-          CalData_Res = (real32_T)(0.800000011920929 /
-            (pmsm_ctrl_M->dwork.ifbk_sum / (real32_T)TICK_R_CAL));
+          CalData_Res = (real32_T)(Cfg_ResCalPwmDuty * 0.66666666666666663 * 6.0
+            / (pmsm_ctrl_M->dwork.ifbk_sum / (real32_T)TICK_R_CAL));
         } else {
           pmsm_ctrl_M->dwork.ifbk_sum +=
             pmsm_ctrl_M->blockIO.BusCreator.mtrif_ifbk_act[0];
@@ -690,8 +719,8 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
         break;
 
        default:
-        if (pmsm_ctrl_M->dwork.temporalCounter_i1_l >= (int32_T)TICK_WAIT_SETTLE)
-        {
+        if (pmsm_ctrl_M->dwork.temporalCounter_i1_l >= (int32_T)
+            TICK_R_CAL_WAIT_SETTLE) {
           /*  Wait for current / motor to settle. */
           pmsm_ctrl_M->dwork.is_c5_pmsm_ctrl = IN_res_id_actv;
           pmsm_ctrl_M->dwork.temporalCounter_i1_l = 0U;
@@ -699,7 +728,7 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
             pmsm_ctrl_M->blockIO.BusCreator.mtrif_ifbk_act[0];
         } else {
           pmsm_ctrl_M->blockIO.CtrlMdRqst_p = CTRL_MD_RAW_PWM;
-          pmsm_ctrl_M->blockIO.PwmRqst_g = PWM_R_CAL_DUTY;
+          pmsm_ctrl_M->blockIO.PwmRqst_g = Cfg_ResCalPwmDuty;
           pmsm_ctrl_M->blockIO.CalMgrStRqst_h = ST_RES_ID;
           pmsm_ctrl_M->dwork.ifbk_sum = 0.0F;
           CalData_Res = -1.0F;
@@ -718,15 +747,18 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
     rtb_TmpSignalConversionAtcalc_i[2] = 0.0F;
 
     /* Outputs for Atomic SubSystem: '<S28>/calc_pwm_dc' */
-
-    /* BusCreator: '<S12>/Bus Creator' */
     calc_pwm_dc(pmsm_ctrl_M, rtb_TmpSignalConversionAtcalc_i,
-                pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst);
+                rtb_DataTypeConversion_f);
 
     /* End of Outputs for SubSystem: '<S28>/calc_pwm_dc' */
+
+    /* BusCreator: '<S12>/Bus Creator' */
     pmsm_ctrl_M->blockIO.Merge.ctrl_md_rqst = pmsm_ctrl_M->blockIO.CtrlMdRqst_p;
     pmsm_ctrl_M->blockIO.Merge.cal_mgr_st_rqst =
       pmsm_ctrl_M->blockIO.CalMgrStRqst_h;
+    pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst[0] = rtb_DataTypeConversion_f[0];
+    pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst[1] = rtb_DataTypeConversion_f[1];
+    pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst[2] = rtb_DataTypeConversion_f[2];
 
     /* End of Outputs for SubSystem: '<S2>/mtr_res_ident' */
     break;
@@ -767,7 +799,7 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
       pmsm_ctrl_M->blockIO.CtrlMdRqst_i = CTRL_MD_RAW_PWM;
 
       /* SignalConversion: '<S25>/TmpSignal ConversionAtcalc_pwm_dcInport1' */
-      rtb_TmpSignalConversionAtcalc_i[0] = PWM_L_CAL_DUTY;
+      rtb_TmpSignalConversionAtcalc_i[0] = Cfg_IndCalPwmDuty;
       pmsm_ctrl_M->blockIO.CalMgrStRqst_i = ST_IND_ID;
       CalData_L = -1.0F;
     } else {
@@ -780,7 +812,8 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
         rtb_TmpSignalConversionAtcalc_i[0] = (real32_T)0.;
         pmsm_ctrl_M->dwork.di_dt = (real32_T)((pmsm_ctrl_M->dwork.ifbk_pos -
           pmsm_ctrl_M->dwork.ifbk_neg) / 500.0 / TsMain);
-        CalData_L = (real32_T)(1.2000000178813934 / pmsm_ctrl_M->dwork.di_dt);
+        CalData_L = (real32_T)(Cfg_VBus / 2. * Cfg_IndCalPwmDuty /
+          pmsm_ctrl_M->dwork.di_dt);
         break;
 
        case IN_ind_id_actv:
@@ -794,27 +827,28 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
           rtb_TmpSignalConversionAtcalc_i[0] = (real32_T)0.;
           pmsm_ctrl_M->dwork.di_dt = (real32_T)((pmsm_ctrl_M->dwork.ifbk_pos -
             pmsm_ctrl_M->dwork.ifbk_neg) / 500.0 / TsMain);
-          CalData_L = (real32_T)(1.2000000178813934 / pmsm_ctrl_M->dwork.di_dt);
+          CalData_L = (real32_T)(Cfg_VBus / 2. * Cfg_IndCalPwmDuty /
+            pmsm_ctrl_M->dwork.di_dt);
         } else if (pmsm_ctrl_M->dwork.is_ind_id_actv == IN_neg_cycle) {
           pmsm_ctrl_M->dwork.is_ind_id_actv = IN_pos_cycle;
 
           /* SignalConversion: '<S25>/TmpSignal ConversionAtcalc_pwm_dcInport1' */
-          rtb_TmpSignalConversionAtcalc_i[0] = PWM_L_CAL_DUTY;
+          rtb_TmpSignalConversionAtcalc_i[0] = Cfg_IndCalPwmDuty;
           pmsm_ctrl_M->dwork.ifbk_neg +=
             pmsm_ctrl_M->blockIO.BusCreator.mtrif_ifbk_act[0];
         } else {
           pmsm_ctrl_M->dwork.is_ind_id_actv = IN_neg_cycle;
 
           /* SignalConversion: '<S25>/TmpSignal ConversionAtcalc_pwm_dcInport1' */
-          rtb_TmpSignalConversionAtcalc_i[0] = -0.2F;
+          rtb_TmpSignalConversionAtcalc_i[0] = -Cfg_IndCalPwmDuty;
           pmsm_ctrl_M->dwork.ifbk_pos +=
             pmsm_ctrl_M->blockIO.BusCreator.mtrif_ifbk_act[0];
         }
         break;
 
        default:
-        if (pmsm_ctrl_M->dwork.temporalCounter_i1_n >= (int32_T)TICK_WAIT_SETTLE)
-        {
+        if (pmsm_ctrl_M->dwork.temporalCounter_i1_n >= (int32_T)
+            TICK_L_CAL_WAIT_SETTLE) {
           /*  Wait for current / motor to settle. */
           pmsm_ctrl_M->dwork.is_c1_pmsm_ctrl = IN_ind_id_actv;
           pmsm_ctrl_M->dwork.temporalCounter_i1_n = 0U;
@@ -823,14 +857,14 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
           pmsm_ctrl_M->dwork.is_ind_id_actv = IN_pos_cycle;
 
           /* SignalConversion: '<S25>/TmpSignal ConversionAtcalc_pwm_dcInport1' */
-          rtb_TmpSignalConversionAtcalc_i[0] = PWM_L_CAL_DUTY;
+          rtb_TmpSignalConversionAtcalc_i[0] = Cfg_IndCalPwmDuty;
           pmsm_ctrl_M->dwork.ifbk_neg +=
             pmsm_ctrl_M->blockIO.BusCreator.mtrif_ifbk_act[0];
         } else {
           pmsm_ctrl_M->blockIO.CtrlMdRqst_i = CTRL_MD_RAW_PWM;
 
           /* SignalConversion: '<S25>/TmpSignal ConversionAtcalc_pwm_dcInport1' */
-          rtb_TmpSignalConversionAtcalc_i[0] = PWM_L_CAL_DUTY;
+          rtb_TmpSignalConversionAtcalc_i[0] = Cfg_IndCalPwmDuty;
           pmsm_ctrl_M->blockIO.CalMgrStRqst_i = ST_IND_ID;
           CalData_L = -1.0F;
         }
@@ -847,15 +881,18 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
     rtb_TmpSignalConversionAtcalc_i[2] = 0.0F;
 
     /* Outputs for Atomic SubSystem: '<S25>/calc_pwm_dc' */
-
-    /* BusCreator: '<S11>/Bus Creator' */
     calc_pwm_dc(pmsm_ctrl_M, rtb_TmpSignalConversionAtcalc_i,
-                pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst);
+                rtb_DataTypeConversion_f);
 
     /* End of Outputs for SubSystem: '<S25>/calc_pwm_dc' */
+
+    /* BusCreator: '<S11>/Bus Creator' */
     pmsm_ctrl_M->blockIO.Merge.ctrl_md_rqst = pmsm_ctrl_M->blockIO.CtrlMdRqst_i;
     pmsm_ctrl_M->blockIO.Merge.cal_mgr_st_rqst =
       pmsm_ctrl_M->blockIO.CalMgrStRqst_i;
+    pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst[0] = rtb_DataTypeConversion_f[0];
+    pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst[1] = rtb_DataTypeConversion_f[1];
+    pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst[2] = rtb_DataTypeConversion_f[2];
 
     /* End of Outputs for SubSystem: '<S2>/mtr_ind_ident' */
     break;
@@ -905,10 +942,8 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
       pmsm_ctrl_M->dwork.is_active_c2_pmsm_ctrl = 1U;
       pmsm_ctrl_M->dwork.is_c2_pmsm_ctrl = IN_mtr_angl_ofs_cal_actv;
       pmsm_ctrl_M->dwork.temporalCounter_i1 = 0U;
-
-      /* BusCreator: '<S10>/Bus Creator' */
-      pmsm_ctrl_M->blockIO.Merge.ctrl_md_rqst = CTRL_MD_RAW_PWM;
-      pmsm_ctrl_M->blockIO.Merge.cal_mgr_st_rqst = ST_IFBK_OFS_CAL;
+      rtb_CtrlMdRqst = CTRL_MD_RAW_PWM;
+      rtb_CalMgrStRqst = ST_IFBK_OFS_CAL;
       rtb_TmpSignalConversionAtcalc_i[0] =
         pmsm_ctrl_M->blockIO.BusCreator.mtrif_ifbk_act[0];
       rtb_TmpSignalConversionAtcalc_i[1] =
@@ -929,27 +964,24 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
       CalData_IfbkOfs_Abc[1] = (real32_T)0.;
       CalData_IfbkOfs_Abc[2] = (real32_T)0.;
     } else if (pmsm_ctrl_M->dwork.is_c2_pmsm_ctrl == IN_mtr_angl_ofs_cal_actv) {
-      if (pmsm_ctrl_M->dwork.temporalCounter_i1 >= (int32_T)TICK_WAIT_SETTLE_d)
-      {
+      if (pmsm_ctrl_M->dwork.temporalCounter_i1 >= (int32_T)
+          TICK_IFBK_OFS_WAIT_SETTLE) {
         /*  Wait for motor to settle. */
         pmsm_ctrl_M->dwork.is_c2_pmsm_ctrl = IN_mtr_angl_ofs_cal_done;
-
-        /* BusCreator: '<S10>/Bus Creator' */
-        pmsm_ctrl_M->blockIO.Merge.ctrl_md_rqst = CTRL_MD_OFF;
-        pmsm_ctrl_M->blockIO.Merge.cal_mgr_st_rqst = ST_DONE;
+        rtb_CtrlMdRqst = CTRL_MD_OFF;
+        rtb_CalMgrStRqst = ST_DONE;
         rtb_TmpSignalConversionAtcalc_i[0] = pmsm_ctrl_M->dwork.ifbk_abc_sum[0];
         rtb_TmpSignalConversionAtcalc_i[1] = pmsm_ctrl_M->dwork.ifbk_abc_sum[1];
         rtb_TmpSignalConversionAtcalc_i[2] = pmsm_ctrl_M->dwork.ifbk_abc_sum[2];
 
         /* Outputs for Function Call SubSystem: '<S20>/get_mtr_ifbk_avg' */
         get_mtr_ifbk_avg(pmsm_ctrl_M, rtb_TmpSignalConversionAtcalc_i, (real32_T)
-                         TICK_WAIT_SETTLE_d, CalData_IfbkOfs_Abc);
+                         TICK_IFBK_OFS_WAIT_SETTLE, CalData_IfbkOfs_Abc);
 
         /* End of Outputs for SubSystem: '<S20>/get_mtr_ifbk_avg' */
       } else {
-        /* BusCreator: '<S10>/Bus Creator' */
-        pmsm_ctrl_M->blockIO.Merge.ctrl_md_rqst = CTRL_MD_RAW_PWM;
-        pmsm_ctrl_M->blockIO.Merge.cal_mgr_st_rqst = ST_IFBK_OFS_CAL;
+        rtb_CtrlMdRqst = CTRL_MD_RAW_PWM;
+        rtb_CalMgrStRqst = ST_IFBK_OFS_CAL;
         rtb_TmpSignalConversionAtcalc_i[0] =
           pmsm_ctrl_M->blockIO.BusCreator.mtrif_ifbk_act[0];
         rtb_TmpSignalConversionAtcalc_i[1] =
@@ -971,16 +1003,15 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
         CalData_IfbkOfs_Abc[2] = (real32_T)0.;
       }
     } else {
-      /* BusCreator: '<S10>/Bus Creator' */
-      pmsm_ctrl_M->blockIO.Merge.ctrl_md_rqst = CTRL_MD_OFF;
-      pmsm_ctrl_M->blockIO.Merge.cal_mgr_st_rqst = ST_DONE;
+      rtb_CtrlMdRqst = CTRL_MD_OFF;
+      rtb_CalMgrStRqst = ST_DONE;
       rtb_TmpSignalConversionAtcalc_i[0] = pmsm_ctrl_M->dwork.ifbk_abc_sum[0];
       rtb_TmpSignalConversionAtcalc_i[1] = pmsm_ctrl_M->dwork.ifbk_abc_sum[1];
       rtb_TmpSignalConversionAtcalc_i[2] = pmsm_ctrl_M->dwork.ifbk_abc_sum[2];
 
       /* Outputs for Function Call SubSystem: '<S20>/get_mtr_ifbk_avg' */
       get_mtr_ifbk_avg(pmsm_ctrl_M, rtb_TmpSignalConversionAtcalc_i, (real32_T)
-                       TICK_WAIT_SETTLE_d, CalData_IfbkOfs_Abc);
+                       TICK_IFBK_OFS_WAIT_SETTLE, CalData_IfbkOfs_Abc);
 
       /* End of Outputs for SubSystem: '<S20>/get_mtr_ifbk_avg' */
     }
@@ -991,6 +1022,8 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
      *  Constant: '<S21>/Zero'
      *  SignalConversion: '<S10>/TmpSignal ConversionAtBus CreatorInport3'
      */
+    pmsm_ctrl_M->blockIO.Merge.ctrl_md_rqst = rtb_CtrlMdRqst;
+    pmsm_ctrl_M->blockIO.Merge.cal_mgr_st_rqst = rtb_CalMgrStRqst;
     pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst[0] = 0.0F;
     pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst[1] = 0.0F;
     pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst[2] = 0.0F;
@@ -1016,12 +1049,13 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
       /* SystemReset for SwitchCase: '<S2>/Switch Case' incorporates:
        *  Chart: '<S9>/EncOfsCal'
        */
-      pmsm_ctrl_M->dwork.temporalCounter_i1_b = 0U;
+      pmsm_ctrl_M->dwork.temporalCounter_i1_h = 0U;
       pmsm_ctrl_M->dwork.is_active_c3_pmsm_ctrl = 0U;
       pmsm_ctrl_M->dwork.is_c3_pmsm_ctrl = IN_NO_ACTIVE_CHILD;
       pmsm_ctrl_M->dwork.ticks_inc = 0;
       pmsm_ctrl_M->dwork.ticks_start = 0;
       pmsm_ctrl_M->dwork.ticks_end = 0;
+      pmsm_ctrl_M->dwork.TICK_TGT = 0;
       pmsm_ctrl_M->blockIO.CtrlMdRqst = CTRL_MD_OFF;
       pmsm_ctrl_M->blockIO.CalMgrStRqst = ST_FAILED;
       pmsm_ctrl_M->blockIO.PwmRqst = 0.0F;
@@ -1034,32 +1068,75 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
      *  ActionPort: '<S9>/Action Port'
      */
     /* Chart: '<S9>/EncOfsCal' */
-    if (pmsm_ctrl_M->dwork.temporalCounter_i1_b < 127U) {
-      pmsm_ctrl_M->dwork.temporalCounter_i1_b++;
+    if (pmsm_ctrl_M->dwork.temporalCounter_i1_h < 255U) {
+      pmsm_ctrl_M->dwork.temporalCounter_i1_h++;
     }
 
     if (pmsm_ctrl_M->dwork.is_active_c3_pmsm_ctrl == 0U) {
       pmsm_ctrl_M->dwork.is_active_c3_pmsm_ctrl = 1U;
       pmsm_ctrl_M->dwork.is_c3_pmsm_ctrl = IN_mtr_n_poles_enc_ofs_init;
-      pmsm_ctrl_M->dwork.temporalCounter_i1_b = 0U;
+      pmsm_ctrl_M->dwork.temporalCounter_i1_h = 0U;
+      if (Cfg_EncCnts > 268435455) {
+        pmsm_ctrl_M->dwork.TICK_TGT = MAX_int32_T;
+      } else if (Cfg_EncCnts <= -268435456) {
+        pmsm_ctrl_M->dwork.TICK_TGT = MIN_int32_T;
+      } else {
+        pmsm_ctrl_M->dwork.TICK_TGT = Cfg_EncCnts << 3;
+      }
+
       pmsm_ctrl_M->blockIO.CtrlMdRqst = CTRL_MD_RAW_PWM;
-      pmsm_ctrl_M->blockIO.PwmRqst = 0.2F;
+      pmsm_ctrl_M->blockIO.PwmRqst = Cfg_AnglOfsCalPwmDuty;
       pmsm_ctrl_M->blockIO.CalMgrStRqst = ST_ENC_OFS;
       CalData_nPoles = -1;
       pmsm_ctrl_M->blockIO.Ticks = 0;
-      pmsm_ctrl_M->dwork.ticks_inc = 38;
+      pmsm_ctrl_M->dwork.ticks_inc = (int32_T)div_nzp_usu32_sat
+        (pmsm_ctrl_M->dwork.TICK_TGT, TICK_OFS_CAL_RAMP);
       CalData_EncOfs = pmsm_ctrl_M->blockIO.BusCreator.mtrif_enc_cnts;
       pmsm_ctrl_M->dwork.ticks_start = 0;
       pmsm_ctrl_M->dwork.ticks_end = 0;
     } else {
       switch (pmsm_ctrl_M->dwork.is_c3_pmsm_ctrl) {
        case IN_calc_enc_ofs_move_forward:
-        if ((pmsm_ctrl_M->blockIO.Ticks >= TICKS_TGT) &&
-            (pmsm_ctrl_M->dwork.ticks_end != pmsm_ctrl_M->dwork.ticks_start)) {
+        if ((pmsm_ctrl_M->dwork.ticks_end >= 0) &&
+            (pmsm_ctrl_M->dwork.ticks_start < pmsm_ctrl_M->dwork.ticks_end -
+             MAX_int32_T)) {
+          qY = MAX_int32_T;
+        } else if ((pmsm_ctrl_M->dwork.ticks_end < 0) &&
+                   (pmsm_ctrl_M->dwork.ticks_start >
+                    pmsm_ctrl_M->dwork.ticks_end - MIN_int32_T)) {
+          qY = MIN_int32_T;
+        } else {
+          qY = pmsm_ctrl_M->dwork.ticks_end - pmsm_ctrl_M->dwork.ticks_start;
+        }
+
+        if (qY < 0) {
+          if (qY <= MIN_int32_T) {
+            qY = MAX_int32_T;
+          } else {
+            qY = -qY;
+          }
+        }
+
+        if ((pmsm_ctrl_M->blockIO.Ticks >= pmsm_ctrl_M->dwork.TICK_TGT) && (qY <
+             TICK_INC_MIN)) {
+          pmsm_ctrl_M->dwork.is_c3_pmsm_ctrl = IN_enc_cnts_err;
+
+          /*  When state machine goes into this state, it means that no encoder movement
+             was detected; either because the encoder is not connected, motor has no
+             power or something else. So calibration is finished here.
+             TODO: Signal & handle error. */
+          pmsm_ctrl_M->dwork.ticks_end = 0;
+          CalData_nPoles = -1;
+          pmsm_ctrl_M->blockIO.CtrlMdRqst = CTRL_MD_OFF;
+          pmsm_ctrl_M->blockIO.CalMgrStRqst = ST_FAILED;
+          if (Cfg_EncCnts <= MIN_int32_T) {
+            CalData_EncOfs = MAX_int32_T;
+          } else {
+            CalData_EncOfs = -Cfg_EncCnts;
+          }
+        } else if (pmsm_ctrl_M->blockIO.Ticks >= pmsm_ctrl_M->dwork.TICK_TGT) {
           pmsm_ctrl_M->dwork.is_c3_pmsm_ctrl = IN_calc_n_poles;
-          pmsm_ctrl_M->dwork.temporalCounter_i1_b = 0U;
-          pmsm_ctrl_M->dwork.ticks_end =
-            pmsm_ctrl_M->blockIO.BusCreator.mtrif_enc_cnts;
+          pmsm_ctrl_M->dwork.temporalCounter_i1_h = 0U;
           if ((pmsm_ctrl_M->dwork.ticks_end >= 0) &&
               (pmsm_ctrl_M->dwork.ticks_start < pmsm_ctrl_M->dwork.ticks_end -
                MAX_int32_T)) {
@@ -1072,11 +1149,36 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
             qY = pmsm_ctrl_M->dwork.ticks_end - pmsm_ctrl_M->dwork.ticks_start;
           }
 
-          CalData_nPoles = (pmsm_ctrl_M->blockIO.Ticks == MIN_int32_T) && (qY ==
-            -1) ? MAX_int32_T : pmsm_ctrl_M->blockIO.Ticks / qY;
-        } else if ((pmsm_ctrl_M->blockIO.Ticks >= TICKS_TGT) &&
-                   (pmsm_ctrl_M->dwork.ticks_end ==
-                    pmsm_ctrl_M->dwork.ticks_start)) {
+          if (qY < 0) {
+            if (qY <= MIN_int32_T) {
+              qY = MAX_int32_T;
+            } else {
+              qY = -qY;
+            }
+          }
+
+          CalData_nPoles = pmsm_ctrl_M->blockIO.Ticks / qY;
+        } else {
+          pmsm_ctrl_M->blockIO.PwmRqst = Cfg_EncOfsCalPwmDuty;
+          if ((pmsm_ctrl_M->blockIO.Ticks < 0) && (pmsm_ctrl_M->dwork.ticks_inc <
+               MIN_int32_T - pmsm_ctrl_M->blockIO.Ticks)) {
+            pmsm_ctrl_M->blockIO.Ticks = MIN_int32_T;
+          } else if ((pmsm_ctrl_M->blockIO.Ticks > 0) &&
+                     (pmsm_ctrl_M->dwork.ticks_inc > MAX_int32_T
+                      - pmsm_ctrl_M->blockIO.Ticks)) {
+            pmsm_ctrl_M->blockIO.Ticks = MAX_int32_T;
+          } else {
+            pmsm_ctrl_M->blockIO.Ticks += pmsm_ctrl_M->dwork.ticks_inc;
+          }
+
+          pmsm_ctrl_M->dwork.ticks_end =
+            pmsm_ctrl_M->blockIO.BusCreator.mtrif_enc_cnts;
+        }
+        break;
+
+       case IN_calc_n_poles:
+        if ((CalData_nPoles < POLES_CAL_MIN) || (CalData_nPoles > POLES_CAL_MAX))
+        {
           pmsm_ctrl_M->dwork.is_c3_pmsm_ctrl = IN_enc_cnts_err;
 
           /*  When state machine goes into this state, it means that no encoder movement
@@ -1086,27 +1188,13 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
           pmsm_ctrl_M->dwork.ticks_end = 0;
           CalData_nPoles = -1;
           pmsm_ctrl_M->blockIO.CtrlMdRqst = CTRL_MD_OFF;
-          pmsm_ctrl_M->blockIO.CalMgrStRqst = ST_DONE;
+          pmsm_ctrl_M->blockIO.CalMgrStRqst = ST_FAILED;
           if (Cfg_EncCnts <= MIN_int32_T) {
             CalData_EncOfs = MAX_int32_T;
           } else {
             CalData_EncOfs = -Cfg_EncCnts;
           }
-        } else if ((pmsm_ctrl_M->blockIO.Ticks < 0) &&
-                   (pmsm_ctrl_M->dwork.ticks_inc < MIN_int32_T
-                    - pmsm_ctrl_M->blockIO.Ticks)) {
-          pmsm_ctrl_M->blockIO.Ticks = MIN_int32_T;
-        } else if ((pmsm_ctrl_M->blockIO.Ticks > 0) &&
-                   (pmsm_ctrl_M->dwork.ticks_inc > MAX_int32_T
-                    - pmsm_ctrl_M->blockIO.Ticks)) {
-          pmsm_ctrl_M->blockIO.Ticks = MAX_int32_T;
-        } else {
-          pmsm_ctrl_M->blockIO.Ticks += pmsm_ctrl_M->dwork.ticks_inc;
-        }
-        break;
-
-       case IN_calc_n_poles:
-        if (pmsm_ctrl_M->dwork.temporalCounter_i1_b >= 1) {
+        } else if (pmsm_ctrl_M->dwork.temporalCounter_i1_h >= 1) {
           pmsm_ctrl_M->dwork.is_c3_pmsm_ctrl = IN_move_back_calc_enc_ofs;
           if ((pmsm_ctrl_M->blockIO.Ticks >= 0) && (pmsm_ctrl_M->dwork.ticks_inc
                < pmsm_ctrl_M->blockIO.Ticks - MAX_int32_T)) {
@@ -1131,8 +1219,15 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
             qY = pmsm_ctrl_M->dwork.ticks_end - pmsm_ctrl_M->dwork.ticks_start;
           }
 
-          CalData_nPoles = (pmsm_ctrl_M->blockIO.Ticks == MIN_int32_T) && (qY ==
-            -1) ? MAX_int32_T : pmsm_ctrl_M->blockIO.Ticks / qY;
+          if (qY < 0) {
+            if (qY <= MIN_int32_T) {
+              qY = MAX_int32_T;
+            } else {
+              qY = -qY;
+            }
+          }
+
+          CalData_nPoles = pmsm_ctrl_M->blockIO.Ticks / qY;
         }
         break;
 
@@ -1150,7 +1245,7 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
         pmsm_ctrl_M->dwork.ticks_end = 0;
         CalData_nPoles = -1;
         pmsm_ctrl_M->blockIO.CtrlMdRqst = CTRL_MD_OFF;
-        pmsm_ctrl_M->blockIO.CalMgrStRqst = ST_DONE;
+        pmsm_ctrl_M->blockIO.CalMgrStRqst = ST_FAILED;
         if (Cfg_EncCnts <= MIN_int32_T) {
           CalData_EncOfs = MAX_int32_T;
         } else {
@@ -1178,29 +1273,21 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
         break;
 
        default:
-        if (pmsm_ctrl_M->dwork.temporalCounter_i1_b >= (int32_T)
-            WAIT_SETTLE_TICKS) {
+        if (pmsm_ctrl_M->dwork.temporalCounter_i1_h >= (int32_T)
+            TICK_ENC_OFS_WAIT_SETTLE) {
           /*  Wait for motor / current to settle. */
           pmsm_ctrl_M->dwork.is_c3_pmsm_ctrl = IN_calc_enc_ofs_move_forward;
+          pmsm_ctrl_M->blockIO.PwmRqst = Cfg_EncOfsCalPwmDuty;
           pmsm_ctrl_M->dwork.ticks_start =
             pmsm_ctrl_M->blockIO.BusCreator.mtrif_enc_cnts;
-          if ((pmsm_ctrl_M->blockIO.Ticks < 0) && (pmsm_ctrl_M->dwork.ticks_inc <
-               MIN_int32_T - pmsm_ctrl_M->blockIO.Ticks)) {
-            pmsm_ctrl_M->blockIO.Ticks = MIN_int32_T;
-          } else if ((pmsm_ctrl_M->blockIO.Ticks > 0) &&
-                     (pmsm_ctrl_M->dwork.ticks_inc > MAX_int32_T
-                      - pmsm_ctrl_M->blockIO.Ticks)) {
-            pmsm_ctrl_M->blockIO.Ticks = MAX_int32_T;
-          } else {
-            pmsm_ctrl_M->blockIO.Ticks += pmsm_ctrl_M->dwork.ticks_inc;
-          }
         } else {
           pmsm_ctrl_M->blockIO.CtrlMdRqst = CTRL_MD_RAW_PWM;
-          pmsm_ctrl_M->blockIO.PwmRqst = 0.2F;
+          pmsm_ctrl_M->blockIO.PwmRqst = Cfg_AnglOfsCalPwmDuty;
           pmsm_ctrl_M->blockIO.CalMgrStRqst = ST_ENC_OFS;
           CalData_nPoles = -1;
           pmsm_ctrl_M->blockIO.Ticks = 0;
-          pmsm_ctrl_M->dwork.ticks_inc = 38;
+          pmsm_ctrl_M->dwork.ticks_inc = (int32_T)div_nzp_usu32_sat
+            (pmsm_ctrl_M->dwork.TICK_TGT, TICK_OFS_CAL_RAMP);
           CalData_EncOfs = pmsm_ctrl_M->blockIO.BusCreator.mtrif_enc_cnts;
           pmsm_ctrl_M->dwork.ticks_start = 0;
           pmsm_ctrl_M->dwork.ticks_end = 0;
@@ -1228,18 +1315,25 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
     rtb_TmpSignalConversionAtcalc_i[2] = 0.0F;
 
     /* Outputs for Atomic SubSystem: '<S9>/calc_mod_wave' */
-
-    /* BusCreator: '<S9>/Bus Creator' incorporates:
-     *  Gain: '<S9>/Gain'
-     */
-    calc_mod_wave(pmsm_ctrl_M, rtb_TmpSignalConversionAtcalc_i, 0.0F,
-                  pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst,
-                  pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst);
+    calc_mod_wave(pmsm_ctrl_M, rtb_TmpSignalConversionAtcalc_i, 6.28318548F *
+                  (real32_T)pmsm_ctrl_M->blockIO.Ticks / (real32_T)Cfg_EncCnts,
+                  rtb_DataTypeConversion_f, rtb_DataTypeConversion_f);
 
     /* End of Outputs for SubSystem: '<S9>/calc_mod_wave' */
+
+    /* BusCreator: '<S9>/Bus Creator' incorporates:
+     *  Constant: '<S9>/Constant'
+     *  DataTypeConversion: '<S9>/Data Type Cnversion1'
+     *  DataTypeConversion: '<S9>/Data Type Conversion'
+     *  Gain: '<S9>/Gain'
+     *  Product: '<S9>/Divide'
+     */
     pmsm_ctrl_M->blockIO.Merge.ctrl_md_rqst = pmsm_ctrl_M->blockIO.CtrlMdRqst;
     pmsm_ctrl_M->blockIO.Merge.cal_mgr_st_rqst =
       pmsm_ctrl_M->blockIO.CalMgrStRqst;
+    pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst[0] = rtb_DataTypeConversion_f[0];
+    pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst[1] = rtb_DataTypeConversion_f[1];
+    pmsm_ctrl_M->blockIO.Merge.mtr_cmd_rqst[2] = rtb_DataTypeConversion_f[2];
 
     /* Update for UnitDelay: '<S14>/Unit Delay' */
     pmsm_ctrl_M->dwork.UnitDelay_DSTATE_j = rtb_PwmRqst_l;
@@ -1266,16 +1360,6 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv)
 
   /* DataStoreRead: '<S2>/Data Store Read3' */
   pmsm_ctrl_M->blockIO.BusCreator_e.res = CalData_Res;
-
-  /* Outport: '<Root>/cal_actv' incorporates:
-   *  Constant: '<S7>/Constant'
-   *  Constant: '<S8>/Constant'
-   *  Logic: '<S2>/Logical Operator'
-   *  RelationalOperator: '<S7>/Compare'
-   *  RelationalOperator: '<S8>/Compare'
-   */
-  *rtY_cal_actv = ((pmsm_ctrl_M->blockIO.Merge.cal_mgr_st_rqst != ST_DONE) &&
-                   (pmsm_ctrl_M->blockIO.ctrl_cal_act != CAL_NONE));
 
   /* End of Outputs for RootInportFunctionCallGenerator: '<Root>/RootFcnCall_InsertedFor_Trig_Pmsm_Cal_at_outport_1' */
 }
@@ -1812,16 +1896,15 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
   /* RootInportFunctionCallGenerator: '<Root>/RootFcnCall_InsertedFor_Trig_Pmsm_MotnCtrl_at_outport_1' incorporates:
    *  SubSystem: '<Root>/CtrlMain'
    */
+  /* Logic: '<S4>/Logical Operator' */
+  DBG_enbl_motn_ctrl =
+    (pmsm_ctrl_M->blockIO.BusCreator2.ENBL_CTRL_FLAGS.enbl_spd_ctrl ||
+     pmsm_ctrl_M->blockIO.BusCreator2.ENBL_CTRL_FLAGS.enbl_pos_ctrl);
+
   /* Outputs for Enabled SubSystem: '<S4>/MotnCtrl' incorporates:
    *  EnablePort: '<S54>/Enable'
    */
-  /* Logic: '<S4>/Logical Operator' incorporates:
-   *  SignalConversion: '<S54>/HiddenBuf_InsertedFor_PosCtl_at_inport_2'
-   *  SignalConversion: '<S54>/HiddenBuf_InsertedFor_SpdCtrl_at_inport_2'
-   *  SignalConversion: '<S56>/HiddenBuf_InsertedFor_PosTrackDiff_at_inport_1'
-   */
-  if (pmsm_ctrl_M->blockIO.BusCreator2.ENBL_CTRL_FLAGS.enbl_spd_ctrl ||
-      pmsm_ctrl_M->blockIO.BusCreator2.ENBL_CTRL_FLAGS.enbl_pos_ctrl) {
+  if (DBG_enbl_motn_ctrl) {
     if (!pmsm_ctrl_M->dwork.MotnCtrl_MODE) {
       pmsm_ctrl_M->dwork.MotnCtrl_MODE = true;
     }
@@ -1834,10 +1917,16 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
     rtb_Gain1 = (real32_T)(Cfg_StepToEncCnts * (int32_T)(real32_T)floor
       (pmsm_ctrl_M->blockIO.BusCreator2.ctrl_tgt[0])) * EncCntsToRads;
 
+    /* Logic: '<S56>/Logical Operator' incorporates:
+     *  Constant: '<S56>/Constant'
+     */
+    DBG_traj_plan_is_enbl = (Cfg_EnblTrajPlan &&
+      pmsm_ctrl_M->blockIO.BusCreator2.ENBL_CTRL_FLAGS.enbl_pos_ctrl);
+
     /* Outputs for Enabled SubSystem: '<S56>/PosTrackDiff' incorporates:
      *  EnablePort: '<S60>/Enable'
      */
-    if (pmsm_ctrl_M->blockIO.BusCreator2.ENBL_CTRL_FLAGS.enbl_pos_ctrl) {
+    if (DBG_traj_plan_is_enbl) {
       if (!pmsm_ctrl_M->dwork.PosTrackDiff_MODE) {
         /* InitializeConditions for DiscreteIntegrator: '<S60>/Discrete-Time Integrator1' */
         pmsm_ctrl_M->dwork.DiscreteTimeIntegrator1_DSTATE = 0.0F;
@@ -1963,12 +2052,10 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
       rtb_Add1_j -= 0.005F;
 
       /* SignalConversion: '<S60>/OutportBufferForGrd' */
-      pmsm_ctrl_M->blockIO.OutportBufferForGrd =
-        pmsm_ctrl_M->blockIO.DiscreteTimeIntegrator;
+      DBG_traj_plan_grd = pmsm_ctrl_M->blockIO.DiscreteTimeIntegrator;
 
       /* SignalConversion: '<S60>/OutportBufferForRef' */
-      pmsm_ctrl_M->blockIO.OutportBufferForRef =
-        pmsm_ctrl_M->blockIO.DiscreteTimeIntegrator1;
+      DBG_traj_plan_ref = pmsm_ctrl_M->blockIO.DiscreteTimeIntegrator1;
 
       /* Update for DiscreteIntegrator: '<S60>/Discrete-Time Integrator1' */
       pmsm_ctrl_M->dwork.DiscreteTimeIntegrator1_DSTATE += 0.001F *
@@ -2023,6 +2110,7 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
     /* Outputs for Enabled SubSystem: '<S54>/PosCtl' incorporates:
      *  EnablePort: '<S55>/Enable'
      */
+    /* SignalConversion: '<S54>/HiddenBuf_InsertedFor_PosCtl_at_inport_2' */
     if (pmsm_ctrl_M->blockIO.BusCreator2.ENBL_CTRL_FLAGS.enbl_pos_ctrl) {
       if (!pmsm_ctrl_M->dwork.PosCtl_MODE) {
         /* InitializeConditions for DiscreteIntegrator: '<S59>/Discrete-Time Integrator' */
@@ -2070,8 +2158,8 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
       sMultiWordMul(&tmp_0, 1, &tmp_1, 1, &tmp.chunks[0U], 2);
 
       /* Switch: '<S56>/Switch' */
-      if (pmsm_ctrl_M->blockIO.BusCreator2.ENBL_CTRL_FLAGS.enbl_pos_ctrl) {
-        rtb_Gain1 = pmsm_ctrl_M->blockIO.OutportBufferForRef;
+      if (DBG_traj_plan_is_enbl) {
+        rtb_Gain1 = DBG_traj_plan_ref;
       }
 
       /* End of Switch: '<S56>/Switch' */
@@ -2099,11 +2187,13 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
       }
     }
 
+    /* End of SignalConversion: '<S54>/HiddenBuf_InsertedFor_PosCtl_at_inport_2' */
     /* End of Outputs for SubSystem: '<S54>/PosCtl' */
 
     /* Outputs for Enabled SubSystem: '<S54>/SpdCtrl' incorporates:
      *  EnablePort: '<S57>/Enable'
      */
+    /* SignalConversion: '<S54>/HiddenBuf_InsertedFor_SpdCtrl_at_inport_2' */
     if (pmsm_ctrl_M->blockIO.BusCreator2.ENBL_CTRL_FLAGS.enbl_spd_ctrl) {
       if (!pmsm_ctrl_M->dwork.SpdCtrl_MODE) {
         /* InitializeConditions for DiscreteIntegrator: '<S69>/Discrete-Time Integrator' */
@@ -2124,7 +2214,7 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
        *  DataTypeConversion: '<S54>/Data Type Conversion1'
        *  Sum: '<S54>/Add'
        */
-      rtb_Gain1 = (pmsm_ctrl_M->blockIO.OutportBufferForGrd + rtb_Sign_g) -
+      rtb_Gain1 = (DBG_traj_plan_grd + rtb_Sign_g) -
         pmsm_ctrl_M->blockIO.MtrIf_SpdOut_i;
 
       /* Saturate: '<S57>/Saturation' incorporates:
@@ -2148,15 +2238,11 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
       }
     }
 
+    /* End of SignalConversion: '<S54>/HiddenBuf_InsertedFor_SpdCtrl_at_inport_2' */
     /* End of Outputs for SubSystem: '<S54>/SpdCtrl' */
 
-    /* DataTypeConversion: '<S54>/Data Type Conversion4' incorporates:
-     *  SignalConversion: '<S54>/HiddenBuf_InsertedFor_PosCtl_at_inport_2'
-     *  SignalConversion: '<S54>/HiddenBuf_InsertedFor_SpdCtrl_at_inport_2'
-     *  SignalConversion: '<S56>/HiddenBuf_InsertedFor_PosTrackDiff_at_inport_1'
-     */
-    pmsm_ctrl_M->blockIO.BusCreator_c.motn_ctrl_cmd =
-      pmsm_ctrl_M->blockIO.Saturation;
+    /* DataTypeConversion: '<S54>/Data Type Conversion4' */
+    DBG_motn_ctrl_cmd = pmsm_ctrl_M->blockIO.Saturation;
   } else {
     if (pmsm_ctrl_M->dwork.MotnCtrl_MODE) {
       /* Disable for Enabled SubSystem: '<S56>/PosTrackDiff' */
@@ -2190,8 +2276,11 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
     }
   }
 
-  /* End of Logic: '<S4>/Logical Operator' */
   /* End of Outputs for SubSystem: '<S4>/MotnCtrl' */
+
+  /* BusCreator: '<S4>/Bus Creator' */
+  pmsm_ctrl_M->blockIO.BusCreator_c.motn_ctrl_cmd = DBG_motn_ctrl_cmd;
+
   /* End of Outputs for RootInportFunctionCallGenerator: '<Root>/RootFcnCall_InsertedFor_Trig_Pmsm_MotnCtrl_at_outport_1' */
 }
 

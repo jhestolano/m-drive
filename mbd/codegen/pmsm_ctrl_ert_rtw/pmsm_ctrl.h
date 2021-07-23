@@ -3,7 +3,7 @@
  *
  * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.700
+ * Model version              : 1.728
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */
@@ -52,8 +52,6 @@ typedef struct {
   real32_T Saturation;                 /* '<S57>/Saturation' */
   real32_T DiscreteTimeIntegrator1;    /* '<S60>/Discrete-Time Integrator1' */
   real32_T DiscreteTimeIntegrator;     /* '<S60>/Discrete-Time Integrator' */
-  real32_T OutportBufferForGrd;        /* '<S60>/Discrete-Time Integrator' */
-  real32_T OutportBufferForRef;        /* '<S60>/Discrete-Time Integrator1' */
   real32_T Add;                        /* '<S58>/Add' */
   real32_T MtrIf_TrqAct;               /* '<S30>/Data Type Conversion2' */
   real32_T MtrIf_SpdOut_i;             /* '<S30>/Data Type Conversion1' */
@@ -93,12 +91,13 @@ typedef struct {
   int32_T ticks_inc;                   /* '<S9>/EncOfsCal' */
   int32_T ticks_start;                 /* '<S9>/EncOfsCal' */
   int32_T ticks_end;                   /* '<S9>/EncOfsCal' */
+  int32_T TICK_TGT;                    /* '<S9>/EncOfsCal' */
   uint16_T temporalCounter_i1;         /* '<S10>/ResIdCal' */
   uint16_T temporalCounter_i1_n;       /* '<S11>/IndIdCal' */
   int8_T SwitchCase_ActiveSubsystem;   /* '<S2>/Switch Case' */
   uint8_T is_active_c3_pmsm_ctrl;      /* '<S9>/EncOfsCal' */
   uint8_T is_c3_pmsm_ctrl;             /* '<S9>/EncOfsCal' */
-  uint8_T temporalCounter_i1_b;        /* '<S9>/EncOfsCal' */
+  uint8_T temporalCounter_i1_h;        /* '<S9>/EncOfsCal' */
   uint8_T is_active_c2_pmsm_ctrl;      /* '<S10>/ResIdCal' */
   uint8_T is_c2_pmsm_ctrl;             /* '<S10>/ResIdCal' */
   uint8_T is_active_c1_pmsm_ctrl;      /* '<S11>/IndIdCal' */
@@ -139,6 +138,9 @@ extern const Calib_OutType pmsm_ctrl_rtZCalib_OutType;/* Calib_OutType ground */
  */
 extern real32_T DBG_mtrif_ifbk_act_w_ofs[3];/* '<S81>/Subtract' */
 extern real32_T DBG_mtrif_v_bus_lpf;   /* '<S79>/Add1' */
+extern real32_T DBG_motn_ctrl_cmd;     /* '<S54>/Data Type Conversion4' */
+extern real32_T DBG_traj_plan_grd;     /* '<S60>/Discrete-Time Integrator' */
+extern real32_T DBG_traj_plan_ref;     /* '<S60>/Discrete-Time Integrator1' */
 extern real32_T DBG_e_angl;            /* '<S30>/calc_elec_angle' */
 extern real32_T DBG_ifbk_q_tgt;        /* '<S34>/Product' */
 extern real32_T DBG_i_abc_lpf[3];      /* '<S40>/Add1' */
@@ -147,6 +149,8 @@ extern real32_T DBG_obs_load_trq;      /* '<S32>/Product1' */
 extern real32_T DBG_ifbk_ctrl_v_dq0[3];/*  */
 extern int32_T DBG_mtrif_enc_cnts_w_ofs;/* '<S80>/Subtract' */
 extern int32_T DBG_obs_enc_cnts;       /* '<S30>/Data Type Conversion4' */
+extern boolean_T DBG_enbl_motn_ctrl;   /* '<S4>/Logical Operator' */
+extern boolean_T DBG_traj_plan_is_enbl;/* '<S56>/Logical Operator' */
 
 /*
  * Exported States
@@ -176,7 +180,7 @@ extern void Trig_Pmsm_SetIn(RT_MODEL *const pmsm_ctrl_M, int32_T
 extern void Trig_Pmsm_CtrlMgr(RT_MODEL *const pmsm_ctrl_M);
 
 /* Exported entry point function */
-extern void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, boolean_T *rtY_cal_actv);
+extern void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M);
 
 /* Exported entry point function */
 extern void Trig_Pmsm_Foc(RT_MODEL *const pmsm_ctrl_M);
@@ -193,6 +197,11 @@ extern void Trig_Pmsm_GetOut(RT_MODEL *const pmsm_ctrl_M, real32_T
 /*-
  * These blocks were eliminated from the model due to optimizations:
  *
+ * Block '<S7>/Compare' : Unused code path elimination
+ * Block '<S7>/Constant' : Unused code path elimination
+ * Block '<S8>/Compare' : Unused code path elimination
+ * Block '<S8>/Constant' : Unused code path elimination
+ * Block '<S2>/Logical Operator' : Unused code path elimination
  * Block '<S9>/Scope' : Unused code path elimination
  * Block '<S10>/Display' : Unused code path elimination
  * Block '<S11>/Display' : Unused code path elimination

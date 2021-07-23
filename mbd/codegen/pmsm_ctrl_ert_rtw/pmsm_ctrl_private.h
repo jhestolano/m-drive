@@ -3,7 +3,7 @@
  *
  * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.700
+ * Model version              : 1.728
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */
@@ -65,6 +65,7 @@ extern real32_T sMultiWord2Single(const uint32_T u1[], int32_T n1, int32_T e1);
 extern void sMultiWordMul(const uint32_T u1[], int32_T n1, const uint32_T u2[],
   int32_T n2, uint32_T y[], int32_T n);
 extern int32_T div_nde_s32_floor(int32_T numerator, int32_T denominator);
+extern uint32_T div_nzp_usu32_sat(int32_T numerator, uint32_T denominator);
 extern void calc_pwm_dc(RT_MODEL * const pmsm_ctrl_M, const real32_T
   rtu_pwm_abc[3], real32_T rty_pwm_dc[3]);
 extern void get_mtr_ifbk_sum_Reset(self_get_mtr_ifbk_sum *pmsm_ctrl_self_arg);
