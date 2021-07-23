@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'pmsm_ctrl'.
  *
- * Model version                  : 1.728
+ * Model version                  : 1.730
  * Simulink Coder version         : 8.14 (R2018a) 06-Feb-2018
- * C/C++ source code generated on : Thu Jul 22 20:04:11 2021
+ * C/C++ source code generated on : Thu Jul 22 20:32:13 2021
  */
 
 #ifndef RTW_HEADER_cfg_params_h_

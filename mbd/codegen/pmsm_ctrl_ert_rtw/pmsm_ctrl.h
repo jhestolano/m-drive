@@ -3,7 +3,7 @@
  *
  * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.728
+ * Model version              : 1.730
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */
@@ -31,6 +31,11 @@
 typedef struct {
   real32_T UnitDelay_DSTATE[3];        /* '<S23>/Unit Delay' */
 } DW_get_mtr_ifbk_sum;
+
+/* Block states (default storage) for system '<S43>/PI-Ctrl-Varying-Gains' */
+typedef struct {
+  real32_T DiscreteTimeIntegrator_DSTATE;/* '<S47>/Discrete-Time Integrator' */
+} DW_PI_Ctrl;
 
 /* Block signals (default storage) */
 typedef struct {
@@ -74,15 +79,12 @@ typedef struct {
   real32_T UnitDelay_DSTATE_o[3];      /* '<S40>/Unit Delay' */
   real32_T ifbk_abc_sum[3];            /* '<S10>/ResIdCal' */
   real32_T UnitDelay_DSTATE;           /* '<S79>/Unit Delay' */
-  real32_T DiscreteTimeIntegrator_DSTATE;/* '<S69>/Discrete-Time Integrator' */
   real32_T DiscreteTimeIntegrator1_DSTATE;/* '<S60>/Discrete-Time Integrator1' */
-  real32_T DiscreteTimeIntegrator_DSTATE_h;/* '<S60>/Discrete-Time Integrator' */
+  real32_T DiscreteTimeIntegrator_DSTATE;/* '<S60>/Discrete-Time Integrator' */
   real32_T DiscreteTimeIntegrator_DSTATE_o;/* '<S59>/Discrete-Time Integrator' */
   real32_T DiscreteTimeIntegrator_DSTATE_k;/* '<S38>/Discrete-Time Integrator' */
   real32_T DiscreteTimeIntegrator_DSTAT_ke;/* '<S39>/Discrete-Time Integrator' */
   real32_T DiscreteTimeIntegrator_DSTATE_p;/* '<S37>/Discrete-Time Integrator' */
-  real32_T DiscreteTimeIntegrator_DSTATE_n;/* '<S49>/Discrete-Time Integrator' */
-  real32_T DiscreteTimeIntegrator_DSTAT_oy;/* '<S47>/Discrete-Time Integrator' */
   real32_T UnitDelay_DSTATE_j;         /* '<S14>/Unit Delay' */
   real32_T ifbk_neg;                   /* '<S11>/IndIdCal' */
   real32_T ifbk_pos;                   /* '<S11>/IndIdCal' */
@@ -118,8 +120,16 @@ typedef struct {
   DW_get_mtr_ifbk_sum dwork;
 } self_get_mtr_ifbk_sum;
 
+/* model data, for system '<S43>/PI-Ctrl-Varying-Gains' */
+typedef struct {
+  DW_PI_Ctrl dwork;
+} self_PI_Ctrl;
+
 /* Self model data, for system '<Root>' */
 struct tag_RTM {
+  self_PI_Ctrl self_PICtrlVaryingGains_m;
+  self_PI_Ctrl self_PICtrlVaryingGains_p;
+  self_PI_Ctrl self_PICtrlVaryingGains;
   self_get_mtr_ifbk_sum self_get_mtr_ifbk_sum_f;
   DW dwork;
   B blockIO;
