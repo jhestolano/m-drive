@@ -104,6 +104,14 @@ void AppTask_MotorControl(void* params) {
     signal_buff[17] = mtr_dbg.ifbk_q_tgt;
     signal_buff[18] = (float)mtr_dbg.obs_enc_cnts;
     signal_buff[19] = (float)mtr_dbg.mtr_load_obs;
+    signal_buff[20] = (float)pwm_dq[1];
+    signal_buff[21] = (float)mtr_dbg.motn_ctrl_cmd;
+    /* signal_buff[22] = (float)mtr_dbg.motn_ctrl_cmd_trq_tgt; */
+    signal_buff[23] = (float)mtr_dbg.mtr_spd_tgt;
+    signal_buff[24] = (float)((int32_t)mtr_dbg.ctrl_md_act);
+    signal_buff[25] = (float)mtr_dbg.ctrl_mgr_ctrl_tgt[0];
+    signal_buff[26] = (float)mtr_dbg.ifbk_ctrl_v_dq0[0];
+    signal_buff[27] = (float)mtr_dbg.ifbk_ctrl_v_dq0[1];
 
     xStreamBufferSend(stream_buff,
         (void*)signal_buff,
