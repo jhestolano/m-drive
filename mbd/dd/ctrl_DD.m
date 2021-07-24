@@ -1,12 +1,12 @@
 %% Sampling rates.
-FastTsample = 1. / 30e3;
+FastTsample = 1e-4;
 MainTsample = 1e-3;
 
 
-%% Fast sampling time 30khz
+%% Fast sampling time 10khz
 TsFast = Simulink.Parameter;
 TsFast.StorageClass = 'Auto';
-TsFast.Description = 'Fast sampling time (30khz)';
+TsFast.Description = 'Fast sampling time (10)';
 TsFast.DataType = 'single';
 TsFast.Min = [];
 TsFast.Max = [];
