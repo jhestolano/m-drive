@@ -28,6 +28,10 @@ typedef struct MtrParams_tag {
   float ifbk_ofs[3]; /* Current offsets. */
 } MtrParams_S;
 
+typedef struct MtrStats_tag {
+  uint32_t ctrl_fast_cnt;
+} MtrStats_S;
+
 /* Might need to add other interrupts that might share data. */
 #define MTRIF_LOCK() __disable_irq()
 #define MTRIF_UNLOCK() __enable_irq()
@@ -76,5 +80,7 @@ float MtrIf_GetTrq(void);
 void MtrIf_GetMtrParams(MtrParams_S* params);
 
 void MtrIf_GetDbg(MtrDbg_S* dbg);
+
+void MtrIf_GetStats(MtrStats_S* stats);
 
 #endif // _MTRIF_H_

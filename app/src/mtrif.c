@@ -7,6 +7,7 @@
 #include "pmsm_ctrl.h"
 #include "pmsm_ctrl_types.h"
 #include "pwm.h"
+#include "tmr.h"
 
 #define MTRIF_TO_DEG (0.1f) /* App layer position resolution is 0.1 degrees
                                represented as int. For example, a value of
@@ -29,6 +30,7 @@ typedef struct MtrIf_State_tag {
   MtrCtrlMd_T ctrl_md_rqst;
   MtrCtrlMd_T ctrl_md_act;
   uint8_t is_busy;
+  uint32_t ctrl_fast_cnt; /* Clock cycles for FOC control. */
 } MtrIf_State_S;
 
 MtrIf_State_S _mtr_if_s = {0};
@@ -85,6 +87,9 @@ void MtrIf_CtrlFast(void) {
   MtrCtrlMd_T ctrl_md;
   MtrCtrlCal_T cal_rqst;
   float ctrl_tgt[3] = {0.f};
+
+  TMR_Reset(TMR_CH_GENERAL);
+  TMR_Start(TMR_CH_GENERAL);
 
   MtrIf_GetIfbk(&_mtr_if_s.mtr_ifbk[0]);
 
@@ -168,6 +173,8 @@ void MtrIf_CtrlFast(void) {
   );
 
   MtrIf_SetPwmDc(&_mtr_if_s.pwm_dc[0]);
+  TMR_Stop(TMR_CH_GENERAL);
+  _mtr_if_s.ctrl_fast_cnt = TMR_GetCnt(TMR_CH_GENERAL);
 }
 
 void MtrIf_SetPwmDc(float* pwm_a) {
@@ -307,4 +314,13 @@ void MtrIf_GetDbg(MtrDbg_S* dbg) {
     memcpy((void*)dbg, (void*)&DBG_Struct, sizeof(DBG_Struct_type));
     MTRIF_UNLOCK();
   }
+}
+
+void MtrIf_GetStats(MtrStats_S* stats) {
+  if(stats) {
+    MTRIF_LOCK();
+    stats->ctrl_fast_cnt = _mtr_if_s.ctrl_fast_cnt;
+    MTRIF_UNLOCK();
+  }
+
 }

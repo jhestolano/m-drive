@@ -62,6 +62,7 @@ void AppTask_MotorControl(void* params) {
   TickType_t last_wake_time = xTaskGetTickCount();
   MtrParams_S mtr_params;
   MtrDbg_S mtr_dbg;
+  MtrStats_S mtr_stats;
   float ifbk_dq[2];
   float pwm_dq[2];
 
@@ -82,6 +83,7 @@ void AppTask_MotorControl(void* params) {
     MtrIf_GetDbg(&mtr_dbg);
     MtrIf_GetIfbkDq(ifbk_dq);
     MtrIf_GetPwmDq(pwm_dq);
+    MtrIf_GetStats(&mtr_stats);
 
 #ifdef __SLOG__
     signal_buff[0] = (float)mtr_dbg.mtr_if_enc_cnts;
@@ -107,11 +109,12 @@ void AppTask_MotorControl(void* params) {
     signal_buff[20] = (float)pwm_dq[1];
     signal_buff[21] = (float)mtr_dbg.motn_ctrl_cmd;
     /* signal_buff[22] = (float)mtr_dbg.motn_ctrl_cmd_trq_tgt; */
-    signal_buff[23] = (float)mtr_dbg.mtr_spd_tgt;
-    signal_buff[24] = (float)((int32_t)mtr_dbg.ctrl_md_act);
-    signal_buff[25] = (float)mtr_dbg.ctrl_mgr_ctrl_tgt[0];
+    /* signal_buff[23] = (float)mtr_dbg.mtr_spd_tgt; */
+    /* signal_buff[24] = (float)((int32_t)mtr_dbg.ctrl_md_act); */
+    /* signal_buff[25] = (float)mtr_dbg.ctrl_mgr_ctrl_tgt[0]; */
     signal_buff[26] = (float)mtr_dbg.ifbk_ctrl_v_dq0[0];
     signal_buff[27] = (float)mtr_dbg.ifbk_ctrl_v_dq0[1];
+    signal_buff[28] = (float)mtr_stats.ctrl_fast_cnt;
 
     xStreamBufferSend(stream_buff,
         (void*)signal_buff,
