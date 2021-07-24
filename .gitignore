@@ -1,9 +1,8 @@
 mbd/cache
-mbd/codegen/
-!mbd/codegen/*.c
-!mbd/codegen/*.h
 tags
-*.slx.autosave
+*.slx.*
+.gdb_history
+mbd/codegen
 
 # Prerequisites
 *.d
