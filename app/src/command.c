@@ -5,6 +5,7 @@
 #include "gpio.h"
 #include "pmsm_ctrl_types.h"
 #include "mtrif.h"
+#include "dbg.h"
 
 #define COMMAND_LOCK UART_DisableIRQ
 #define COMMAND_UNLOCK UART_EnableIRQ
@@ -34,52 +35,23 @@ CONSOLE_COMMAND_DEF(set_ctrl, "Set control mode and target",
 static void set_ctrl_command_handler(const set_ctrl_args_t* args) {
   MtrCtlMd_T md_rqst;
 
-  float tgt;
   float target[3];
   bzero(target, sizeof(target));
 
-  switch(args->mode) {
-    case 0:
-      md_rqst = CTRL_MD_OFF;
-      tgt = 0;
-      break;
-    case 1:
-      tgt = (float)args->target / 100.0f;
-      if(tgt > 1.0f) {
-        tgt = 1.0f;
-      }
-      if(tgt < 0.0f) {
-        tgt = 0.0f;
-      }
-      md_rqst = CTRL_MD_DQ_PWM;
-      target[1] = tgt; /* Set Q-Component */
-      break;
-    case 2:
-      tgt = (float)args->target / 1000.0f;
-      if(tgt > 1.0f) {
-        tgt = 1.0f;
-      }
-      if(tgt < 0.0f) {
-        tgt = 0.0f;
-      }
-      md_rqst = CTRL_MD_IFBK;
-      target[0] = tgt;
-      break;
-    default:
-      md_rqst = CTRL_MD_OFF;
-      tgt = 0;
-  }
+  target[0] = args->target * 1.0e-3f;
 
-  MtrIf_SetCtlMd(md_rqst, target);
+  MtrIf_SetCtlMd(CTRL_MD_IFBK, target);
 
 }
 /* End of command definitions. */
 
 /* Wrappers for Tx / Rx UART communication. */
 static void wrap_write_fnc(const char* str) {
+  DBG_DEBUG("Tx'd char!\n\r");
   UART_Puts(str);
 }
 
+#ifdef UART_RX_USE_IT
 static void wrap_read_fnc(uint8_t ch) {
   /* This is interrupt context. Keep it short. */
   if(buff.cnt < BUFF_SIZE) {
@@ -87,6 +59,7 @@ static void wrap_read_fnc(uint8_t ch) {
     buff.cnt++;
   }
 }
+#endif
 /* End of wrappers. */
 
 void command_init(void) {
@@ -97,13 +70,26 @@ void command_init(void) {
   console_init(&init_console);
   console_command_register(led_set);
   console_command_register(set_ctrl);
+#ifdef UART_RX_USE_IT
   UART_AttachRxCallback(wrap_read_fnc);
+#endif
 }
 
 void command_exec(void) {
   /* Handle console processing and buffering here. */
+#ifdef UART_RX_USE_IT
   COMMAND_LOCK();
   console_process(buff.mem, buff.cnt);
   buff.cnt = 0;
   COMMAND_UNLOCK();
+#else
+  uint8_t ch;
+  int8_t ret = UART_Getc(&ch);
+  if(ret == 0) {
+    console_process(&ch, 1);
+    DBG_DEBUG("Received char: %c!\n\r", ch);
+  } else {
+    /* DBG_WARN("UART Rx error!\n\r"); */
+  }
+#endif
 }

@@ -7,10 +7,6 @@
  *-----------------------------------------------------------------------------*/
 #define UART_TX_DELAY (1)                       /* Uart xmit delay. */
 
-/* Rx buffer shall remain one to generate an interrupt for each characeter, as the */
-/* size of the message cannot be anticipated. Buffering will be done in software. */
-#define UART_RX_BUFF_SIZE (1)                   /* Uart rx buffer. */
-
 /*-----------------------------------------------------------------------------
  * Static global variable definitions.
  *-----------------------------------------------------------------------------*/
@@ -18,11 +14,17 @@ static UART_HandleTypeDef gs_uart_init_conf = UART_INIT_CONF;
 
 static DMA_HandleTypeDef gs_uart_dma_conf = DMA_UART_INIT_CONF;
 
+#ifdef UART_RX_USE_IT
+/* Rx buffer shall remain one to generate an interrupt for each characeter, as the */
+/* size of the message cannot be anticipated. Buffering will be done in software. */
+#define UART_RX_BUFF_SIZE (1)                   /* Uart rx buffer. */
+
 static uint8_t _uart_rx_buff[UART_RX_BUFF_SIZE];
 
 /* This variable hold the function pointer to callback when a new char */
 /* interrupt has been received. */
 static uart_rx_callback_t gs_uart_rx_callback;
+#endif
 
 /*-----------------------------------------------------------------------------
  * Interface functions.
@@ -62,21 +64,25 @@ void HAL_UART_MspInit(UART_HandleTypeDef* s_uart_conf) {
   /* Transmission interrupt to trigger DMA transfer. */
   HAL_NVIC_SetPriority(USART2_IRQn, UART_DMA_TX_PRIO, UART_DMA_TX_SUBPRIO);
 
+#ifdef UART_RX_USE_IT
   /* Receive interrupt to handle commands. */
+  /* Why is this using the same IRQn as DMA??? */
   HAL_NVIC_SetPriority(USART2_IRQn, UART_RX_PRIO, UART_RX_SUBPRIO);
+  DBG_DEBUG("Uart using rx interrupts.\n\r");
+#endif
 
   DBG_DEBUG("Uart enabled.\n\r");
 }
 
 void UART_EnableIRQ(void) {
-  HAL_NVIC_EnableIRQ(USART2_IRQn);
   HAL_NVIC_EnableIRQ(DMA1_Channel7_IRQn);
+  HAL_NVIC_EnableIRQ(USART2_IRQn);
   DBG_DEBUG("UART IRQ Enabled\n\r");
 }
 
 void UART_DisableIRQ(void) {
-  HAL_NVIC_DisableIRQ(USART2_IRQn);
   HAL_NVIC_DisableIRQ(DMA1_Channel7_IRQn);
+  HAL_NVIC_DisableIRQ(USART2_IRQn);
   DBG_DEBUG("UART IRQ Disabled\n\r");
 }
 
@@ -86,14 +92,24 @@ void UART_Init(void) {
     UART_ErrorHandler("Error initializing UART");
   }
 
-  /* Should this one be called after Line/uCmd initialization? */
+#ifdef UART_RX_USE_IT
   if(HAL_UART_Receive_IT(&gs_uart_init_conf, _uart_rx_buff, UART_RX_BUFF_SIZE) != HAL_OK) {
     UART_ErrorHandler("Error start rx routine with interrupts.");
   }
 
   gs_uart_rx_callback = NULL;
+#endif
 
   return;
+}
+
+int8_t UART_Getc(uint8_t* ch) {
+  int8_t ret = -1;
+  HAL_StatusTypeDef st = HAL_UART_Receive(&gs_uart_init_conf, ch, sizeof(uint8_t), 0); 
+  if(st == HAL_OK) {
+    ret =0;
+  }
+  return ret;
 }
 
 void UART_Putc(uint8_t ch) {
@@ -115,9 +131,6 @@ void _putchar(char ch) {
   UART_Putc(ch);
 }
 
-/*-----------------------------------------------------------------------------
- * UART Interrupt functions. 
- *-----------------------------------------------------------------------------*/
 void DMA1_Channel7_IRQHandler(void) {
   HAL_DMA_IRQHandler(&gs_uart_dma_conf);
 }
@@ -126,6 +139,7 @@ void USART2_IRQHandler(void) {
   HAL_UART_IRQHandler(&gs_uart_init_conf);
 }
 
+#ifdef UART_RX_USE_IT
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
   (void)huart;
   if(gs_uart_rx_callback) {
@@ -153,3 +167,4 @@ void UART_DettachRxCallback(void) {
   gs_uart_rx_callback = NULL;
   UART_EnableIRQ();
 }
+#endif

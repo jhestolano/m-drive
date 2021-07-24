@@ -103,6 +103,7 @@ DEFS=-DSTM32F303xE \
 	-DUSE_HAL_DRIVER \
 	-D__SLOG__ \
 #	-D__DBG__ \
+#	-DUART_RX_USE_IT \
 
 TARGET_FLAGS=-mcpu=cortex-m4 \
 	-mthumb \
