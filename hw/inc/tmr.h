@@ -59,7 +59,7 @@ typedef uint8_t TmrCh_T;
 #define TMR_GENERAL_CONF {                                                     \
   .Instance = TMR_CH_GENERAL_INSTANCE,                                         \
   .Init = {                                                                    \
-    .Prescaler = 15,                                                           \
+    .Prescaler = 0,                                                            \
     .CounterMode = TIM_COUNTERMODE_UP,                                         \
     .Period = UINT16_MAX,                                                      \
     .RepetitionCounter = 0,                                                    \
