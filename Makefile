@@ -92,7 +92,6 @@ OBJS:=$(SRCS:%=$(BUILD_DIR)/%.o)
 CC=arm-none-eabi-gcc
 OBJCOPY=arm-none-eabi-objcopy
 OBJDUMP=arm-none-eabi-objdump
-#GDB=arm-none-eabi-gdb-py
 GDB=arm-none-eabi-gdb
 SZ=arm-none-eabi-size
 

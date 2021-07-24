@@ -6,6 +6,7 @@
 #include "gpio.h"
 #include "pmsm_ctrl.h"
 #include "pmsm_ctrl_types.h"
+#include "pwm.h"
 
 #define MTRIF_TO_DEG (0.1f) /* App layer position resolution is 0.1 degrees
                                represented as int. For example, a value of
@@ -41,7 +42,7 @@ static void _mtr_if_adc_isr_callback(void *params) {
 
   /* Heartbeat. */
   /* static int32_t tmr; */
-  /* if(tmr++ >= 30e3) { */
+  /* if(tmr++ >= PWM_TMR_FRQ_HZ) { */
   /*   GPIO_LedToggle(); */
   /*   tmr = 0; */
   /* } */

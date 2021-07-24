@@ -41,7 +41,7 @@ TIM_CLK: Timer clock frequency (Hertz).
 PRD: Waveform period (Seconds).
 *******************************************************************************/
 #define PWM_TMR_CLOCK_HZ (72000000)
-#define PWM_TMR_FRQ_HZ (30000)
+#define PWM_TMR_FRQ_HZ (10000)
 #define PWM_TMR_PSC (0)
 #define PWM_TMR_ARR (((PWM_TMR_CLOCK_HZ / (2 * PWM_TMR_FRQ_HZ)) / (PWM_TMR_PSC + 1)) - 1)
 
