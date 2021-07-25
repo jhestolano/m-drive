@@ -3,15 +3,14 @@
  *
  * Code generated for Simulink model 'pmsm_ctrl'.
  *
- * Model version                  : 1.731
+ * Model version                  : 1.757
  * Simulink Coder version         : 8.14 (R2018a) 06-Feb-2018
- * C/C++ source code generated on : Thu Jul 22 20:51:23 2021
+ * C/C++ source code generated on : Sat Jul 24 18:14:10 2021
  */
 
 #ifndef RTW_HEADER_cfg_params_h_
 #define RTW_HEADER_cfg_params_h_
 #include "rtwtypes.h"
-#include "multiword_types.h"
 #include "pmsm_ctrl_types.h"
 
 /* Exported data declaration */
@@ -37,12 +36,12 @@ extern real32_T Cfg_SpdCtrlBW;         /* Speed controller bandwith. */
 extern boolean_T Cfg_SpdSnsEnbl;       /* System has speed sensor. */
 extern int32_T Cfg_StepToEncCnts;      /* Defines how many encoder counts per step. */
 extern boolean_T Cfg_UseObsPosEst;     /* Use observer position estimate. */
+extern boolean_T Cfg_UseSpdPll;        /* Use Speed PLL instead of observer for speed estimate. */
 extern real32_T Cfg_VBus;              /* Bus voltage */
 extern real32_T DistObs_J;             /* Motor Inertia at Disturbance Observer. */
 extern real32_T DistObs_K1;            /* Disturbance obser gain k1. */
 extern real32_T DistObs_K2;            /* Disturbance obser gain k2. */
 extern real32_T DistObs_K3;            /* Disturbance obser gain k3. */
-extern real32_T EncCntsToRads;         /* Encoder to radians conversion. */
 extern real32_T PosCtrl_Ki;            /* PI integral term for position controller. */
 extern real32_T PosCtrl_Kp;            /* PI proportional term for position controller. */
 extern real32_T TsMain;                /* Main sampling time (1khz) */

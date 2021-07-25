@@ -17,6 +17,34 @@ TsFast.CoderInfo.CustomStorageClass = 'ExportToFile';
 TsFast.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
 TsFast.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
 
+%% Speed PLL Bandwith.
+Cfg_UseSpdPll = Simulink.Parameter;
+Cfg_UseSpdPll.StorageClass = 'Auto';
+Cfg_UseSpdPll.Description = 'Use Speed PLL instead of observer for speed estimate.';
+Cfg_UseSpdPll.DataType = 'boolean';
+Cfg_UseSpdPll.Min = [];
+Cfg_UseSpdPll.Max = [];
+Cfg_UseSpdPll.DocUnits = '';
+Cfg_UseSpdPll.Value = true;
+Cfg_UseSpdPll.CoderInfo.StorageClass = 'Custom';
+Cfg_UseSpdPll.CoderInfo.CustomStorageClass = 'ExportToFile';
+Cfg_UseSpdPll.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
+Cfg_UseSpdPll.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
+
+%% Speed PLL Bandwith.
+Cfg_SpdPllBw = Simulink.Parameter;
+Cfg_SpdPllBw.StorageClass = 'Auto';
+Cfg_SpdPllBw.Description = 'Speed PLL bandwith.';
+Cfg_SpdPllBw.DataType = 'single';
+Cfg_SpdPllBw.Min = [];
+Cfg_SpdPllBw.Max = [];
+Cfg_SpdPllBw.DocUnits = '';
+Cfg_SpdPllBw.Value = 400.;
+Cfg_SpdPllBw.CoderInfo.StorageClass = 'Custom';
+Cfg_SpdPllBw.CoderInfo.CustomStorageClass = 'ExportToFile';
+Cfg_SpdPllBw.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
+Cfg_SpdPllBw.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
+
 %% Trajectory planner.
 Cfg_EnblTrajPlan = Simulink.Parameter;
 Cfg_EnblTrajPlan.StorageClass = 'Auto';
@@ -589,34 +617,6 @@ Cfg_EncCnts.CoderInfo.StorageClass = 'Custom';
 Cfg_EncCnts.CoderInfo.CustomStorageClass = 'ExportToFile';
 Cfg_EncCnts.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
 Cfg_EncCnts.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Encoder to radians.
-EncCntsToRads = Simulink.Parameter;
-EncCntsToRads.StorageClass = 'Auto';
-EncCntsToRads.Description = 'Encoder to radians conversion.';
-EncCntsToRads.DataType = 'single';
-EncCntsToRads.Min = [];
-EncCntsToRads.Max = [];
-EncCntsToRads.DocUnits = '';
-EncCntsToRads.Value = 2. * pi / MtrParams.EncCnts;
-EncCntsToRads.CoderInfo.StorageClass = 'Custom';
-EncCntsToRads.CoderInfo.CustomStorageClass = 'ExportToFile';
-EncCntsToRads.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-EncCntsToRads.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Encoder resolution.
-EncResDeg = Simulink.Parameter;
-EncResDeg.StorageClass = 'Auto';
-EncResDeg.Description = 'Encoder resolution in degrees';
-EncResDeg.DataType = 'single';
-EncResDeg.Min = [];
-EncResDeg.Max = [];
-EncResDeg.DocUnits = '';
-EncResDeg.Value = 360. / MtrParams.PPR;
-EncResDeg.CoderInfo.StorageClass = 'Custom';
-EncResDeg.CoderInfo.CustomStorageClass = 'ExportToFile';
-EncResDeg.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-EncResDeg.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
 
 %% Main sampling time (1khz)
 TsMain = Simulink.Parameter;

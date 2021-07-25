@@ -3,7 +3,7 @@
  *
  * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.731
+ * Model version              : 1.757
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */
@@ -11,7 +11,6 @@
 #ifndef RTW_HEADER_pmsm_ctrl_types_h_
 #define RTW_HEADER_pmsm_ctrl_types_h_
 #include "rtwtypes.h"
-#include "multiword_types.h"
 #include "CalMgrSt_T.h"
 #ifndef DEFINED_TYPEDEF_FOR_MtrCtrlMd_T_
 #define DEFINED_TYPEDEF_FOR_MtrCtrlMd_T_
