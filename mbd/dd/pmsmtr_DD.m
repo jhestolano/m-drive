@@ -59,13 +59,13 @@ CtrlParams.IfbkBW = 4e3;
 CtrlParams.IfbkKi = CtrlParams.IfbkBW * MtrParams.Rs;
 CtrlParams.IfbkKp = CtrlParams.IfbkBW * MtrParams.Ls;
 
-CtrlParams.SpdBW = 1e3;
+CtrlParams.SpdBW = 200.;
 CtrlParams.SpdKi = CtrlParams.SpdBW * MtrParams.Kf;
 CtrlParams.SpdKp = CtrlParams.SpdBW * MtrParams.Jm;
 % CtrlParams.SpdKi = CtrlParams.SpdBW / MtrParams.Kdc;
 % CtrlParams.SpdKp = MtrParams.Tau * CtrlParams.SpdKi;
 
-CtrlParams.TsPos = 0.01;
+CtrlParams.TsPos = 0.05;
 CtrlParams.PosKp = (4 / CtrlParams.TsPos);
 CtrlParams.PosKi = 0.0;
 

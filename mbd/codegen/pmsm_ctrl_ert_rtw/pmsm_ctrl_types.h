@@ -3,7 +3,7 @@
  *
  * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.757
+ * Model version              : 1.765
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */
@@ -106,9 +106,9 @@ typedef struct {
 /* This structure holds all calibration (estimated) parameters. */
 typedef struct {
   int32_T enc_ofs;
-  real32_T ind;
-  int32_T ppoles;
-  real32_T res;
+  real32_T inductance;
+  int32_T pole_pairs;
+  real32_T resistance;
   real32_T ifbk_ofs[3];
 } Calib_ParamType;
 

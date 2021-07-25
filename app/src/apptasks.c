@@ -117,6 +117,8 @@ void AppTask_MotorControl(void* params) {
     signal_buff[28] = (float)mtr_stats.ctrl_fast_cnt;
     signal_buff[29] = (float)mtr_dbg.mtr_spd_obs;
     signal_buff[30] = (float)mtr_dbg.mtr_spd_pll;
+    signal_buff[31] = (float)mtr_dbg.mtr_cnts_ref;
+    signal_buff[32] = (float)mtr_dbg.mtr_cnts_tgt;
 
     xStreamBufferSend(stream_buff,
         (void*)signal_buff,

@@ -99,7 +99,7 @@ void MtrIf_CtrlFast(void) {
     ctrl_md = CTRL_MD_CAL;
     cal_rqst = CAL_ENC_OFS;
     tmr++;
-    if(tmr >= 60e3) {
+    if(tmr >= 20e3) {
       st++;
       tmr = 0;
     }
@@ -109,7 +109,7 @@ void MtrIf_CtrlFast(void) {
     ctrl_md = CTRL_MD_CAL;
     cal_rqst = CAL_IFBK_OFS;
     tmr++;
-    if(tmr >= 60e3) {
+    if(tmr >= 20e3) {
       st++;
       tmr = 0;
     }
@@ -141,11 +141,10 @@ void MtrIf_CtrlFast(void) {
     default: /* Just spin it. */
     _mtr_if_s.is_busy = false;
     cal_rqst = CAL_NONE;
-    tmr = 0;
     st = 255; /* Stay here @ default */
     MtrIf_GetCtlMd(&ctrl_md, &ctrl_tgt[0]);
-    ctrl_md = CTRL_MD_IFBK;
-    ctrl_tgt[0] = 0.3;
+    ctrl_md = CTRL_MD_POS;
+    ctrl_tgt[0] = 5000;
 
   }
 
@@ -297,13 +296,7 @@ void MtrIf_GetModWave(float* mod_wave) {
 void MtrIf_GetMtrParams(MtrParams_S* params) {
   if(params) {
     MTRIF_LOCK();
-    params->ind = CalData_L;
-    params->res = CalData_Res;
-    params->ppoles = CalData_nPoles;
-    params->enc_ofs = CalData_EncOfs;
-    params->ifbk_ofs[0] = CalData_IfbkOfs_Abc[0];
-    params->ifbk_ofs[1] = CalData_IfbkOfs_Abc[1];
-    params->ifbk_ofs[2] = CalData_IfbkOfs_Abc[2];
+    memcpy((void*)params, (void*)&CALIB_PARAM_BUS, sizeof(Calib_ParamType));
     MTRIF_UNLOCK();
   } 
 }
@@ -322,5 +315,4 @@ void MtrIf_GetStats(MtrStats_S* stats) {
     stats->ctrl_fast_cnt = _mtr_if_s.ctrl_fast_cnt;
     MTRIF_UNLOCK();
   }
-
 }

@@ -9,6 +9,8 @@
 
 typedef DBG_Struct_type MtrDbg_S;
 
+typedef Calib_ParamType MtrParams_S;
+
 typedef enum {
   MtrCtlMdPos_E = 0,
   MtrCtlMdSpd_E,
@@ -16,17 +18,6 @@ typedef enum {
   MtrCtlMdPwm_E,
   MtrCtlMdInv_E = 255
 } MtrCtlMd_T;
-
-typedef struct MtrParams_tag {
-  float ind; /* Inductance. */
-  float res; /* Resistance. */
-  float k_trq; /* Torque constant. */
-  float k_frc; /* Friction constant. */
-  int32_t ppoles; /* Pole paris. */
-  int32_t enc_ofs; /* Encoder offset. */
-  float inertia; /* Rotor inertia. */
-  float ifbk_ofs[3]; /* Current offsets. */
-} MtrParams_S;
 
 typedef struct MtrStats_tag {
   uint32_t ctrl_fast_cnt;

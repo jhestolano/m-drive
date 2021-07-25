@@ -3,7 +3,7 @@
  *
  * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.757
+ * Model version              : 1.765
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */
@@ -29,15 +29,14 @@ typedef struct {
   real32_T UnitDelay_DSTATE[3];        /* '<S23>/Unit Delay' */
 } DW_get_mtr_ifbk_sum;
 
-/* Block states (default storage) for system '<S40>/PI-Ctrl-Varying-Gains' */
+/* Block states (default storage) for system '<S49>/PI-Ctrl-Varying-Gains' */
 typedef struct {
-  real32_T DiscreteTimeIntegrator_DSTATE;/* '<S44>/Discrete-Time Integrator' */
+  real32_T DiscreteTimeIntegrator_DSTATE;/* '<S53>/Discrete-Time Integrator' */
 } DW_PI_Ctrl;
 
 /* Block signals (default storage) */
 typedef struct {
   MtrIf_InType BusCreator;             /* '<S6>/Bus Creator' */
-  Calib_ParamType BusCreator_e;        /* '<S2>/Bus Creator' */
   CtrlMgr_OutType BusCreator2;         /* '<S5>/Bus Creator2' */
   Calib_OutType Merge;                 /* '<S2>/Merge' */
   MotnCtrl_OutType BusCreator_c;       /* '<S4>/Bus Creator' */
@@ -47,18 +46,18 @@ typedef struct {
   real32_T MtrIf_IfbkDq[2];            /* '<S30>/Data Type Conversion6' */
   real32_T Saturation_g[3];            /* '<S36>/Saturation' */
   real32_T OutportBufferFormod_wave[3];/* '<S36>/Zero1' */
-  real32_T Saturation1[3];             /* '<S34>/Saturation1' */
-  real32_T Gain1[3];                   /* '<S48>/Gain1' */
-  real32_T DataTypeConversion[3];      /* '<S49>/Data Type Conversion' */
+  real32_T Saturation1[3];             /* '<S35>/Saturation1' */
+  real32_T Gain1[3];                   /* '<S57>/Gain1' */
+  real32_T DataTypeConversion[3];      /* '<S58>/Data Type Conversion' */
   real32_T Add_p[3];                   /* '<S23>/Add' */
   real32_T Saturation;                 /* '<S63>/Saturation' */
-  real32_T DiscreteTimeIntegrator1;    /* '<S68>/Discrete-Time Integrator1' */
-  real32_T DiscreteTimeIntegrator;     /* '<S68>/Discrete-Time Integrator' */
-  real32_T Add;                        /* '<S66>/Add' */
+  real32_T DiscreteTimeIntegrator1;    /* '<S69>/Discrete-Time Integrator1' */
+  real32_T DiscreteTimeIntegrator;     /* '<S69>/Discrete-Time Integrator' */
+  real32_T Add;                        /* '<S67>/Add' */
   real32_T MtrIf_TrqAct;               /* '<S30>/Data Type Conversion2' */
   real32_T MtrIf_SpdOut_i;             /* '<S30>/Data Type Conversion1' */
-  real32_T Gain3;                      /* '<S42>/Gain3' */
-  real32_T Gain;                       /* '<S42>/Gain' */
+  real32_T Gain3;                      /* '<S51>/Gain3' */
+  real32_T Gain;                       /* '<S51>/Gain' */
   real32_T PwmRqst;                    /* '<S9>/EncOfsCal' */
   real32_T PwmRqst_g;                  /* '<S12>/ResIdCal' */
   int32_T Ticks;                       /* '<S9>/EncOfsCal' */
@@ -73,17 +72,17 @@ typedef struct {
 
 /* Block states (default storage) for system '<Root>' */
 typedef struct {
-  real32_T UnitDelay_DSTATE_o[3];      /* '<S37>/Unit Delay' */
+  real32_T UnitDelay_DSTATE_o[3];      /* '<S46>/Unit Delay' */
   real32_T ifbk_abc_sum[3];            /* '<S10>/ResIdCal' */
-  real32_T UnitDelay_DSTATE;           /* '<S87>/Unit Delay' */
-  real32_T DiscreteTimeIntegrator1_DSTATE;/* '<S68>/Discrete-Time Integrator1' */
-  real32_T DiscreteTimeIntegrator_DSTATE;/* '<S68>/Discrete-Time Integrator' */
-  real32_T DiscreteTimeIntegrator_DSTATE_o;/* '<S67>/Discrete-Time Integrator' */
-  real32_T DiscreteTimeIntegrator_DSTATE_h;/* '<S56>/Discrete-Time Integrator' */
-  real32_T DiscreteTimeIntegrator_DSTATE_k;/* '<S58>/Discrete-Time Integrator' */
-  real32_T DiscreteTimeIntegrator_DSTAT_kg;/* '<S54>/Discrete-Time Integrator' */
-  real32_T DiscreteTimeIntegrator_DSTAT_ke;/* '<S55>/Discrete-Time Integrator' */
-  real32_T DiscreteTimeIntegrator_DSTATE_p;/* '<S53>/Discrete-Time Integrator' */
+  real32_T UnitDelay_DSTATE;           /* '<S88>/Unit Delay' */
+  real32_T DiscreteTimeIntegrator1_DSTATE;/* '<S69>/Discrete-Time Integrator1' */
+  real32_T DiscreteTimeIntegrator_DSTATE;/* '<S69>/Discrete-Time Integrator' */
+  real32_T DiscreteTimeIntegrator_DSTATE_o;/* '<S68>/Discrete-Time Integrator' */
+  real32_T DiscreteTimeIntegrator_DSTATE_h;/* '<S43>/Discrete-Time Integrator' */
+  real32_T DiscreteTimeIntegrator_DSTATE_k;/* '<S45>/Discrete-Time Integrator' */
+  real32_T DiscreteTimeIntegrator_DSTAT_kg;/* '<S41>/Discrete-Time Integrator' */
+  real32_T DiscreteTimeIntegrator_DSTAT_ke;/* '<S42>/Discrete-Time Integrator' */
+  real32_T DiscreteTimeIntegrator_DSTATE_p;/* '<S40>/Discrete-Time Integrator' */
   real32_T UnitDelay_DSTATE_j;         /* '<S14>/Unit Delay' */
   real32_T ifbk_neg;                   /* '<S11>/IndIdCal' */
   real32_T ifbk_pos;                   /* '<S11>/IndIdCal' */
@@ -111,11 +110,22 @@ typedef struct {
   boolean_T SpdCtrl_MODE;              /* '<S60>/SpdCtrl' */
   boolean_T PosTrackDiff_MODE;         /* '<S62>/PosTrackDiff' */
   boolean_T PosCtl_MODE;               /* '<S60>/PosCtl' */
-  boolean_T IfbkCtrl_MODE;             /* '<S33>/IfbkCtrl' */
+  boolean_T IfbkCtrl_MODE;             /* '<S34>/IfbkCtrl' */
 } DW;
+
+/* data stores shared across model instances, for system '<Root>' */
+typedef struct {
+  real32_T CalData_IfbkOfs_Abc[3];     /* '<S2>/Data Store Memory4' */
+  real32_T CalData_L;                  /* '<S2>/Data Store Memory1' */
+  real32_T CalData_Res;                /* '<S2>/Data Store Memory3' */
+  int32_T CalData_EncOfs;              /* '<S2>/Data Store Memory' */
+  int32_T CalData_nPoles;              /* '<S2>/Data Store Memory2' */
+} SharedDSM;
 
 /* Type definition for custom storage class: Struct */
 typedef struct DBG_Struct_tag {
+  int32_T mtr_cnts_ref;
+  int32_T mtr_cnts_tgt;
   int32_T mtr_if_enc_cnts;
   int32_T obs_enc_cnts;
   real32_T e_angl;
@@ -141,7 +151,7 @@ typedef struct {
   DW_get_mtr_ifbk_sum dwork;
 } self_get_mtr_ifbk_sum;
 
-/* model data, for system '<S40>/PI-Ctrl-Varying-Gains' */
+/* model data, for system '<S49>/PI-Ctrl-Varying-Gains' */
 typedef struct {
   DW_PI_Ctrl dwork;
 } self_PI_Ctrl;
@@ -156,8 +166,21 @@ struct tag_RTM {
   B blockIO;
 };
 
+/* data stores shared across model instances */
+extern SharedDSM rtSharedDSM;
+
 /* External data declarations for dependent source files */
 extern const Calib_OutType pmsm_ctrl_rtZCalib_OutType;/* Calib_OutType ground */
+
+/*
+ * Exported Global Signals
+ *
+ * Note: Exported global signals are block signals with an exported global
+ * storage class designation.  Code generation will declare the memory for
+ * these signals and export their symbols.
+ *
+ */
+extern Calib_ParamType CALIB_PARAM_BUS;/* '<S2>/Bus Creator' */
 
 /*
  * Exported States
@@ -167,11 +190,6 @@ extern const Calib_OutType pmsm_ctrl_rtZCalib_OutType;/* Calib_OutType ground */
  * states and exports their symbols.
  *
  */
-extern real32_T CalData_L;             /* '<S2>/Data Store Memory1' */
-extern real32_T CalData_Res;           /* '<S2>/Data Store Memory3' */
-extern real32_T CalData_IfbkOfs_Abc[3];/* '<S2>/Data Store Memory4' */
-extern int32_T CalData_EncOfs;         /* '<S2>/Data Store Memory' */
-extern int32_T CalData_nPoles;         /* '<S2>/Data Store Memory2' */
 extern boolean_T _pmsm_ctrl_SharedDataInit_;/* synthesized block */
 
 /* Model entry point functions */
@@ -283,32 +301,32 @@ extern DBG_Struct_type DBG_Struct;
  * '<S30>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller'
  * '<S31>'  : 'pmsm_ctrl/CtrlFast/det_ctrl_tgt'
  * '<S32>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/calc_elec_angle'
- * '<S33>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl'
- * '<S34>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mod_wave_calc'
- * '<S35>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mtr_spd_load_est'
+ * '<S33>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/calc_spd_load_est'
+ * '<S34>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl'
+ * '<S35>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mod_wave_calc'
  * '<S36>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/raw_pwm_calc'
- * '<S37>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/D-1LPF'
- * '<S38>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/IfbkCtrl'
- * '<S39>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/Park Transform'
- * '<S40>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/IfbkCtrl/ifbk_d_ctrl'
- * '<S41>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/IfbkCtrl/ifbk_q_ctrl'
- * '<S42>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/IfbkCtrl/mtr_coupling_bemf_comp'
- * '<S43>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/IfbkCtrl/ifbk_d_ctrl/PI-Ctrl-Varying-Gains'
- * '<S44>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/IfbkCtrl/ifbk_d_ctrl/PI-Ctrl-Varying-Gains/Integrator'
- * '<S45>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/IfbkCtrl/ifbk_q_ctrl/PI-Ctrl-Varying-Gains'
- * '<S46>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/IfbkCtrl/ifbk_q_ctrl/PI-Ctrl-Varying-Gains/Integrator'
- * '<S47>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mod_wave_calc/calc_mod_wave'
- * '<S48>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mod_wave_calc/calc_mod_wave/Inverse Park Transform1'
- * '<S49>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mod_wave_calc/calc_mod_wave/calc_pwm_dc'
- * '<S50>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mtr_spd_load_est/DistObsJ'
- * '<S51>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mtr_spd_load_est/mtr_speed_pll_est'
- * '<S52>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mtr_spd_load_est/rads_to_cnts'
- * '<S53>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mtr_spd_load_est/DistObsJ/Integrator'
- * '<S54>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mtr_spd_load_est/DistObsJ/Integrator1'
- * '<S55>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mtr_spd_load_est/DistObsJ/Integrator2'
- * '<S56>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mtr_spd_load_est/mtr_speed_pll_est/Integrator'
- * '<S57>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mtr_spd_load_est/mtr_speed_pll_est/PI_Ctrl'
- * '<S58>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mtr_spd_load_est/mtr_speed_pll_est/PI_Ctrl/Integrator'
+ * '<S37>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/calc_spd_load_est/DistObsJ'
+ * '<S38>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/calc_spd_load_est/mtr_speed_pll_est'
+ * '<S39>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/calc_spd_load_est/rads_to_cnts'
+ * '<S40>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/calc_spd_load_est/DistObsJ/Integrator'
+ * '<S41>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/calc_spd_load_est/DistObsJ/Integrator1'
+ * '<S42>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/calc_spd_load_est/DistObsJ/Integrator2'
+ * '<S43>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/calc_spd_load_est/mtr_speed_pll_est/Integrator'
+ * '<S44>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/calc_spd_load_est/mtr_speed_pll_est/PI_Ctrl'
+ * '<S45>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/calc_spd_load_est/mtr_speed_pll_est/PI_Ctrl/Integrator'
+ * '<S46>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/D-1LPF'
+ * '<S47>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/IfbkCtrl'
+ * '<S48>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/Park Transform'
+ * '<S49>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/IfbkCtrl/ifbk_d_ctrl'
+ * '<S50>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/IfbkCtrl/ifbk_q_ctrl'
+ * '<S51>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/IfbkCtrl/mtr_coupling_bemf_comp'
+ * '<S52>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/IfbkCtrl/ifbk_d_ctrl/PI-Ctrl-Varying-Gains'
+ * '<S53>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/IfbkCtrl/ifbk_d_ctrl/PI-Ctrl-Varying-Gains/Integrator'
+ * '<S54>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/IfbkCtrl/ifbk_q_ctrl/PI-Ctrl-Varying-Gains'
+ * '<S55>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/ifbk_trq_ctrl/IfbkCtrl/ifbk_q_ctrl/PI-Ctrl-Varying-Gains/Integrator'
+ * '<S56>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mod_wave_calc/calc_mod_wave'
+ * '<S57>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mod_wave_calc/calc_mod_wave/Inverse Park Transform1'
+ * '<S58>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/mod_wave_calc/calc_mod_wave/calc_pwm_dc'
  * '<S59>'  : 'pmsm_ctrl/CtrlFast/Field_Oriented_Controller/raw_pwm_calc/raw_pwm_calc'
  * '<S60>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl'
  * '<S61>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosCtl'
@@ -316,30 +334,31 @@ extern DBG_Struct_type DBG_Struct;
  * '<S63>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/SpdCtrl'
  * '<S64>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/cnts_to_rads1'
  * '<S65>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/cnts_to_rads2'
- * '<S66>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosCtl/PI-Ctrl'
- * '<S67>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosCtl/PI-Ctrl/Integrator'
- * '<S68>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosTrajPlan/PosTrackDiff'
- * '<S69>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosTrajPlan/PosTrackDiff/fhan'
- * '<S70>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosTrajPlan/PosTrackDiff/fhan/a1_calc'
- * '<S71>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosTrajPlan/PosTrackDiff/fhan/a2_calc'
- * '<S72>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosTrajPlan/PosTrackDiff/fhan/a_calc'
- * '<S73>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosTrajPlan/PosTrackDiff/fhan/fhan_calc'
- * '<S74>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosTrajPlan/PosTrackDiff/fhan/sa_calc'
- * '<S75>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosTrajPlan/PosTrackDiff/fhan/sy_calc'
- * '<S76>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/SpdCtrl/PI-Ctrl-Varying-Gains'
- * '<S77>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/SpdCtrl/PI-Ctrl-Varying-Gains/Integrator'
- * '<S78>'  : 'pmsm_ctrl/CtrlMgr/Compare To Constant10'
- * '<S79>'  : 'pmsm_ctrl/CtrlMgr/Compare To Constant3'
- * '<S80>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags'
- * '<S81>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags/Compare To Constant2'
- * '<S82>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags/Compare To Constant4'
- * '<S83>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags/Compare To Constant5'
- * '<S84>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags/Compare To Constant6'
- * '<S85>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags/Compare To Constant7'
- * '<S86>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags/Compare To Constant8'
- * '<S87>'  : 'pmsm_ctrl/SetInputs/D-1LPF'
- * '<S88>'  : 'pmsm_ctrl/SetInputs/enc_ofs_comp'
- * '<S89>'  : 'pmsm_ctrl/SetInputs/ifbk_ofs_comp'
+ * '<S66>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/rads_to_cnts'
+ * '<S67>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosCtl/PI-Ctrl'
+ * '<S68>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosCtl/PI-Ctrl/Integrator'
+ * '<S69>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosTrajPlan/PosTrackDiff'
+ * '<S70>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosTrajPlan/PosTrackDiff/fhan'
+ * '<S71>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosTrajPlan/PosTrackDiff/fhan/a1_calc'
+ * '<S72>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosTrajPlan/PosTrackDiff/fhan/a2_calc'
+ * '<S73>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosTrajPlan/PosTrackDiff/fhan/a_calc'
+ * '<S74>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosTrajPlan/PosTrackDiff/fhan/fhan_calc'
+ * '<S75>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosTrajPlan/PosTrackDiff/fhan/sa_calc'
+ * '<S76>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/PosTrajPlan/PosTrackDiff/fhan/sy_calc'
+ * '<S77>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/SpdCtrl/PI-Ctrl-Varying-Gains'
+ * '<S78>'  : 'pmsm_ctrl/CtrlMain/MotnCtrl/SpdCtrl/PI-Ctrl-Varying-Gains/Integrator'
+ * '<S79>'  : 'pmsm_ctrl/CtrlMgr/Compare To Constant10'
+ * '<S80>'  : 'pmsm_ctrl/CtrlMgr/Compare To Constant3'
+ * '<S81>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags'
+ * '<S82>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags/Compare To Constant2'
+ * '<S83>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags/Compare To Constant4'
+ * '<S84>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags/Compare To Constant5'
+ * '<S85>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags/Compare To Constant6'
+ * '<S86>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags/Compare To Constant7'
+ * '<S87>'  : 'pmsm_ctrl/CtrlMgr/calc_enbl_flags/Compare To Constant8'
+ * '<S88>'  : 'pmsm_ctrl/SetInputs/D-1LPF'
+ * '<S89>'  : 'pmsm_ctrl/SetInputs/enc_ofs_comp'
+ * '<S90>'  : 'pmsm_ctrl/SetInputs/ifbk_ofs_comp'
  */
 
 /*-
