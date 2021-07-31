@@ -100,9 +100,9 @@ DEFS=-DSTM32F303xE \
 	-DARM_MATH_CM4 \
 	-D__FPU_PRESENT \
 	-DUSE_HAL_DRIVER \
+	-DUART_RX_USE_IT \
 	-D__SLOG__ \
 #	-D__DBG__ \
-#	-DUART_RX_USE_IT \
 
 TARGET_FLAGS=-mcpu=cortex-m4 \
 	-mthumb \
@@ -169,7 +169,7 @@ all:
 
 # before you start gdb, you must start st-util
 debug:
-	$(GDB) $(BUILD_DIR)/$(PROJ_NAME).elf
+	$(GDB) $(BUILD_DIR)/$(PROJ_NAME).elf --eval-command="target extended-remote :3333" --eval-command="b main" --eval-command="r"
 #	st-util &
 #	killall st-util
 
