@@ -48,6 +48,7 @@ SRCS+=sys/src/stm32f3xx_it.c
 
 # Code generated files.
 SRCS+=$(CODEGEN_DIR)/pmsm_ctrl.c
+SRCS+=$(CODEGEN_DIR)/pmsm_ctrl_data.c
 SRCS+=$(CODEGEN_DIR)/cfg_params.c
 
 SRCS+=$(HAL_SRC_DIR)/stm32f3xx_hal.c

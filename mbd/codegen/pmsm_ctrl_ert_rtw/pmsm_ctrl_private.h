@@ -3,7 +3,7 @@
  *
  * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.766
+ * Model version              : 1.774
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */
@@ -33,5 +33,8 @@ extern void PI_Ctrl(self_PI_Ctrl *pmsm_ctrl_self_arg, real32_T rtu_y_tgt,
                     real32_T rtu_y_act, real32_T rtu_Kp, real32_T rtu_Ki,
                     real32_T *rty_PI_out, real32_T rtp_max_lim, real32_T
                     rtp_min_lim);
+extern void clarke_park_trans(RT_MODEL * const pmsm_ctrl_M, const real32_T
+  rtu_abc[3], real32_T rtu_sin_k, real32_T rtu_cos_k, real32_T *rty_d, real32_T *
+  rty_q);
 
 #endif                                 /* RTW_HEADER_pmsm_ctrl_private_h_ */

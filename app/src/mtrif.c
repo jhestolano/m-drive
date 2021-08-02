@@ -82,71 +82,11 @@ void MtrIf_CtrlSlow(void) {
 
 void MtrIf_CtrlFast(void) {
 
-  static uint8_t st = 0;
-  static uint32_t tmr = 0;
-  MtrCtrlMd_T ctrl_md;
-  MtrCtrlCal_T cal_rqst;
-  float ctrl_tgt[3] = {0.f};
-
   TMR_Reset(TMR_CH_GENERAL);
+
   TMR_Start(TMR_CH_GENERAL);
 
   MtrIf_GetIfbk(&_mtr_if_s.mtr_ifbk[0]);
-
-  switch(st) {
-    case 0: /* Offset calibration */
-    _mtr_if_s.is_busy = true;
-    ctrl_md = CTRL_MD_CAL;
-    cal_rqst = CAL_ENC_OFS;
-    tmr++;
-    if(tmr >= 20e3) {
-      st++;
-      tmr = 0;
-    }
-    break;
-
-    case 1: /* Ifbk offset calibration */
-    ctrl_md = CTRL_MD_CAL;
-    cal_rqst = CAL_IFBK_OFS;
-    tmr++;
-    if(tmr >= 20e3) {
-      st++;
-      tmr = 0;
-    }
-    break;
-
-    /* case 2: /1* Inductance calibration *1/ */
-    /* _mtr_if_s.is_busy = true; */
-    /* ctrl_md = CTRL_MD_CAL; */
-    /* cal_rqst = CAL_IND_ID; */
-    /* tmr++; */
-    /* if(tmr >= 60e3) { */
-    /*   st++; */
-    /*   tmr = 0; */
-    /* } */
-    /* break; */
-
-    /* case 3: /1* Resistance calibration *1/ */
-    /* _mtr_if_s.is_busy = true; */
-    /* ctrl_md = CTRL_MD_CAL; */
-    /* cal_rqst = CAL_RES_ID; */
-    /* tmr++; */
-    /* if(tmr >= 60e3) { */
-    /*   st++; */
-    /*   tmr = 0; */
-    /* } */
-    /* break; */
-
-
-    default: /* Just spin it. */
-    _mtr_if_s.is_busy = false;
-    cal_rqst = CAL_NONE;
-    st = 255; /* Stay here @ default */
-    MtrIf_GetCtlMd(&ctrl_md, &ctrl_tgt[0]);
-    ctrl_md = CTRL_MD_POS;
-    ctrl_tgt[0] = 5000;
-
-  }
 
   Trig_Pmsm_SetIn(
     &pmsm_ctrl_obj,

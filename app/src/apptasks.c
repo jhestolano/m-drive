@@ -59,14 +59,15 @@ void AppTask_LowPrio(void* params) {
 
 
 void AppTask_MotorControl(void* params) {
+
   TickType_t last_wake_time = xTaskGetTickCount();
+
+#ifdef __SLOG__
   MtrParams_S mtr_params;
   MtrDbg_S mtr_dbg;
   MtrStats_S mtr_stats;
   float ifbk_dq[2];
   float pwm_dq[2];
-
-#ifdef __SLOG__
   StreamBufferHandle_t stream_buff = (StreamBufferHandle_t)params;
   float signal_buff[APP_TASK_MOTOR_CONTROL_N_SIGNALS] = {0};
 #endif
@@ -79,13 +80,14 @@ void AppTask_MotorControl(void* params) {
     MtrIf_CtrlSlow();
 
     /* Get data from control layer. */
+#ifdef __SLOG__
+
     MtrIf_GetMtrParams(&mtr_params);
     MtrIf_GetDbg(&mtr_dbg);
     MtrIf_GetIfbkDq(ifbk_dq);
     MtrIf_GetPwmDq(pwm_dq);
     MtrIf_GetStats(&mtr_stats);
 
-#ifdef __SLOG__
     signal_buff[0] = (float)mtr_dbg.mtr_if_enc_cnts;
     signal_buff[1] = (float)MtrIf_GetSpd();
     signal_buff[2] = (float)mtr_dbg.mtrif_ifbk_act[0];
@@ -98,8 +100,8 @@ void AppTask_MotorControl(void* params) {
     signal_buff[9] = mtr_dbg.i_abc_lpf[0];
     signal_buff[10] = mtr_dbg.i_abc_lpf[1];
     signal_buff[11] = mtr_dbg.i_abc_lpf[2];
-    signal_buff[12] = mtr_dbg.i_dq0[0]; /* D-component. */
-    signal_buff[13] = mtr_dbg.i_dq0[1]; /* Q-component. */
+    signal_buff[12] = mtr_dbg.i_dq[0]; /* D-component. */
+    signal_buff[13] = mtr_dbg.i_dq[1]; /* Q-component. */
     signal_buff[14] = (float)MtrIf_GetVBus();
     signal_buff[15] = mtr_dbg.mtrif_v_bus;
     signal_buff[16] = (float)MtrIf_GetTemp();

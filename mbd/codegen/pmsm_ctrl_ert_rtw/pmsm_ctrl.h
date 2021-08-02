@@ -3,7 +3,7 @@
  *
  * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.766
+ * Model version              : 1.774
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */
@@ -255,9 +255,10 @@ extern DBG_Struct_type DBG_Struct;
  * Block '<S12>/Display' : Unused code path elimination
  * Block '<S37>/Scope' : Unused code path elimination
  * Block '<Root>/DistObs' : Unused code path elimination
- * Block '<Root>/IfbkCtrl' : Unused code path elimination
  * Block '<Root>/SpdCtrl' : Unused code path elimination
  * Block '<Root>/ElecAngl' : Unused code path elimination
+ * Block '<Root>/IfbkCtrl' : Unused code path elimination
+ * Block '<S35>/Data Type Conversion' : Eliminate redundant data type conversion
  * Block '<S63>/Data Type Conversion' : Eliminate redundant data type conversion
  * Block '<S63>/Data Type Conversion2' : Eliminate redundant data type conversion
  * Block '<S67>/Data Type Conversion3' : Eliminate redundant data type conversion

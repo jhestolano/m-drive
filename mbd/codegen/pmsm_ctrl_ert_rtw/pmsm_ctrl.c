@@ -3,7 +3,7 @@
  *
  * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.766
+ * Model version              : 1.774
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */
@@ -341,6 +341,42 @@ void PI_Ctrl(self_PI_Ctrl *pmsm_ctrl_self_arg, real32_T rtu_y_tgt, real32_T
   }
 
   /* End of Update for DiscreteIntegrator: '<S54>/Discrete-Time Integrator' */
+}
+
+/* Output and update for atomic system: '<S35>/abc_to_dq' */
+void clarke_park_trans(RT_MODEL * const pmsm_ctrl_M, const real32_T rtu_abc[3],
+  real32_T rtu_sin_k, real32_T rtu_cos_k, real32_T *rty_d, real32_T *rty_q)
+{
+  real32_T rtb_Gain1_d[3];
+  real32_T tmp[3];
+  int32_T i;
+  (void) (pmsm_ctrl_M);
+  for (i = 0; i < 3; i++) {
+    /* Gain: '<S57>/Gain3' incorporates:
+     *  Gain: '<S57>/Gain1'
+     */
+    tmp[i] = 0.0F;
+    tmp[i] += rtConstP.Gain3_Gain[i] * rtu_abc[0];
+    tmp[i] += rtConstP.Gain3_Gain[i + 3] * rtu_abc[1];
+    tmp[i] += rtConstP.Gain3_Gain[i + 6] * rtu_abc[2];
+
+    /* Gain: '<S57>/Gain1' incorporates:
+     *  Gain: '<S57>/Gain3'
+     */
+    rtb_Gain1_d[i] = 0.666666687F * tmp[i];
+  }
+
+  /* Sum: '<S49>/Add' incorporates:
+   *  Product: '<S49>/Product'
+   *  Product: '<S49>/Product1'
+   */
+  *rty_d = rtb_Gain1_d[0] * rtu_cos_k + rtb_Gain1_d[1] * rtu_sin_k;
+
+  /* Sum: '<S49>/Add1' incorporates:
+   *  Product: '<S49>/Product2'
+   *  Product: '<S49>/Product3'
+   */
+  *rty_q = rtb_Gain1_d[1] * rtu_cos_k - rtb_Gain1_d[0] * rtu_sin_k;
 }
 
 /* Model step function */
@@ -1308,16 +1344,13 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M)
 /* Model step function */
 void Trig_Pmsm_Foc(RT_MODEL *const pmsm_ctrl_M)
 {
-  real32_T rtb_Sin1;
-  real32_T rtb_Sin;
-  real32_T rtb_Subtract_b;
-  real32_T rtb_pwm_dc[3];
-  real32_T rtb_DiscreteTimeIntegrator_d;
-  real32_T rtb_Switch1;
   real32_T rtb_Add1_cm;
-  real32_T rtb_Add_h;
-  real32_T tmp[3];
-  int32_T i;
+  real32_T rtb_Sin;
+  real32_T rtb_Sin1;
+  real32_T rtb_DiscreteTimeIntegrator_d;
+  real32_T rtb_Subtract_b;
+  real32_T rtb_Switch1;
+  real32_T rtb_mtr_cnts_obs;
   real32_T rtb_Switch_m_idx_0;
   real32_T rtb_Switch_m_idx_1;
   real32_T rtb_Switch_d_idx_0;
@@ -1401,11 +1434,11 @@ void Trig_Pmsm_Foc(RT_MODEL *const pmsm_ctrl_M)
 
   /* End of Outputs for SubSystem: '<S31>/calc_elec_angle' */
 
-  /* Trigonometry: '<S31>/Sin1' */
-  rtb_Sin1 = arm_cos_f32(DBG_Struct.e_angl);
-
   /* Trigonometry: '<S31>/Sin' */
   rtb_Sin = arm_sin_f32(DBG_Struct.e_angl);
+
+  /* Trigonometry: '<S31>/Sin1' */
+  rtb_Sin1 = arm_cos_f32(DBG_Struct.e_angl);
 
   /* MultiPortSwitch: '<S35>/Multiport Switch' incorporates:
    *  Constant: '<S35>/Constant2'
@@ -1413,22 +1446,22 @@ void Trig_Pmsm_Foc(RT_MODEL *const pmsm_ctrl_M)
    */
   switch (pmsm_ctrl_M->blockIO.BusCreator2.ctrl_md_act) {
    case CTRL_MD_TRQ:
-    rtb_Subtract_b = 1.0F / Cfg_MtrKtrq;
+    rtb_Add1_cm = 1.0F / Cfg_MtrKtrq;
     break;
 
    case CTRL_MD_IFBK:
-    rtb_Subtract_b = 1.0F;
+    rtb_Add1_cm = 1.0F;
     break;
 
    default:
-    rtb_Subtract_b = 1.0F;
+    rtb_Add1_cm = 1.0F;
     break;
   }
 
   /* End of MultiPortSwitch: '<S35>/Multiport Switch' */
 
   /* Product: '<S35>/Product' */
-  DBG_Struct.ifbk_q_tgt = rtb_Switch_d_idx_0 * rtb_Subtract_b;
+  DBG_Struct.ifbk_q_tgt = rtb_Switch_d_idx_0 * rtb_Add1_cm;
 
   /* Sum: '<S47>/Add1' incorporates:
    *  Constant: '<S47>/Constant'
@@ -1442,32 +1475,12 @@ void Trig_Pmsm_Foc(RT_MODEL *const pmsm_ctrl_M)
     0.5F + 0.5F * pmsm_ctrl_M->dwork.UnitDelay_DSTATE_o[1];
   DBG_Struct.i_abc_lpf[2] = pmsm_ctrl_M->blockIO.BusCreator.mtrif_ifbk_act[2] *
     0.5F + 0.5F * pmsm_ctrl_M->dwork.UnitDelay_DSTATE_o[2];
-  for (i = 0; i < 3; i++) {
-    /* Gain: '<S57>/Gain3' incorporates:
-     *  Gain: '<S57>/Gain1'
-     */
-    tmp[i] = 0.0F;
-    tmp[i] += rtConstP.Gain3_Gain[i] * DBG_Struct.i_abc_lpf[0];
-    tmp[i] += rtConstP.Gain3_Gain[i + 3] * DBG_Struct.i_abc_lpf[1];
-    tmp[i] += rtConstP.Gain3_Gain[i + 6] * DBG_Struct.i_abc_lpf[2];
 
-    /* Gain: '<S57>/Gain1' incorporates:
-     *  Gain: '<S57>/Gain3'
-     */
-    rtb_pwm_dc[i] = 0.666666687F * tmp[i];
-  }
+  /* Outputs for Atomic SubSystem: '<S35>/abc_to_dq' */
+  clarke_park_trans(pmsm_ctrl_M, &(DBG_Struct.i_abc_lpf[0]), rtb_Sin, rtb_Sin1,
+                    &rtb_mtr_cnts_obs, &rtb_Add1_cm);
 
-  /* Sum: '<S49>/Add' incorporates:
-   *  Product: '<S49>/Product'
-   *  Product: '<S49>/Product1'
-   */
-  rtb_Add_h = rtb_pwm_dc[0] * rtb_Sin1 + rtb_pwm_dc[1] * rtb_Sin;
-
-  /* Sum: '<S49>/Add1' incorporates:
-   *  Product: '<S49>/Product2'
-   *  Product: '<S49>/Product3'
-   */
-  rtb_Add1_cm = rtb_pwm_dc[1] * rtb_Sin1 - rtb_pwm_dc[0] * rtb_Sin;
+  /* End of Outputs for SubSystem: '<S35>/abc_to_dq' */
 
   /* Sum: '<S45>/Subtract' incorporates:
    *  DiscreteIntegrator: '<S44>/Discrete-Time Integrator'
@@ -1560,7 +1573,7 @@ void Trig_Pmsm_Foc(RT_MODEL *const pmsm_ctrl_M)
        *  Sum: '<S52>/Add1'
        */
       pmsm_ctrl_M->blockIO.Gain3_o = (Cfg_MFlux / Cfg_Ls * rtb_Switch_m_idx_0 +
-        rtb_Add_h * rtb_Switch_m_idx_0) * Cfg_Ls;
+        rtb_mtr_cnts_obs * rtb_Switch_m_idx_0) * Cfg_Ls;
 
       /* Gain: '<S52>/Gain' incorporates:
        *  Product: '<S52>/Product'
@@ -1596,7 +1609,7 @@ void Trig_Pmsm_Foc(RT_MODEL *const pmsm_ctrl_M)
     /* End of Switch: '<S50>/Switch' */
 
     /* Outputs for Atomic SubSystem: '<S50>/PI-Ctrl-Varying-Gains' */
-    PI_Ctrl(&pmsm_ctrl_M->self_PICtrlVaryingGains, 0.0F, rtb_Add_h,
+    PI_Ctrl(&pmsm_ctrl_M->self_PICtrlVaryingGains, 0.0F, rtb_mtr_cnts_obs,
             rtb_Switch_m_idx_0, rtb_Switch_m_idx_1, &rtb_Switch_m_idx_1, 12.0F,
             -12.0F);
 
@@ -1742,7 +1755,7 @@ void Trig_Pmsm_Foc(RT_MODEL *const pmsm_ctrl_M)
   pmsm_ctrl_M->blockIO.MtrIf_SpdOut[1] = pmsm_ctrl_M->blockIO.Saturation1[1];
 
   /* DataTypeConversion: '<S31>/Data Type Conversion6' */
-  pmsm_ctrl_M->blockIO.MtrIf_IfbkDq[0] = rtb_Add_h;
+  pmsm_ctrl_M->blockIO.MtrIf_IfbkDq[0] = rtb_mtr_cnts_obs;
   pmsm_ctrl_M->blockIO.MtrIf_IfbkDq[1] = rtb_Add1_cm;
 
   /* DataTypeConversion: '<S31>/Data Type Conversion1' */
@@ -1755,7 +1768,7 @@ void Trig_Pmsm_Foc(RT_MODEL *const pmsm_ctrl_M)
     pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTAT_ke;
 
   /* Gain: '<S31>/Gain2' */
-  rtb_Add1_cm *= Cfg_MtrKtrq;
+  rtb_mtr_cnts_obs = Cfg_MtrKtrq * rtb_Add1_cm;
 
   /* Product: '<S38>/Product1' incorporates:
    *  Constant: '<S34>/ObsInertia'
@@ -1765,7 +1778,7 @@ void Trig_Pmsm_Foc(RT_MODEL *const pmsm_ctrl_M)
     DistObs_J;
 
   /* DataTypeConversion: '<S31>/Data Type Conversion2' */
-  pmsm_ctrl_M->blockIO.MtrIf_TrqAct = rtb_Add1_cm;
+  pmsm_ctrl_M->blockIO.MtrIf_TrqAct = rtb_mtr_cnts_obs;
 
   /* DataTypeConversion: '<S40>/Data Type Conversion4' incorporates:
    *  Constant: '<S40>/Constant'
@@ -1821,7 +1834,7 @@ void Trig_Pmsm_Foc(RT_MODEL *const pmsm_ctrl_M)
    */
   pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTAT_kg += ((DistObs_K2 *
     rtb_DiscreteTimeIntegrator_d +
-    pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTATE_p) + rtb_Add1_cm /
+    pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTATE_p) + rtb_mtr_cnts_obs /
     DistObs_J) * 0.0001F;
   if (pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTAT_kg >= 1.0E+7F) {
     pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTAT_kg = 1.0E+7F;
@@ -1870,7 +1883,7 @@ void Trig_Pmsm_Foc(RT_MODEL *const pmsm_ctrl_M)
 void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
 {
   real32_T rtb_Product_f;
-  real32_T rtb_Add_j;
+  real32_T rtb_Add_gh;
   real32_T rtb_Sign_k;
   real32_T rtb_Add1_o;
   real32_T rtb_Sign_g;
@@ -1935,13 +1948,13 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
         pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTATE;
 
       /* Gain: '<S73>/Gain3' */
-      rtb_Add_j = TsMain * pmsm_ctrl_M->blockIO.DiscreteTimeIntegrator;
+      rtb_Add_gh = TsMain * pmsm_ctrl_M->blockIO.DiscreteTimeIntegrator;
 
       /* Sum: '<S73>/Add8' incorporates:
        *  Sum: '<S72>/Add'
        */
       rtb_Sign_k = (pmsm_ctrl_M->blockIO.DiscreteTimeIntegrator1 - rtb_Product_f)
-        + rtb_Add_j;
+        + rtb_Add_gh;
 
       /* Sqrt: '<S74>/Sqrt' incorporates:
        *  Abs: '<S74>/Abs'
@@ -1970,10 +1983,11 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
        *  Product: '<S75>/Product'
        *  Sum: '<S75>/Add'
        */
-      rtb_Add1_o = (rtb_Add1_o - 0.00100000016F) * rtb_Sign_g * 0.5F + rtb_Add_j;
+      rtb_Add1_o = (rtb_Add1_o - 0.00100000016F) * rtb_Sign_g * 0.5F +
+        rtb_Add_gh;
 
       /* Sum: '<S76>/Add1' */
-      rtb_Add_j = (rtb_Add_j + rtb_Sign_k) - rtb_Add1_o;
+      rtb_Add_gh = (rtb_Add_gh + rtb_Sign_k) - rtb_Add1_o;
 
       /* Sum: '<S79>/Add1' incorporates:
        *  Constant: '<S73>/d'
@@ -2012,7 +2026,7 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
        *  Product: '<S76>/Product'
        *  Sum: '<S79>/Add'
        */
-      rtb_Add1_o += (rtb_Sign_g - rtb_Sign_k) * 0.5F * rtb_Add_j;
+      rtb_Add1_o += (rtb_Sign_g - rtb_Sign_k) * 0.5F * rtb_Add_gh;
 
       /* Signum: '<S77>/Sign' */
       if (rtb_Add1_o < 0.0F) {
@@ -2029,7 +2043,7 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
        *  Constant: '<S73>/d'
        *  Product: '<S77>/Divide'
        */
-      rtb_Add_j = rtb_Add1_o / 0.00100000016F - rtb_Sign_k;
+      rtb_Add_gh = rtb_Add1_o / 0.00100000016F - rtb_Sign_k;
 
       /* Sum: '<S78>/Add' incorporates:
        *  Constant: '<S73>/d'
@@ -2081,7 +2095,7 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
        *  Sum: '<S78>/Add2'
        */
       pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTATE += ((rtb_Sign_g -
-        rtb_Add1_o) * 0.5F * rtb_Add_j + rtb_Sign_k) * -1000.0F * 0.001F;
+        rtb_Add1_o) * 0.5F * rtb_Add_gh + rtb_Sign_k) * -1000.0F * 0.001F;
     } else {
       if (pmsm_ctrl_M->dwork.PosTrackDiff_MODE) {
         /* Disable for DiscreteIntegrator: '<S72>/Discrete-Time Integrator1' */
