@@ -11,24 +11,9 @@
 #ifndef RTW_HEADER_pmsm_ctrl_types_h_
 #define RTW_HEADER_pmsm_ctrl_types_h_
 #include "rtwtypes.h"
+#include "MtrCtrlMd_T.h"
 #include "CalMgrSt_T.h"
-#ifndef DEFINED_TYPEDEF_FOR_MtrCtrlMd_T_
-#define DEFINED_TYPEDEF_FOR_MtrCtrlMd_T_
-
-typedef enum {
-  CTRL_MD_OFF = 0,                     /* Default value */
-  CTRL_MD_CAL,
-  CTRL_MD_RAW_PWM,
-  CTRL_MD_DQ_PWM,
-  CTRL_MD_IFBK,
-  CTRL_MD_TRQ,
-  CTRL_MD_SPD,
-  CTRL_MD_POS,
-  CTRL_MD_STEP_DIR
-} MtrCtrlMd_T;
-
-#endif
-
+#include "MtrCtrlCal_T.h"
 #ifndef DEFINED_TYPEDEF_FOR_Calib_OutType_
 #define DEFINED_TYPEDEF_FOR_Calib_OutType_
 
@@ -63,22 +48,6 @@ typedef struct {
 typedef struct {
   real32_T motn_ctrl_cmd;
 } MotnCtrl_OutType;
-
-#endif
-
-#ifndef DEFINED_TYPEDEF_FOR_MtrCtrlCal_T_
-#define DEFINED_TYPEDEF_FOR_MtrCtrlCal_T_
-
-typedef enum {
-  CAL_ENC_OFS = 0,                     /* Default value */
-  CAL_RES_ID = 1,
-  CAL_IND_ID = 2,
-  CAL_IFBK_OFS = 3,
-  CAL_MECH_PARAMS = 4,
-  CAL_IFBK_CTRL = 5,
-  CAL_MOTN_CTRL = 6,
-  CAL_NONE = 255
-} MtrCtrlCal_T;
 
 #endif
 

@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'pmsm_ctrl'.
  *
- * Model version                  : 1.765
+ * Model version                  : 1.766
  * Simulink Coder version         : 8.14 (R2018a) 06-Feb-2018
- * C/C++ source code generated on : Sat Jul 24 19:18:11 2021
+ * C/C++ source code generated on : Tue Aug 10 16:26:21 2021
  */
 
 #include "rtwtypes.h"
@@ -30,7 +30,7 @@ real32_T Cfg_MtrKtrq = 0.035F;         /* Motor torque constant */
 uint8_T Cfg_PolePairs = 4U;            /* Number of pole pairs. */
 real32_T Cfg_ResCalPwmDuty = 0.2F;     /* Duty cycle during resistance calibration */
 real32_T Cfg_Rs = 1.4F;                /* Motor resistance (phase). */
-real32_T Cfg_SpdCtrlBW = 200.0F;      /* Speed controller bandwith. */
+real32_T Cfg_SpdCtrlBW = 200.0F;       /* Speed controller bandwith. */
 boolean_T Cfg_SpdSnsEnbl = 0;          /* System has speed sensor. */
 int32_T Cfg_StepToEncCnts = 10;        /* Defines how many encoder counts per step. */
 boolean_T Cfg_UseObsPosEst = 0;        /* Use observer position estimate. */
@@ -41,7 +41,7 @@ real32_T DistObs_K1 = 1200.0F;         /* Disturbance obser gain k1. */
 real32_T DistObs_K2 = 480000.0F;       /* Disturbance obser gain k2. */
 real32_T DistObs_K3 = 6.4E+7F;         /* Disturbance obser gain k3. */
 real32_T PosCtrl_Ki = 0.0F;            /* PI integral term for position controller. */
-real32_T PosCtrl_Kp = 80.0F;          /* PI proportional term for position controller. */
+real32_T PosCtrl_Kp = 80.0F;           /* PI proportional term for position controller. */
 real32_T TsMain = 0.001F;              /* Main sampling time (1khz) */
 
 /*
