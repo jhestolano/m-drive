@@ -6,22 +6,45 @@
 #include "app.h"
 #include "cmsis_gcc.h"
 #include "pmsm_ctrl.h"
+#include "MtrCtrlMd_T.h"
 
-typedef DBG_Struct_type MtrDbg_S;
+#define MTRIF_ST_OK      (0)
+#define MTRIF_ST_IDLE    (1)
+#define MTRIF_ST_BUSY    (2)
+#define MTRIF_ST_DONE    (3)
+#define MTRIF_ST_NOT_OK  (4)
+#define MTRIF_ST_ERR     (5)
 
-typedef Calib_ParamType MtrParams_S;
+#define MTRIF_TO_MILLIS (1.0e3f) /* Convert to millis (amps, volts, etc.) */
+#define MTRIF_FROM_MILLIS (1.0e-3f) /* Convert back from millis. */
 
 typedef enum {
-  MtrCtlMdPos_E = 0,
-  MtrCtlMdSpd_E,
-  MtrCtlMdIfbk_E,
-  MtrCtlMdPwm_E,
-  MtrCtlMdInv_E = 255
-} MtrCtlMd_T;
+  CAL_JOB_NONE = 0,
+  CAL_JOB_ENC_OFS,
+  CAL_JOB_RES,
+  CAL_JOB_IND,
+  CAL_JOB_IFBK_OFS,
+  CAL_JOB_MECH_PARAMS,
+  CAL_JOB_IFBK_CTRL,
+  CAL_JOB_MOTN_CTRL,
+  CAL_JOB_MAX,
+} CalJob_T;
+
+typedef void (*MtrIfJobCb)(CalJob_T job);
+
+typedef struct MtrIfCalJob_tag {
+  CalJob_T job;
+  MtrIfJobCb on_err;
+  MtrIfJobCb on_done;
+} MtrIfCalJob_S;
 
 typedef struct MtrStats_tag {
   uint32_t ctrl_fast_cnt;
 } MtrStats_S;
+
+typedef DBG_Struct_type MtrDbg_S;
+
+typedef Calib_ParamType MtrParams_S;
 
 /* Might need to add other interrupts that might share data. */
 #define MTRIF_LOCK() __disable_irq()
@@ -48,9 +71,9 @@ float MtrIf_GetPos(void);
 
 float MtrIf_GetSpd(void);
 
-void MtrIf_SetCtlMd(MtrCtlMd_T ctlmd, float* target);
+void MtrIf_SetCtlMd(MtrCtrlMd_T ctlmd, float* target);
 
-void MtrIf_GetCtlMd(MtrCtlMd_T* ctlmd, float* target);
+void MtrIf_GetCtlMd(MtrCtrlMd_T* ctlmd, float* target);
 
 void MtrIf_SetPwmDc(float* pwm_a);
 
@@ -73,5 +96,14 @@ void MtrIf_GetMtrParams(MtrParams_S* params);
 void MtrIf_GetDbg(MtrDbg_S* dbg);
 
 void MtrIf_GetStats(MtrStats_S* stats);
+
+int32_t MtrIf_CalJobReq(MtrIfCalJob_S* job);
+
+/* int32_t MtrIf_CtrlJobReq(MtrIfCtrlJob_S* job); */
+int32_t MtrIf_CtrlJobReq(int32_t pwm_dc);
+
+int32_t MtrIf_WaitPending(void);
+
+int32_t MtrIf_GetJobStat(void);
 
 #endif // _MTRIF_H_

@@ -12,5 +12,11 @@ classdef MtrCtrlMd_T < Simulink.IntEnumType
       CTRL_MD_POS(7),
       CTRL_MD_STEP_DIR(8),
     end
+
+    methods (Static)
+      function retVal = getDataScope()
+        retVal = 'Exported';
+      end
+    end
 end
 

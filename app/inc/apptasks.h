@@ -15,8 +15,9 @@
  * Motor control task definitions.
  *-----------------------------------------------------------------------------*/
 #define APP_TASK_MOTOR_CONTROL_TS (1)
-#define APP_TASK_MOTOR_CONTROL_PRIO (3)
+#define APP_TASK_MOTOR_CONTROL_PRIO (configMAX_PRIORITIES)
 #define APP_TASK_MOTOR_CONTROL_STACK_SIZE (200)
+
 #define APP_TASK_MOTOR_CONTROL_N_SIGNALS (40)
 #define ADC_ISR_N_SIGNALS (0)
 

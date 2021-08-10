@@ -10,6 +10,22 @@
 #define COMMAND_LOCK UART_DisableIRQ
 #define COMMAND_UNLOCK UART_EnableIRQ
 
+/* Callbacks. */
+extern void cb_cal_done(CalJob_T);
+/* End callbacks. */
+
+char* _cal_job_to_str_map[] = {
+  "None",
+  "Encoder Offset",
+  "Resistance",
+  "Inductance",
+  "Current Sens. Offset",
+  "Mech. Params.",
+  "Current Ctrl. Gains",
+  "Motion Ctrl. Gains",
+  "Invalid",
+};
+
 #define BUFF_SIZE (64)
 
 typedef struct Buff_tag {
@@ -28,20 +44,76 @@ static void led_set_command_handler(const led_set_args_t* args) {
   HAL_GPIO_WritePin(RED_LED_PORT, RED_LED_PIN, (GPIO_PinState)args->value);
 }
 
-CONSOLE_COMMAND_DEF(set_ctrl, "Set control mode and target",
-    CONSOLE_INT_ARG_DEF(mode, "0: DQ PWM; 1: Current; 2: Speed; 3: Position"),
-    CONSOLE_INT_ARG_DEF(target, "Control target: 0: %; 1: mA; 2: RPM; 3: Deg")
+CONSOLE_COMMAND_DEF(cal, "Calibration routines",
+    CONSOLE_INT_ARG_DEF(mode, "Enc. Ofs (0); Res (1); Ind (2); Current Sens. Ofs. (3); Mech. Params (4); Current Ctrl. Gains (5); Motion Ctrl. Gains (6).")
 );
-static void set_ctrl_command_handler(const set_ctrl_args_t* args) {
-  MtrCtlMd_T md_rqst;
+static void cal_command_handler(const cal_args_t* args) {
+  MtrParams_S params = {0};
+  int32_t ret;
+  MtrIfCalJob_S job = {
+    .job = CAL_JOB_NONE,
+    .on_err = NULL,
+    .on_done = NULL,
+  };
+  CalJob_T mode = (CalJob_T)(args->mode + 1);
+  if((mode > CAL_JOB_MAX) || (mode <= CAL_JOB_NONE)) {
+    printf("Out of range.\n\r");
+    return;
+  }
+  printf("CAL req: %s\n\r",  _cal_job_to_str_map[(int32_t)mode]);
+  job.job = mode;
+  ret = MtrIf_CalJobReq(&job);
+  if(ret != MTRIF_ST_OK) {
+    printf("Not OK: %d\n\r", ret);
+    return;
+  }
+  printf("OK.\n\r");
+  ret = MtrIf_WaitPending();
+  if(ret == MTRIF_ST_ERR) {
+    printf("CAL failed.\n\r");
+  } else {
+    printf("CAL OK: %d\n\r", ret);
+  }
+  MtrIf_GetMtrParams(&params);
+  switch(mode) {
+    case CAL_JOB_ENC_OFS:
+      printf("Offset: %d counts\n\r", params.enc_ofs);
+      printf("Pole pairs: %d\n\r", params.pole_pairs);
+      break;
+    case CAL_JOB_RES:
+      printf("Resistance: %f ohms\n\r", params.resistance);
+      break;
+    case CAL_JOB_IND:
+      printf("Inductance: %fmH\n\r", params.inductance * MTRIF_TO_MILLIS);
+      break;
+    case CAL_JOB_IFBK_OFS:
+      printf("Phase 1 offset: %fmA\n\r", params.ifbk_ofs[0] * MTRIF_TO_MILLIS);
+      printf("Phase 2 offset: %fmA\n\r", params.ifbk_ofs[1] * MTRIF_TO_MILLIS);
+      printf("Phase 3 offset: %fmA\n\r", params.ifbk_ofs[2] * MTRIF_TO_MILLIS);
+      break;
+    case CAL_JOB_MECH_PARAMS:
+      break;
+    case CAL_JOB_IFBK_CTRL:
+      break;
+    case CAL_JOB_MOTN_CTRL:
+      break;
+  }
+}
 
-  float target[3];
-  bzero(target, sizeof(target));
-
-  target[0] = args->target * 1.0e-3f;
-
-  MtrIf_SetCtlMd(CTRL_MD_IFBK, target);
-
+CONSOLE_COMMAND_DEF(pwm, "PWM control mode",
+    CONSOLE_INT_ARG_DEF(dc, "Duty cycle (%)")
+);
+static void pwm_command_handler(const pwm_args_t* args) {
+  int32_t ret;
+  if(args->dc > 100 || args->dc < -100) {
+    printf("Error: Out of range");
+    return;
+  }
+  ret = MtrIf_CtrlJobReq(args->dc);
+  if(ret != MTRIF_ST_OK) {
+    printf("Not OK: %d\n\r", ret);
+  }
+  printf("OK.\n\r");
 }
 /* End of command definitions. */
 
@@ -69,7 +141,8 @@ void command_init(void) {
   bzero((void*)&buff, sizeof(buff));
   console_init(&init_console);
   console_command_register(led_set);
-  console_command_register(set_ctrl);
+  console_command_register(cal);
+  console_command_register(pwm);
 #ifdef UART_RX_USE_IT
   UART_AttachRxCallback(wrap_read_fnc);
 #endif
