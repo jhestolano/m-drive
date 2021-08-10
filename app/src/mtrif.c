@@ -97,9 +97,9 @@ void MtrIf_CtrlSlow(void) {
     case ST_DONE:
       job_status = MTRIF_ST_OK;
       /* Set state machine back to idle. */
-      _mtr_if_clear_cal_job();
+      /* _mtr_if_clear_cal_job(); */
       /* Notify subscriber. */
-      _mtr_if_notify();
+      /* _mtr_if_notify(); */
       break;
 
     case ST_FAILED:
