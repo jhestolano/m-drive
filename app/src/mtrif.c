@@ -47,6 +47,15 @@ typedef struct MtrIf_State_tag {
   int32_t job_status;
 } MtrIf_State_S;
 
+static MtrCtrlMd_T _ctrl_job_to_md_map[] = {
+  CTRL_MD_OFF,
+  CTRL_MD_DQ_PWM,
+  CTRL_MD_IFBK,
+  CTRL_MD_SPD,
+  CTRL_MD_POS,
+  CTRL_MD_OFF
+};
+
 MtrIf_State_S _mtr_if_s = {0};
 
 static void _mtr_if_clear_cal_job(void);
@@ -353,15 +362,14 @@ int32_t MtrIf_CalJobReq(MtrIfCalJob_S* job) {
   return MTRIF_ST_OK;
 }
 
-int32_t MtrIf_CtrlJobReq(int32_t pwm_dc) {
+
+int32_t MtrIf_CtrlJobReq(MtrIfCtrlJob_S *job) {
   CtrlIn_S inputs = {0};
   int32_t job_status;
-  
-  inputs.mode = CTRL_MD_DQ_PWM;
-  inputs.tgt[0] = 0.0f;
-  inputs.tgt[1] = pwm_dc * 0.01f;
-  inputs.cal_req = CAL_NONE;
 
+  if(!job) {
+    return MTRIF_ST_ERR;
+  }
   MTRIF_LOCK();
   job_status = _mtr_if_s.job_status;
   MTRIF_UNLOCK();
@@ -369,8 +377,21 @@ int32_t MtrIf_CtrlJobReq(int32_t pwm_dc) {
     /* Job already ongoing. Refuse by returning busy. */
     return MTRIF_ST_BUSY;
   }
+  if(job->job >= CTRL_JOB_NONE && job->job < CTRL_JOB_MAX) {
+    inputs.mode = _ctrl_job_to_md_map[job->job];
+    bzero((void*)&inputs.tgt[0], MTRIF_TGT_SIZE);
+    if(inputs.mode == CTRL_MD_DQ_PWM) {
+      /* For DQ control, index 1 is Q axis component. */
+      inputs.tgt[1] = job->tgt;
+    } else {
+      inputs.tgt[0] = job->tgt;
+    }
+    inputs.cal_req = CAL_NONE;
+  } else {
+    return MTRIF_ST_ERR;
+  }
+
   MTRIF_LOCK();
-  /* Update control inputs structure to execute on next cycle. */
   memcpy((void*)&_mtr_if_s.inputs, (void*)&inputs, sizeof(CtrlIn_S));
 
   /* Update job status to busy, as the job has been accepted and is pending to be */

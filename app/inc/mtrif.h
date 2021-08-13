@@ -30,7 +30,21 @@ typedef enum {
   CAL_JOB_MAX,
 } CalJob_T;
 
+typedef enum {
+  CTRL_JOB_NONE = 0,
+  CTRL_JOB_PWM,
+  CTRL_JOB_IFBK,
+  CTRL_JOB_SPD,
+  CTRL_JOB_POS,
+  CTRL_JOB_MAX,
+} CtrlJob_T;
+
 typedef void (*MtrIfJobCb)(CalJob_T job);
+
+typedef struct MtrIfCtrlJob_tag {
+  CtrlJob_T job;
+  float tgt;
+} MtrIfCtrlJob_S;
 
 typedef struct MtrIfCalJob_tag {
   CalJob_T job;
@@ -99,8 +113,7 @@ void MtrIf_GetStats(MtrStats_S* stats);
 
 int32_t MtrIf_CalJobReq(MtrIfCalJob_S* job);
 
-/* int32_t MtrIf_CtrlJobReq(MtrIfCtrlJob_S* job); */
-int32_t MtrIf_CtrlJobReq(int32_t pwm_dc);
+int32_t MtrIf_CtrlJobReq(MtrIfCtrlJob_S* job);
 
 int32_t MtrIf_WaitPending(void);
 

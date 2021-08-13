@@ -60,7 +60,7 @@ static void cal_command_handler(const cal_args_t* args) {
     printf("Out of range.\n\r");
     return;
   }
-  printf("CAL req: %s\n\r",  _cal_job_to_str_map[(int32_t)mode]);
+  printf("CAL RQST: %s\n\r",  _cal_job_to_str_map[(int32_t)mode]);
   job.job = mode;
   ret = MtrIf_CalJobReq(&job);
   if(ret != MTRIF_ST_OK) {
@@ -70,7 +70,7 @@ static void cal_command_handler(const cal_args_t* args) {
   printf("OK.\n\r");
   ret = MtrIf_WaitPending();
   if(ret == MTRIF_ST_ERR) {
-    printf("CAL failed.\n\r");
+    printf("CAL ERROR.\n\r");
   } else {
     printf("CAL OK: %d\n\r", ret);
   }
@@ -100,20 +100,65 @@ static void cal_command_handler(const cal_args_t* args) {
   }
 }
 
+CONSOLE_COMMAND_DEF(info, "Motor state info.");
+static void info_command_handler(const info_args_t* args) {
+  MtrParams_S params;
+  float ifbk[3];
+  MtrIf_GetIfbk(&ifbk[0]);
+  MtrIf_GetMtrParams(&params);
+  printf("Temp: %f deg\n\r", MtrIf_GetTemp());
+  printf("Bus voltage: %f volts\n\r", MtrIf_GetVBus());
+  printf("Offset: %d counts\n\r", params.enc_ofs);
+  printf("Resistance: %f ohm\n\r", params.resistance);
+  printf("Inductance: %f mH\n\r", params.inductance * MTRIF_TO_MILLIS);
+  printf("Pole pairs: %d\n\r", params.pole_pairs);
+  printf("Speed: %f rad/s\n\r", MtrIf_GetSpd());
+  printf("Position: %d counts\n\r", App_GetEncCnt());
+  printf("Control mode: %d\n\r", 0);
+  printf("Status: %d\n\r", 0);
+  printf("PhA current: %f mA\n\r", ifbk[0] * MTRIF_TO_MILLIS);
+  printf("PhB current: %f mA\n\r", ifbk[1] * MTRIF_TO_MILLIS);
+  printf("PhC current: %f mA\n\r", ifbk[2] * MTRIF_TO_MILLIS);
+}
+
 CONSOLE_COMMAND_DEF(pwm, "PWM control mode",
     CONSOLE_INT_ARG_DEF(dc, "Duty cycle (%)")
 );
 static void pwm_command_handler(const pwm_args_t* args) {
   int32_t ret;
+  printf("Error: Unimplemented\n\r");
+  return;
   if(args->dc > 100 || args->dc < -100) {
     printf("Error: Out of range");
     return;
   }
-  ret = MtrIf_CtrlJobReq(args->dc);
+  /* ret = MtrIf_CtrlJobReq(args->dc); */
   if(ret != MTRIF_ST_OK) {
     printf("Not OK: %d\n\r", ret);
   }
   printf("OK.\n\r");
+}
+
+CONSOLE_COMMAND_DEF(ctrl, "Request control job",
+    CONSOLE_INT_ARG_DEF(mode, "Control mode: OFF (0), PWM(1, %), IFBK(2, mA), SPD(3, RPM), POS(4, Counts)"),
+    CONSOLE_INT_ARG_DEF(target, "Control target")
+);
+static void ctrl_command_handler(const ctrl_args_t* args) {
+  MtrIfCtrlJob_S job;
+  int32_t ret;
+  const float k_tgt[] = {0.0f, 0.01f, 1.0e-3f, 1.0f, 1.0f};
+  if(args->mode < 0 || args->mode > 4) {
+    printf("Out of range.\n\r");
+    return;
+  }
+  job.tgt = k_tgt[args->mode] * (float)args->target;
+  job.job = (CtrlJob_T)args->mode;
+  ret = MtrIf_CtrlJobReq(&job);
+  if(ret != MTRIF_ST_OK) {
+    printf("Not OK: %d\n\r", ret);
+  } else{
+    printf("OK.\n\r");
+  }
 }
 /* End of command definitions. */
 
@@ -143,6 +188,8 @@ void command_init(void) {
   console_command_register(led_set);
   console_command_register(cal);
   console_command_register(pwm);
+  console_command_register(info);
+  console_command_register(ctrl);
 #ifdef UART_RX_USE_IT
   UART_AttachRxCallback(wrap_read_fnc);
 #endif
