@@ -53,7 +53,7 @@
 }
 
 /*******************************************************************************
- * DMA CONFIGURATION FOR SIGNAL DEBUG
+ * DMA CONFIGURATION FOR SIGNAL COMMUNICATION
 ********************************************************************************
 * Type: DMA_HandleTypeDef
 *******************************************************************************/
@@ -68,11 +68,26 @@
   .Init.Priority = DMA_PRIORITY_LOW,                                           \
 }
 
-#define UART_DMA_TX_PRIO (5)
-#define UART_DMA_TX_SUBPRIO (0)
+#define DMA_UART_RX_INIT_CONF {                                                \
+  .Instance = DMA1_Channel6,                                                   \
+  .Init.Direction = DMA_PERIPH_TO_MEMORY,                                      \
+  .Init.MemInc = DMA_MINC_ENABLE,                                              \
+  .Init.PeriphInc = DMA_PINC_DISABLE,                                          \
+  .Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE,                             \
+  .Init.MemDataAlignment = DMA_MDATAALIGN_BYTE,                                \
+  .Init.Mode = DMA_NORMAL,                                                     \
+  .Init.Priority = DMA_PRIORITY_HIGH,                                          \
+}
 
-#define UART_RX_PRIO (5)
-#define UART_RX_SUBPRIO (1)
+#define UART_IRQ_PRIO (5)
+#define UART_IRQ_SUBPRIO (0)
+
+#define UART_DMA_RX_PRIO (6)
+#define UART_DMA_RX_SUBPRIO (0)
+
+#define UART_DMA_TX_PRIO (6)
+#define UART_DMA_TX_SUBPRIO (1)
+
 /*******************************************************************************
 *******************************************************************************/
 
