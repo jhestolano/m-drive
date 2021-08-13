@@ -91,7 +91,7 @@
 /*******************************************************************************
 *******************************************************************************/
 
-typedef void(*uart_rx_callback_t)(uint8_t);
+typedef void(*uart_rx_callback_t)(uint8_t* buff, size_t sz);
 
 void UART_Init(void);
 
@@ -101,13 +101,11 @@ int8_t UART_Getc(uint8_t* ch);
 
 void UART_Puts(uint8_t* str);
 
-void UART_DMAPutBytes(uint8_t* bufdata, size_t bufsz);
+void UART_DMAPutBytes(uint8_t* buff, size_t sz);
 
-#ifdef UART_RX_USE_IT
 void UART_AttachRxCallback(uart_rx_callback_t callback);
 
 void UART_DettachRxCallback(void);
-#endif
 
 void UART_DisableIRQ(void);
 

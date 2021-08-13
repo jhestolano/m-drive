@@ -26,15 +26,15 @@ char* _cal_job_to_str_map[] = {
   "Invalid",
 };
 
-#define BUFF_SIZE (64)
+#define BUFF_SIZE (255)
 
 typedef struct Buff_tag {
   uint8_t mem[BUFF_SIZE]; /* Memory. */
-  size_t cnt; /* Number of elements in buffer. */
+  size_t cnt; /* Number of elements in g_buffer. */
 } Buff_S;
 
 const console_init_t init_console;
-Buff_S buff;
+Buff_S g_buff;
 
 /* Command defintions. */
 CONSOLE_COMMAND_DEF(led_set, "Set user LED value",
@@ -168,48 +168,42 @@ static void wrap_write_fnc(const char* str) {
   UART_Puts(str);
 }
 
-#ifdef UART_RX_USE_IT
-static void wrap_read_fnc(uint8_t ch) {
+static void wrap_read_fnc(uint8_t* mem, size_t sz) {
   /* This is interrupt context. Keep it short. */
-  if(buff.cnt < BUFF_SIZE) {
-    buff.mem[buff.cnt] = ch;
-    buff.cnt++;
+  if(!mem) {
+    return;
+  }
+  /* Is there space in the buffer? */
+  if((g_buff.cnt + sz) < BUFF_SIZE) {
+    memcpy((void*)&g_buff.mem[g_buff.cnt], (void*)mem, sz);
+    g_buff.cnt += sz;
+  } else {
+    /* Implement actions for overflow events. */
   }
 }
-#endif
 /* End of wrappers. */
 
 void command_init(void) {
   const console_init_t init_console = {
     .write_function = wrap_write_fnc,
   };
-  bzero((void*)&buff, sizeof(buff));
+  bzero((void*)&g_buff, sizeof(g_buff));
   console_init(&init_console);
   console_command_register(led_set);
   console_command_register(cal);
   console_command_register(pwm);
   console_command_register(info);
   console_command_register(ctrl);
-#ifdef UART_RX_USE_IT
+
+  /* Attach interrupt context callback to copy data into */
+  /* local g_buffer. Processing happens in RTOS task. */
   UART_AttachRxCallback(wrap_read_fnc);
-#endif
 }
 
 void command_exec(void) {
   /* Handle console processing and buffering here. */
-#ifdef UART_RX_USE_IT
   COMMAND_LOCK();
-  console_process(buff.mem, buff.cnt);
-  buff.cnt = 0;
+  console_process(g_buff.mem, g_buff.cnt);
+  g_buff.cnt = 0;
   COMMAND_UNLOCK();
-#else
-  uint8_t ch;
-  int8_t ret = UART_Getc(&ch);
-  if(ret == 0) {
-    console_process(&ch, 1);
-    DBG_DEBUG("Received char: %c!\n\r", ch);
-  } else {
-    /* DBG_WARN("UART Rx error!\n\r"); */
-  }
-#endif
 }
