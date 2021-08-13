@@ -3,7 +3,7 @@
  *
  * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.766
+ * Model version              : 1.770
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */
@@ -750,14 +750,14 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, CalMgrSt_T *rtY_CalMgr_Status)
 
           /* SignalConversion: '<S23>/TmpSignal ConversionAtcalc_pwm_dcInport1' */
           rtb_TmpSignalConversionAtcalc_i[0] = Cfg_IndCalPwmDuty;
-          pmsm_ctrl_M->dwork.ifbk_neg +=
+          pmsm_ctrl_M->dwork.ifbk_pos +=
             pmsm_ctrl_M->blockIO.BusCreator.mtrif_ifbk_act[0];
         } else {
           pmsm_ctrl_M->dwork.is_ind_id_actv = IN_neg_cycle;
 
           /* SignalConversion: '<S23>/TmpSignal ConversionAtcalc_pwm_dcInport1' */
           rtb_TmpSignalConversionAtcalc_i[0] = -Cfg_IndCalPwmDuty;
-          pmsm_ctrl_M->dwork.ifbk_pos +=
+          pmsm_ctrl_M->dwork.ifbk_neg +=
             pmsm_ctrl_M->blockIO.BusCreator.mtrif_ifbk_act[0];
         }
         break;
@@ -774,7 +774,7 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, CalMgrSt_T *rtY_CalMgr_Status)
 
           /* SignalConversion: '<S23>/TmpSignal ConversionAtcalc_pwm_dcInport1' */
           rtb_TmpSignalConversionAtcalc_i[0] = Cfg_IndCalPwmDuty;
-          pmsm_ctrl_M->dwork.ifbk_neg +=
+          pmsm_ctrl_M->dwork.ifbk_pos +=
             pmsm_ctrl_M->blockIO.BusCreator.mtrif_ifbk_act[0];
         } else {
           pmsm_ctrl_M->blockIO.CtrlMdRqst_i = CTRL_MD_RAW_PWM;
@@ -868,13 +868,12 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, CalMgrSt_T *rtY_CalMgr_Status)
 
       /* Outputs for Function Call SubSystem: '<S18>/get_mtr_ifbk_sum' */
       get_mtr_ifbk_sum(&pmsm_ctrl_M->self_get_mtr_ifbk_sum_f,
-                       rtb_TmpSignalConversionAtcalc_i,
-                       pmsm_ctrl_M->blockIO.Add_p);
+                       rtb_TmpSignalConversionAtcalc_i, pmsm_ctrl_M->blockIO.Add);
 
       /* End of Outputs for SubSystem: '<S18>/get_mtr_ifbk_sum' */
-      pmsm_ctrl_M->dwork.ifbk_abc_sum[0] = pmsm_ctrl_M->blockIO.Add_p[0];
-      pmsm_ctrl_M->dwork.ifbk_abc_sum[1] = pmsm_ctrl_M->blockIO.Add_p[1];
-      pmsm_ctrl_M->dwork.ifbk_abc_sum[2] = pmsm_ctrl_M->blockIO.Add_p[2];
+      pmsm_ctrl_M->dwork.ifbk_abc_sum[0] = pmsm_ctrl_M->blockIO.Add[0];
+      pmsm_ctrl_M->dwork.ifbk_abc_sum[1] = pmsm_ctrl_M->blockIO.Add[1];
+      pmsm_ctrl_M->dwork.ifbk_abc_sum[2] = pmsm_ctrl_M->blockIO.Add[2];
       rtSharedDSM.CalData_IfbkOfs_Abc[0] = (real32_T)0.;
       rtSharedDSM.CalData_IfbkOfs_Abc[1] = (real32_T)0.;
       rtSharedDSM.CalData_IfbkOfs_Abc[2] = (real32_T)0.;
@@ -911,12 +910,12 @@ void Trig_Pmsm_Cal(RT_MODEL *const pmsm_ctrl_M, CalMgrSt_T *rtY_CalMgr_Status)
         /* Outputs for Function Call SubSystem: '<S18>/get_mtr_ifbk_sum' */
         get_mtr_ifbk_sum(&pmsm_ctrl_M->self_get_mtr_ifbk_sum_f,
                          rtb_TmpSignalConversionAtcalc_i,
-                         pmsm_ctrl_M->blockIO.Add_p);
+                         pmsm_ctrl_M->blockIO.Add);
 
         /* End of Outputs for SubSystem: '<S18>/get_mtr_ifbk_sum' */
-        pmsm_ctrl_M->dwork.ifbk_abc_sum[0] = pmsm_ctrl_M->blockIO.Add_p[0];
-        pmsm_ctrl_M->dwork.ifbk_abc_sum[1] = pmsm_ctrl_M->blockIO.Add_p[1];
-        pmsm_ctrl_M->dwork.ifbk_abc_sum[2] = pmsm_ctrl_M->blockIO.Add_p[2];
+        pmsm_ctrl_M->dwork.ifbk_abc_sum[0] = pmsm_ctrl_M->blockIO.Add[0];
+        pmsm_ctrl_M->dwork.ifbk_abc_sum[1] = pmsm_ctrl_M->blockIO.Add[1];
+        pmsm_ctrl_M->dwork.ifbk_abc_sum[2] = pmsm_ctrl_M->blockIO.Add[2];
         rtSharedDSM.CalData_IfbkOfs_Abc[0] = (real32_T)0.;
         rtSharedDSM.CalData_IfbkOfs_Abc[1] = (real32_T)0.;
         rtSharedDSM.CalData_IfbkOfs_Abc[2] = (real32_T)0.;
@@ -1498,7 +1497,7 @@ void Trig_Pmsm_Foc(RT_MODEL *const pmsm_ctrl_M)
     /* Outputs for Atomic SubSystem: '<S48>/PI-Ctrl-Varying-Gains' */
     PI_Ctrl(&pmsm_ctrl_M->self_PICtrlVaryingGains_p, DBG_Struct.ifbk_q_tgt,
             DBG_Struct.i_dq0[1], rtb_Switch_m_idx_0, rtb_Switch_m_idx_1,
-            &rtb_Switch_m_idx_1, 12.0F, -12.0F);
+            &rtb_Switch_m_idx_1, 4.0F, -4.0F);
 
     /* End of Outputs for SubSystem: '<S48>/PI-Ctrl-Varying-Gains' */
 
@@ -1553,8 +1552,8 @@ void Trig_Pmsm_Foc(RT_MODEL *const pmsm_ctrl_M)
 
     /* Outputs for Atomic SubSystem: '<S47>/PI-Ctrl-Varying-Gains' */
     PI_Ctrl(&pmsm_ctrl_M->self_PICtrlVaryingGains, 0.0F, DBG_Struct.i_dq0[0],
-            rtb_Switch_m_idx_0, rtb_Switch_m_idx_1, &rtb_Switch_m_idx_1, 12.0F,
-            -12.0F);
+            rtb_Switch_m_idx_0, rtb_Switch_m_idx_1, &rtb_Switch_m_idx_1, 4.0F,
+            -4.0F);
 
     /* End of Outputs for SubSystem: '<S47>/PI-Ctrl-Varying-Gains' */
 
@@ -1892,8 +1891,8 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
        *  Product: '<S69>/Product'
        *  Sum: '<S69>/Add'
        */
-      mw_arm_sqrt_f32((8.0F * (real32_T)fabs(rtb_Sign_k) + 0.00100000016F) *
-                      0.00100000016F, &rtb_Add1_j);
+      mw_arm_sqrt_f32((8.0F * (real32_T)fabs(rtb_Sign_k) + 0.000100000012F) *
+                      0.000100000012F, &rtb_Add1_j);
 
       /* Signum: '<S70>/Sign' */
       if (rtb_Sign_k < 0.0F) {
@@ -1912,7 +1911,7 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
        *  Product: '<S70>/Product'
        *  Sum: '<S70>/Add'
        */
-      rtb_Add1_j = (rtb_Add1_j - 0.00100000016F) * rtb_Sign_g * 0.5F +
+      rtb_Add1_j = (rtb_Add1_j - 0.000100000012F) * rtb_Sign_g * 0.5F +
         rtb_Add_gh;
 
       /* Sum: '<S71>/Add1' */
@@ -1921,12 +1920,12 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
       /* Sum: '<S74>/Add1' incorporates:
        *  Constant: '<S68>/d'
        */
-      rtb_Sign_g = 0.00100000016F + rtb_Sign_k;
+      rtb_Sign_g = 0.000100000012F + rtb_Sign_k;
 
       /* Sum: '<S74>/Add2' incorporates:
        *  Constant: '<S68>/d'
        */
-      rtb_Sign_k -= 0.00100000016F;
+      rtb_Sign_k -= 0.000100000012F;
 
       /* Signum: '<S74>/Sign' */
       if (rtb_Sign_g < 0.0F) {
@@ -1972,17 +1971,17 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
        *  Constant: '<S68>/d'
        *  Product: '<S72>/Divide'
        */
-      rtb_Add_gh = rtb_Add1_j / 0.00100000016F - rtb_Sign_k;
+      rtb_Add_gh = rtb_Add1_j / 0.000100000012F - rtb_Sign_k;
 
       /* Sum: '<S73>/Add' incorporates:
        *  Constant: '<S68>/d'
        */
-      rtb_Sign_g = rtb_Add1_j + 0.00100000016F;
+      rtb_Sign_g = rtb_Add1_j + 0.000100000012F;
 
       /* Sum: '<S73>/Add1' incorporates:
        *  Constant: '<S68>/d'
        */
-      rtb_Add1_j -= 0.00100000016F;
+      rtb_Add1_j -= 0.000100000012F;
 
       /* SignalConversion: '<S67>/OutportBufferForGrd' */
       DBG_Struct.traj_plan_grd = pmsm_ctrl_M->blockIO.DiscreteTimeIntegrator;
@@ -2024,7 +2023,7 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
        *  Sum: '<S73>/Add2'
        */
       pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTATE += ((rtb_Sign_g -
-        rtb_Add1_j) * 0.5F * rtb_Add_gh + rtb_Sign_k) * -1000.0F * 0.001F;
+        rtb_Add1_j) * 0.5F * rtb_Add_gh + rtb_Sign_k) * -100.0F * 0.001F;
     } else {
       if (pmsm_ctrl_M->dwork.PosTrackDiff_MODE) {
         /* Disable for DiscreteIntegrator: '<S67>/Discrete-Time Integrator1' */
@@ -2094,24 +2093,35 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
        *  DiscreteIntegrator: '<S66>/Discrete-Time Integrator'
        *  Gain: '<S65>/Gain1'
        */
-      pmsm_ctrl_M->blockIO.Add = PosCtrl_Kp * rtb_Product_f +
+      rtb_Add_gh = PosCtrl_Kp * rtb_Product_f +
         pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTATE_o;
+
+      /* Saturate: '<S59>/Saturation' */
+      if (rtb_Add_gh > 400.0F) {
+        pmsm_ctrl_M->blockIO.Saturation_b = 400.0F;
+      } else if (rtb_Add_gh < -400.0F) {
+        pmsm_ctrl_M->blockIO.Saturation_b = -400.0F;
+      } else {
+        pmsm_ctrl_M->blockIO.Saturation_b = rtb_Add_gh;
+      }
+
+      /* End of Saturate: '<S59>/Saturation' */
 
       /* Update for DiscreteIntegrator: '<S66>/Discrete-Time Integrator' incorporates:
        *  Gain: '<S65>/Gain'
        */
       pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTATE_o += PosCtrl_Ki *
         rtb_Product_f * 0.001F;
-      if (pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTATE_o >= 1000.0F) {
-        pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTATE_o = 1000.0F;
+      if (pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTATE_o >= 300.0F) {
+        pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTATE_o = 300.0F;
       } else {
-        if (pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTATE_o <= -1000.0F) {
-          pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTATE_o = -1000.0F;
+        if (pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTATE_o <= -300.0F) {
+          pmsm_ctrl_M->dwork.DiscreteTimeIntegrator_DSTATE_o = -300.0F;
         }
       }
 
       /* End of Update for DiscreteIntegrator: '<S66>/Discrete-Time Integrator' */
-      rtb_Sign_g = pmsm_ctrl_M->blockIO.Add;
+      rtb_Sign_g = pmsm_ctrl_M->blockIO.Saturation_b;
     } else {
       if (pmsm_ctrl_M->dwork.PosCtl_MODE) {
         pmsm_ctrl_M->dwork.PosCtl_MODE = false;
@@ -2146,7 +2156,7 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
       /* Outputs for Atomic SubSystem: '<S61>/PI-Ctrl-Varying-Gains' */
       PI_Ctrl(&pmsm_ctrl_M->self_PICtrlVaryingGains_m, DBG_Struct.mtr_spd_tgt,
               pmsm_ctrl_M->blockIO.MtrIf_SpdOut, Cfg_SpdCtrlBW * Cfg_MtrJm,
-              Cfg_SpdCtrlBW * Cfg_MtrKf, &rtb_Product_f, 10.0F, -10.0F);
+              Cfg_SpdCtrlBW * Cfg_MtrKf, &rtb_Product_f, 0.5F, -0.5F);
 
       /* End of Outputs for SubSystem: '<S61>/PI-Ctrl-Varying-Gains' */
 
@@ -2155,10 +2165,10 @@ void Trig_Pmsm_MotnCtrl(RT_MODEL *const pmsm_ctrl_M)
        *  Constant: '<S61>/Constant3'
        *  DataTypeConversion: '<S58>/Data Type Conversion1'
        */
-      if (rtb_Product_f > 10.0F) {
-        pmsm_ctrl_M->blockIO.Saturation = 10.0F;
-      } else if (rtb_Product_f < -10.0F) {
-        pmsm_ctrl_M->blockIO.Saturation = -10.0F;
+      if (rtb_Product_f > 2.0F) {
+        pmsm_ctrl_M->blockIO.Saturation = 2.0F;
+      } else if (rtb_Product_f < -2.0F) {
+        pmsm_ctrl_M->blockIO.Saturation = -2.0F;
       } else {
         pmsm_ctrl_M->blockIO.Saturation = rtb_Product_f;
       }
