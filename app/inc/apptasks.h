@@ -6,7 +6,7 @@
 /*-----------------------------------------------------------------------------
  * Signal logging task definitions.
  *-----------------------------------------------------------------------------*/
-#define APP_TASK_SLOG_TS (1)
+#define APP_TASK_SLOG_TS (5)
 #define APP_TASK_SLOG_PRIO (2)
 /* Stack size: word size, not bytes: 300 implies 1200 bytes. */
 #define APP_TASK_SLOG_STACK_SIZE (200)

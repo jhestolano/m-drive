@@ -100,8 +100,8 @@ void AppTask_MotorControl(void* params) {
     signal_buff[9] = mtr_dbg.i_abc_lpf[0];
     signal_buff[10] = mtr_dbg.i_abc_lpf[1];
     signal_buff[11] = mtr_dbg.i_abc_lpf[2];
-    /* signal_buff[12] = mtr_dbg.i_dq[0]; /1* D-component. *1/ */
-    /* signal_buff[13] = mtr_dbg.i_dq[1]; /1* Q-component. *1/ */
+    signal_buff[12] = mtr_dbg.i_dq0[0]; /* D-component. */
+    signal_buff[13] = mtr_dbg.i_dq0[1]; /* Q-component. */
     signal_buff[14] = (float)MtrIf_GetVBus();
     signal_buff[15] = mtr_dbg.mtrif_v_bus;
     signal_buff[16] = (float)MtrIf_GetTemp();

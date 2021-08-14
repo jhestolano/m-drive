@@ -7,8 +7,9 @@
 #include "mtrif.h"
 #include "dbg.h"
 
-#define COMMAND_LOCK UART_DisableIRQ
-#define COMMAND_UNLOCK UART_EnableIRQ
+#define COMMAND_LOCK UART_RxPause
+
+#define COMMAND_UNLOCK UART_RxResume
 
 /* Callbacks. */
 extern void cb_cal_done(CalJob_T);

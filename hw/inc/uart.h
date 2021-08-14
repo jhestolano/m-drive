@@ -43,7 +43,7 @@
 #define UART_INIT_CONF {                                                       \
   .Instance = USART2,                                                          \
   .Init = {                                                                    \
-    .BaudRate = 2000000,                                                       \
+    .BaudRate = 230400,                                                        \
     .WordLength = UART_WORDLENGTH_8B,                                          \
     .StopBits = UART_STOPBITS_1,                                               \
     .Parity = UART_PARITY_NONE,                                                \
@@ -110,5 +110,13 @@ void UART_DettachRxCallback(void);
 void UART_DisableIRQ(void);
 
 void UART_EnableIRQ(void);
+
+void UART_RxPause(void);
+
+void UART_RxResume(void);
+
+void UART_TxPause(void);
+
+void UART_TxResume(void);
 
 #endif // UART_H

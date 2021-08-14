@@ -195,3 +195,19 @@ void UART_DettachRxCallback(void) {
   gs_uart_rx_callback = NULL;
   UART_EnableIRQ();
 }
+
+void UART_TxPause(void) {
+  HAL_UART_DMAPause(&gs_uart_init_conf);
+}
+
+void UART_TxResume(void) {
+  HAL_UART_DMAResume(&gs_uart_init_conf);
+}
+
+void UART_RxPause(void) {
+  HAL_NVIC_DisableIRQ(DMA1_Channel6_IRQn);
+}
+
+void UART_RxResume(void) {
+  HAL_NVIC_EnableIRQ(DMA1_Channel6_IRQn);
+}
