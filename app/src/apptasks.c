@@ -72,7 +72,15 @@ void AppTask_MotorControl(void* params) {
   float signal_buff[APP_TASK_MOTOR_CONTROL_N_SIGNALS] = {0};
 #endif
 
+  MtrIfCalJob_S job = {
+    .job = CAL_JOB_ENC_OFS,
+    .on_err = NULL,
+    .on_done = NULL,
+  };
+
   MtrIf_Init();
+
+  MtrIf_CalJobReq(&job);
 
   for(;;) {
 
@@ -105,10 +113,10 @@ void AppTask_MotorControl(void* params) {
     signal_buff[14] = (float)MtrIf_GetVBus();
     signal_buff[15] = mtr_dbg.mtrif_v_bus;
     signal_buff[16] = (float)MtrIf_GetTemp();
-    signal_buff[17] = mtr_dbg.ifbk_q_tgt;
+    /* signal_buff[17] = mtr_dbg.ifbk_q_des; */
     signal_buff[18] = (float)mtr_dbg.obs_enc_cnts;
     signal_buff[19] = (float)mtr_dbg.mtr_load_obs;
-    signal_buff[20] = (float)pwm_dq[1];
+    signal_buff[20] = 0.0f;
     signal_buff[21] = (float)mtr_dbg.motn_ctrl_cmd;
     /* signal_buff[22] = (float)mtr_dbg.motn_ctrl_cmd_trq_tgt; */
     signal_buff[23] = (float)mtr_dbg.mtr_spd_tgt;
@@ -121,6 +129,9 @@ void AppTask_MotorControl(void* params) {
     signal_buff[30] = (float)mtr_dbg.mtr_spd_pll;
     signal_buff[31] = (float)mtr_dbg.mtr_cnts_ref;
     signal_buff[32] = (float)mtr_dbg.mtr_cnts_tgt;
+    /* signal_buff[33] = (float)mtr_dbg.pwm_ctrl_dq0_lpf[1]; */
+    /* signal_buff[34] = (float)mtr_dbg.ifbk_ctrl_dq0[1]; */
+    /* signal_buff[35] = (float)mtr_dbg.pwm_dq0[1]; */
 
     xStreamBufferSend(stream_buff,
         (void*)signal_buff,

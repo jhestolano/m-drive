@@ -209,8 +209,8 @@ void MtrIf_GetIfbkDq(float* ifbk) {
 void MtrIf_GetPwmDq(float* pwm_dq) {
   if(pwm_dq) {
     MTRIF_LOCK();
-    pwm_dq[0] = _mtr_if_s.pwm_dc[0];
-    pwm_dq[1] = _mtr_if_s.pwm_dc[1];
+    pwm_dq[0] = 0.0f;
+    pwm_dq[1] = 0.0f;
     MTRIF_UNLOCK();
   }
 }

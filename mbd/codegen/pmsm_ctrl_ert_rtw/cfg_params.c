@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'pmsm_ctrl'.
  *
- * Model version                  : 1.767
+ * Model version                  : 1.816
  * Simulink Coder version         : 8.14 (R2018a) 06-Feb-2018
- * C/C++ source code generated on : Tue Aug 10 18:35:15 2021
+ * C/C++ source code generated on : Sun Aug 15 12:19:48 2021
  */
 
 #include "rtwtypes.h"
@@ -25,8 +25,9 @@ real32_T Cfg_IndCalPwmDuty = 0.2F;     /* Duty cycle during inductance calibrati
 real32_T Cfg_Ls = 0.0013F;             /* Motor inductance (phase) */
 real32_T Cfg_MFlux = 0.0058F;          /* Motor flux */
 real32_T Cfg_MtrJm = 2.4E-5F;          /* Motor rotor inertia. */
-real32_T Cfg_MtrKf = 1.0e-4F;             /* Rotor friction coefficient */
+real32_T Cfg_MtrKf = 0.0F;             /* Rotor friction coefficient */
 real32_T Cfg_MtrKtrq = 0.035F;         /* Motor torque constant */
+real32_T Cfg_OverCurProtMax = 1.0F;    /* Overcurrent protection limit. */
 uint8_T Cfg_PolePairs = 4U;            /* Number of pole pairs. */
 real32_T Cfg_ResCalPwmDuty = 0.2F;     /* Duty cycle during resistance calibration */
 real32_T Cfg_Rs = 1.4F;                /* Motor resistance (phase). */
@@ -41,7 +42,7 @@ real32_T DistObs_K1 = 1200.0F;         /* Disturbance obser gain k1. */
 real32_T DistObs_K2 = 480000.0F;       /* Disturbance obser gain k2. */
 real32_T DistObs_K3 = 6.4E+7F;         /* Disturbance obser gain k3. */
 real32_T PosCtrl_Ki = 0.0F;            /* PI integral term for position controller. */
-real32_T PosCtrl_Kp = 320.0F;           /* PI proportional term for position controller. */
+real32_T PosCtrl_Kp = 80.0F;           /* PI proportional term for position controller. */
 real32_T TsMain = 0.001F;              /* Main sampling time (1khz) */
 
 /*

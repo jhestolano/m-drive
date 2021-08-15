@@ -17,33 +17,19 @@ TsFast.CoderInfo.CustomStorageClass = 'ExportToFile';
 TsFast.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
 TsFast.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
 
-%% Overcurrent protection switch-on.
-Cfg_OverCurProtOn = Simulink.Parameter;
-Cfg_OverCurProtOn.StorageClass = 'Auto';
-Cfg_OverCurProtOn.Description = 'Overcurrent protection switch-on.';
-Cfg_OverCurProtOn.DataType = 'single';
-Cfg_OverCurProtOn.Min = [];
-Cfg_OverCurProtOn.Max = [];
-Cfg_OverCurProtOn.DocUnits = '';
-Cfg_OverCurProtOn.Value = 1.;
-Cfg_OverCurProtOn.CoderInfo.StorageClass = 'Custom';
-Cfg_OverCurProtOn.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_OverCurProtOn.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_OverCurProtOn.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
-
-%% Overcurrent protection switch-off.
-Cfg_OverCurProtOff = Simulink.Parameter;
-Cfg_OverCurProtOff.StorageClass = 'Auto';
-Cfg_OverCurProtOff.Description = 'Overcurrent protection switch-on.';
-Cfg_OverCurProtOff.DataType = 'single';
-Cfg_OverCurProtOff.Min = [];
-Cfg_OverCurProtOff.Max = [];
-Cfg_OverCurProtOff.DocUnits = '';
-Cfg_OverCurProtOff.Value = 0.8;
-Cfg_OverCurProtOff.CoderInfo.StorageClass = 'Custom';
-Cfg_OverCurProtOff.CoderInfo.CustomStorageClass = 'ExportToFile';
-Cfg_OverCurProtOff.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
-Cfg_OverCurProtOff.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
+%% Overcurrent protection limit.
+Cfg_OverCurProtMax = Simulink.Parameter;
+Cfg_OverCurProtMax.StorageClass = 'Auto';
+Cfg_OverCurProtMax.Description = 'Overcurrent protection limit.';
+Cfg_OverCurProtMax.DataType = 'single';
+Cfg_OverCurProtMax.Min = [];
+Cfg_OverCurProtMax.Max = [];
+Cfg_OverCurProtMax.DocUnits = '';
+Cfg_OverCurProtMax.Value = 1.;
+Cfg_OverCurProtMax.CoderInfo.StorageClass = 'Custom';
+Cfg_OverCurProtMax.CoderInfo.CustomStorageClass = 'ExportToFile';
+Cfg_OverCurProtMax.CoderInfo.CustomAttributes.HeaderFile = 'cfg_params.h';
+Cfg_OverCurProtMax.CoderInfo.CustomAttributes.DefinitionFile = 'cfg_params.c';
 
 %% Speed PLL Bandwith.
 Cfg_UseSpdPll = Simulink.Parameter;

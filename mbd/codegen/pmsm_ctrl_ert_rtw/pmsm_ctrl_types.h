@@ -3,7 +3,7 @@
  *
  * Code generation for model "pmsm_ctrl".
  *
- * Model version              : 1.766
+ * Model version              : 1.816
  * Simulink Coder version : 8.14 (R2018a) 06-Feb-2018
  *
  */

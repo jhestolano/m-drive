@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'pmsm_ctrl'.
  *
- * Model version                  : 1.766
+ * Model version                  : 1.816
  * Simulink Coder version         : 8.14 (R2018a) 06-Feb-2018
- * C/C++ source code generated on : Tue Aug 10 16:26:21 2021
+ * C/C++ source code generated on : Sun Aug 15 12:19:48 2021
  */
 
 #ifndef RTW_HEADER_cfg_params_h_
@@ -29,6 +29,7 @@ extern real32_T Cfg_MFlux;             /* Motor flux */
 extern real32_T Cfg_MtrJm;             /* Motor rotor inertia. */
 extern real32_T Cfg_MtrKf;             /* Rotor friction coefficient */
 extern real32_T Cfg_MtrKtrq;           /* Motor torque constant */
+extern real32_T Cfg_OverCurProtMax;    /* Overcurrent protection limit. */
 extern uint8_T Cfg_PolePairs;          /* Number of pole pairs. */
 extern real32_T Cfg_ResCalPwmDuty;     /* Duty cycle during resistance calibration */
 extern real32_T Cfg_Rs;                /* Motor resistance (phase). */
